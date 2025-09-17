@@ -1,6 +1,0 @@
-// পুরোনো (লোকাল ফাইল থেকে)
-import namesData from "../data/islamic-names.json";
-
-// নতুন (Backend API থেকে)
-const res = await fetch("https://islamicguide-qqag.onrender.com/api/names");
-const namesData = await res.json();
