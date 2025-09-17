@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -16,12 +16,29 @@ export default function NamesPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedLanguage, setSelectedLanguage] = useState<"english" | "arabic" | "bengali">("bengali");
 
+  // 🔥 এখানে API URL change করা হলো
   const { data: allNames, isLoading } = useQuery<IslamicName[]>({
-    queryKey: [`/api/islamic-names?gender=${selectedGender}&category=${encodeURIComponent(selectedCategory)}`],
+    queryKey: [`names`, selectedGender, selectedCategory],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://islamicguide-qqag.onrender.com/api/islamic-names?gender=${selectedGender}&category=${encodeURIComponent(
+          selectedCategory
+        )}`
+      );
+      return res.json();
+    },
   });
 
   const { data: searchResults, refetch: searchNames } = useQuery<IslamicName[]>({
-    queryKey: [`/api/islamic-names/search?q=${encodeURIComponent(searchQuery)}&gender=${selectedGender}`],
+    queryKey: [`search-names`, searchQuery, selectedGender],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://islamicguide-qqag.onrender.com/api/islamic-names/search?q=${encodeURIComponent(
+          searchQuery
+        )}&gender=${selectedGender}`
+      );
+      return res.json();
+    },
     enabled: false,
   });
 
@@ -284,4 +301,5 @@ function NameCard({ name, selectedLanguage, onShare }: NameCardProps) {
       </CardContent>
     </Card>
   );
-}
+        }
+            
