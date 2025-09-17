@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -10,18 +10,38 @@ import BottomNavigation from "@/components/bottom-navigation";
 import { Search, Heart, Share, Baby, Languages } from "lucide-react";
 import type { IslamicName } from "@shared/schema";
 
+// ✅ API URL সেট করা হলো
+const API_URL =
+  import.meta.env.VITE_API_URL || "https://islamicguide-qqag.onrender.com";
+
 export default function NamesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGender, setSelectedGender] = useState<"all" | "boy" | "girl">("all");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedLanguage, setSelectedLanguage] = useState<"english" | "arabic" | "bengali">("bengali");
 
+  // ✅ সব নাম লোড করা
   const { data: allNames, isLoading } = useQuery<IslamicName[]>({
-    queryKey: [`/api/islamic-names?gender=${selectedGender}&category=${encodeURIComponent(selectedCategory)}`],
+    queryKey: ["allNames", selectedGender, selectedCategory],
+    queryFn: async () => {
+      const res = await fetch(
+        `${API_URL}/api/islamic-names?gender=${selectedGender}&category=${encodeURIComponent(selectedCategory)}`
+      );
+      if (!res.ok) throw new Error("Failed to fetch names");
+      return res.json();
+    },
   });
 
+  // ✅ সার্চ রেজাল্ট
   const { data: searchResults, refetch: searchNames } = useQuery<IslamicName[]>({
-    queryKey: [`/api/islamic-names/search?q=${encodeURIComponent(searchQuery)}&gender=${selectedGender}`],
+    queryKey: ["searchNames", searchQuery, selectedGender],
+    queryFn: async () => {
+      const res = await fetch(
+        `${API_URL}/api/islamic-names/search?q=${encodeURIComponent(searchQuery)}&gender=${selectedGender}`
+      );
+      if (!res.ok) throw new Error("Search failed");
+      return res.json();
+    },
     enabled: false,
   });
 
@@ -41,8 +61,8 @@ export default function NamesPage() {
   };
 
   const categories = [
-    "All", "Popular", "Prophetic", "Historical", "Virtue", "Divine", 
-    "Nature", "Beauty", "Spiritual", "Companion", "Leadership", 
+    "All", "Popular", "Prophetic", "Historical", "Virtue", "Divine",
+    "Nature", "Beauty", "Spiritual", "Companion", "Leadership",
     "Knowledge", "Wisdom", "Joy", "Royal", "Precious"
   ];
 
@@ -61,7 +81,7 @@ export default function NamesPage() {
       </header>
 
       <main className="flex-1 overflow-y-auto p-4 space-y-6">
-        {/* Search and Filters */}
+        {/* 🔎 Search and Filters */}
         <div className="space-y-4">
           <div className="flex gap-2">
             <Input
@@ -102,7 +122,7 @@ export default function NamesPage() {
             </Select>
           </div>
 
-          {/* Language Selector */}
+          {/* 🌍 Language Selector */}
           <div className="flex items-center space-x-2">
             <Languages className="h-4 w-4 text-muted-foreground" />
             <Select value={selectedLanguage} onValueChange={(value: "english" | "arabic" | "bengali") => setSelectedLanguage(value)}>
@@ -118,16 +138,16 @@ export default function NamesPage() {
           </div>
         </div>
 
-        {/* Results Summary */}
+        {/* ℹ️ Results Summary */}
         {!isLoading && (
           <div className="text-center text-sm text-muted-foreground">
-            Found {displayNames.length} names 
+            Found {displayNames.length} names{" "}
             {selectedGender !== 'all' && ` for ${selectedGender}s`}
             {selectedCategory !== 'All' && ` in ${selectedCategory}`}
           </div>
         )}
 
-        {/* Names Display */}
+        {/* 📋 Names Display */}
         {isLoading ? (
           <div className="space-y-3">
             {Array.from({ length: 6 }).map((_, i) => (
@@ -191,6 +211,7 @@ export default function NamesPage() {
   );
 }
 
+// 🃏 NameCard Component
 interface NameCardProps {
   name: IslamicName;
   selectedLanguage: "english" | "arabic" | "bengali";
@@ -284,4 +305,4 @@ function NameCard({ name, selectedLanguage, onShare }: NameCardProps) {
       </CardContent>
     </Card>
   );
-      }
+}
