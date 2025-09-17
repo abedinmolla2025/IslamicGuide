@@ -15,3 +15,6 @@ app.get("/api/ping", (req, res) => {
 app.listen(3000, () => {
   console.log("✅ Server running");
 });
+app.get("/api/ping", (req, res) => {
+  res.json({ message: "pong from backend" });
+});
