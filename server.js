@@ -2,19 +2,22 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-// এখানে বসাবেন 👇
+// CORS setup
 app.use(cors({
-  origin: "https://islamic-guide-theta.vercel.app"
+  origin: "https://islamic-guide-theta.vercel.app",
+  methods: ["GET", "POST"],
+  credentials: true
 }));
 
-// Example route
+// ✅ টেস্ট route
 app.get("/api/ping", (req, res) => {
   res.json({ message: "pong from backend" });
 });
 
-app.listen(3000, () => {
-  console.log("✅ Server running");
-});
-app.get("/api/ping", (req, res) => {
-  res.json({ message: "pong from backend" });
+// আপনার অন্য route গুলো এখানে থাকবে
+
+// Server listen
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
 });
