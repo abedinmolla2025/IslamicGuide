@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Share } from "lucide-react";
+import { BookOpen, Share, RefreshCw } from "lucide-react";
 import { useLocation } from "wouter";
 import type { QuranVerse as QuranVerseType } from "@shared/schema";
+import { queryClient } from "@/lib/queryClient";
 
 export default function QuranVerse() {
   const [, setLocation] = useLocation();
@@ -33,6 +34,10 @@ export default function QuranVerse() {
     setLocation("/quran");
   };
 
+  const refreshVerse = () => {
+    queryClient.invalidateQueries({ queryKey: ["/api/quran/random"] });
+  };
+
   if (isLoading) {
     return (
       <section className="p-4">
@@ -56,11 +61,22 @@ export default function QuranVerse() {
 
   return (
     <section className="p-4" data-testid="section-quran-verse">
-      <h2 className="text-xl font-black mb-4 flex items-center text-amber-400">
-        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg mr-3">
-          <BookOpen className="text-emerald-950 w-5 h-5" />
+      <h2 className="text-xl font-black mb-4 flex items-center justify-between text-amber-400">
+        <div className="flex items-center">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg mr-3">
+            <BookOpen className="text-emerald-950 w-5 h-5" />
+          </div>
+          Verse of the Day
         </div>
-        Verse of the Day
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={refreshVerse}
+          className="text-amber-400 hover:text-amber-300 hover:bg-emerald-800/30"
+          data-testid="button-refresh-verse"
+        >
+          <RefreshCw className="h-4 w-4" />
+        </Button>
       </h2>
       
       <div className="bg-gradient-to-br from-[#0E3B1A] to-[#0A2E14] rounded-2xl p-6 border border-amber-400/20 shadow-[0_8px_24px_rgba(0,0,0,0.3)] hover:shadow-[0_12px_32px_rgba(251,191,36,0.15)] transition-all duration-300 mb-4">
