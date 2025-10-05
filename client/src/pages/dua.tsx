@@ -25,8 +25,8 @@ export default function DuaPage() {
                 <BookOpen className="w-7 h-7 text-emerald-950" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-amber-400">দোয়া সমূহ</h1>
-                <p className="text-xs text-emerald-100">আরবি • বাংলা উচ্চারণ • বাংলা অর্থ</p>
+                <h1 className="text-2xl font-black text-amber-400" style={{ fontFamily: "'Noto Sans Bengali', sans-serif" }}>দোয়া সমূহ</h1>
+                <p className="text-sm text-emerald-100 font-semibold" style={{ fontFamily: "'Noto Sans Bengali', sans-serif" }}>আরবি • বাংলা উচ্চারণ • বাংলা অর্থ</p>
               </div>
             </div>
 
@@ -36,7 +36,8 @@ export default function DuaPage() {
                   key={category}
                   variant="outline"
                   size="sm"
-                  className="text-xs bg-emerald-800/30 border-amber-400/20 text-emerald-100 hover:bg-amber-400/20 hover:text-amber-400"
+                  className="text-sm bg-emerald-800/30 border-amber-400/20 text-emerald-100 hover:bg-amber-400/20 hover:text-amber-400 font-bold"
+                  style={{ fontFamily: "'Noto Sans Bengali', sans-serif" }}
                   onClick={() => setSelectedDua(duas.find(d => d.category === category) || duas[0])}
                   data-testid={`category-${category}`}
                 >
@@ -90,16 +91,17 @@ export default function DuaPage() {
 
                 <div className="pt-2">
                   <Button 
-                    className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-emerald-950 font-bold text-base py-6 shadow-lg"
+                    className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-emerald-950 font-black text-base py-6 shadow-lg"
                     onClick={handlePrint}
                     data-testid="button-print"
+                    style={{ fontFamily: "'Noto Sans Bengali', sans-serif" }}
                   >
                     <Printer className="w-5 h-5 mr-3" />
                     প্রিন্ট / Save as PDF
                   </Button>
                 </div>
 
-                <p className="text-xs text-emerald-200/80 text-center italic">
+                <p className="text-xs text-emerald-200/80 text-center italic font-semibold" style={{ fontFamily: "'Noto Sans Bengali', sans-serif" }}>
                   মুঠোফোনে পোর্টেট মোডে দেখুন
                 </p>
               </div>
@@ -117,10 +119,10 @@ export default function DuaPage() {
                   onClick={() => setSelectedDua(dua)}
                   data-testid={`dua-item-${dua.id}`}
                 >
-                  <p className="text-sm font-semibold text-amber-400 mb-1">
+                  <p className="text-sm font-bold text-amber-400 mb-1" style={{ fontFamily: "'Noto Sans Bengali', sans-serif" }}>
                     {dua.titleBengali}
                   </p>
-                  <p className="text-xs text-emerald-200">
+                  <p className="text-xs text-emerald-200 font-semibold" style={{ fontFamily: "'Noto Sans Bengali', sans-serif" }}>
                     {dua.category}
                   </p>
                 </Card>

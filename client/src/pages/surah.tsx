@@ -23,8 +23,8 @@ export default function SurahPage() {
                 <BookMarked className="w-7 h-7 text-emerald-950" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-amber-400">সূরা সমূহ</h1>
-                <p className="text-xs text-emerald-100">আরবি • বাংলা উচ্চারণ • বাংলা অর্থ</p>
+                <h1 className="text-2xl font-black text-amber-400" style={{ fontFamily: "'Noto Sans Bengali', sans-serif" }}>সূরা সমূহ</h1>
+                <p className="text-sm text-emerald-100 font-semibold" style={{ fontFamily: "'Noto Sans Bengali', sans-serif" }}>আরবি • বাংলা উচ্চারণ • বাংলা অর্থ</p>
               </div>
             </div>
 
@@ -85,16 +85,17 @@ export default function SurahPage() {
 
                 <div className="pt-2">
                   <Button 
-                    className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-emerald-950 font-bold text-base py-6 shadow-lg"
+                    className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-emerald-950 font-black text-base py-6 shadow-lg"
                     onClick={handlePrint}
                     data-testid="button-print"
+                    style={{ fontFamily: "'Noto Sans Bengali', sans-serif" }}
                   >
                     <Printer className="w-5 h-5 mr-3" />
                     প্রিন্ট / Save as PDF
                   </Button>
                 </div>
 
-                <p className="text-xs text-emerald-200/80 text-center italic">
+                <p className="text-xs text-emerald-200/80 text-center italic font-semibold" style={{ fontFamily: "'Noto Sans Bengali', sans-serif" }}>
                   মুঠোফোনে পোর্টেট মোডে দেখুন
                 </p>
               </div>
@@ -117,10 +118,10 @@ export default function SurahPage() {
                       <span className="text-amber-400 font-bold text-sm">{surah.number}</span>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-amber-400 truncate">
+                      <p className="text-sm font-bold text-amber-400 truncate" style={{ fontFamily: "'Noto Sans Bengali', sans-serif" }}>
                         {surah.nameBengali}
                       </p>
-                      <p className="text-xs text-emerald-200 truncate">
+                      <p className="text-xs text-emerald-200 truncate font-semibold" style={{ fontFamily: "'Noto Sans Bengali', sans-serif" }}>
                         {surah.nameEnglish}
                       </p>
                     </div>
