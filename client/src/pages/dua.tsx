@@ -88,7 +88,7 @@ export default function DuaPage() {
             </Card>
 
             <div className="grid grid-cols-2 gap-3">
-              {duas.map(dua => (
+              {duas.map((dua, index) => (
                 <Card
                   key={dua.id}
                   className={`p-3 cursor-pointer transition-all ${
@@ -99,12 +99,19 @@ export default function DuaPage() {
                   onClick={() => setSelectedDua(dua)}
                   data-testid={`dua-item-${dua.id}`}
                 >
-                  <p className="text-sm font-bold text-amber-400 mb-1" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>
-                    {dua.titleBengali}
-                  </p>
-                  <p className="text-xs text-emerald-200 font-semibold" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>
-                    {dua.category}
-                  </p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                      <span className="text-amber-400 font-bold text-sm">{index + 1}</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-bold text-amber-400 truncate" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>
+                        {dua.titleBengali}
+                      </p>
+                      <p className="text-xs text-emerald-200 truncate font-semibold" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>
+                        {dua.category}
+                      </p>
+                    </div>
+                  </div>
                 </Card>
               ))}
             </div>
