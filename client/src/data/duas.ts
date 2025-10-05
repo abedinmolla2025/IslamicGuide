@@ -1,4 +1,4 @@
-export interface Dua {
+9export interface Dua {
   id: string;
   titleBengali: string;
   titleEnglish: string;
@@ -306,4 +306,4 @@ export const duas: Dua[] = [
     "meaningBengali": "হে আমাদের প্রভু! আমাদেরকে দুনিয়াতে কল্যাণ দাও, আখিরাতে কল্যাণ দাও এবং আমাদেরকে আগুনের শাস্তি থেকে রক্ষা করো।",
     "category": "সর্বজনীন"
   }
-]
+];
