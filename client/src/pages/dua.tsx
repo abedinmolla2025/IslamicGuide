@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { BookOpen, Printer, Download } from "lucide-react";
+import { BookOpen, Printer } from "lucide-react";
 import BottomNavigation from "@/components/bottom-navigation";
 import { duas, Dua } from "@/data/duas";
 
@@ -48,11 +48,16 @@ export default function DuaPage() {
             <Card className="bg-gradient-to-b from-emerald-900/40 to-emerald-950/40 border-2 border-amber-400/20 shadow-2xl overflow-hidden" data-testid="dua-card">
               <div className="p-5 space-y-4">
                 <div className="text-center">
+                  <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg">
+                    <span className="text-2xl font-bold text-emerald-950">
+                      {duas.findIndex(d => d.id === selectedDua.id) + 1}
+                    </span>
+                  </div>
                   <h2 className="text-lg font-bold text-amber-400 mb-1" data-testid="dua-title-bengali">
                     {selectedDua.titleBengali}
                   </h2>
                   <p className="text-xs text-emerald-200" data-testid="dua-title-english">
-                    {selectedDua.titleEnglish}
+                    আরবি • বাংলা উচ্চারণ • বাংলা অর্থ
                   </p>
                 </div>
 
@@ -87,12 +92,12 @@ export default function DuaPage() {
                     data-testid="button-print"
                   >
                     <Printer className="w-4 h-4 mr-2" />
-                    প্রিন্ট
+                    প্রিন্ট / Save as PDF
                   </Button>
                 </div>
 
                 <p className="text-xs text-emerald-200/70 text-center">
-                  মুঠোফোনে পোর্ট্রেট মোডে দেখুন
+                  মুঠোফোনে পোর্টেট মোডে দেখুন
                 </p>
               </div>
             </Card>

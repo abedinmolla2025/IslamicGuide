@@ -87,12 +87,12 @@ export default function SurahPage() {
                     data-testid="button-print"
                   >
                     <Printer className="w-4 h-4 mr-2" />
-                    প্রিন্ট
+                    প্রিন্ট / Save as PDF
                   </Button>
                 </div>
 
                 <p className="text-xs text-emerald-200/70 text-center">
-                  মুঠোফোনে পোর্ট্রেট মোডে দেখুন
+                  মুঠোফোনে পোর্টেট মোডে দেখুন
                 </p>
               </div>
             </Card>
