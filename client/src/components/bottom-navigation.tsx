@@ -21,30 +21,37 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
   ];
 
   return (
-    <nav className="bg-card border-t border-border p-2" data-testid="bottom-navigation">
-      <div className="flex justify-around">
-        {navigationItems.map((item) => {
-          const IconComponent = item.icon;
-          const isActive = currentPage === item.id;
-          
-          return (
-            <Button
-              key={item.id}
-              variant="ghost"
-              size="sm"
-              className={`flex flex-col items-center p-2 ${
-                isActive 
-                  ? "text-primary" 
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-              onClick={() => setLocation(item.path)}
-              data-testid={`nav-${item.id}`}
-            >
-              <IconComponent className="text-lg mb-1 h-5 w-5" />
-              <span className="text-xs">{item.label}</span>
-            </Button>
-          );
-        })}
+    <nav className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-emerald-950 via-emerald-900 to-emerald-900/95 backdrop-blur-xl border-t border-emerald-700/50 shadow-2xl z-50" data-testid="bottom-navigation">
+      <div className="max-w-2xl mx-auto px-2 py-1.5">
+        <div className="flex justify-around items-center">
+          {navigationItems.map((item) => {
+            const IconComponent = item.icon;
+            const isActive = currentPage === item.id;
+            
+            return (
+              <Button
+                key={item.id}
+                variant="ghost"
+                size="sm"
+                className={`flex flex-col items-center gap-1 p-2 min-w-[60px] transition-all duration-300 ${
+                  isActive 
+                    ? "text-amber-400 scale-110" 
+                    : "text-emerald-300 hover:text-amber-300 hover:scale-105"
+                }`}
+                onClick={() => setLocation(item.path)}
+                data-testid={`nav-${item.id}`}
+              >
+                <div className={`relative ${isActive ? 'animate-pulse' : ''}`}>
+                  <IconComponent className={`h-6 w-6 transition-transform duration-300 ${isActive ? 'drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]' : ''}`} />
+                  {isActive && (
+                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-amber-400 rounded-full"></div>
+                  )}
+                </div>
+                <span className={`text-[10px] font-semibold ${isActive ? 'text-amber-400' : 'text-emerald-200'}`}>{item.label}</span>
+              </Button>
+            );
+          })}
+        </div>
       </div>
     </nav>
   );

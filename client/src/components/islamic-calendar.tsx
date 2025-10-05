@@ -14,17 +14,19 @@ export default function IslamicCalendar() {
   };
 
   return (
-    <div className="bg-gradient-to-br from-primary/20 to-primary/10 rounded-xl p-4 text-center border border-primary/20" data-testid="islamic-calendar">
-      <Calendar className="text-2xl text-primary mb-2 mx-auto" />
-      <h3 className="font-semibold mb-2">Islamic Calendar</h3>
-      <div className="text-lg font-bold text-primary mb-1" data-testid="text-hijri-day">
+    <div className="bg-gradient-to-br from-[#0E3B1A] to-[#0A2E14] rounded-2xl p-5 text-center border border-amber-400/20 shadow-[0_8px_24px_rgba(0,0,0,0.3)] hover:shadow-[0_12px_32px_rgba(251,191,36,0.15)] transition-all duration-300" data-testid="islamic-calendar">
+      <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg">
+        <Calendar className="text-xl text-emerald-950" />
+      </div>
+      <h3 className="font-black text-amber-400 mb-3 text-base" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>Islamic Calendar</h3>
+      <div className="text-5xl font-black text-amber-400 mb-2 tracking-tight drop-shadow-[0_2px_8px_rgba(251,191,36,0.3)]" data-testid="text-hijri-day">
         {day}
       </div>
-      <div className="text-sm text-muted-foreground mb-2" data-testid="text-hijri-month-year">
+      <div className="text-sm text-emerald-200 mb-4 font-semibold" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }} data-testid="text-hijri-month-year">
         {monthYear}
       </div>
       <Button 
-        className="w-full bg-primary text-primary-foreground py-2 rounded-md text-sm font-medium hover:bg-primary/90"
+        className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-3 rounded-xl font-black shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
         onClick={viewCalendar}
         data-testid="button-view-calendar"
       >
