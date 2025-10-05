@@ -67,7 +67,7 @@ export default function SurahPage() {
                 </div>
 
                 {selectedSurah.transliteration && (
-                  <div className="p-5 rounded-2xl bg-[#0E3B1A]" data-testid="surah-transliteration">
+                  <div className="p-5 rounded-2xl bg-[#0E3B1A] shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)]" data-testid="surah-transliteration">
                     <p className="text-xl font-bold text-white mb-3 text-center" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>বিসমিল্লাহির রহমানির রহীম</p>
                     <div className="my-4"></div>
                     <p className="font-black text-base text-white mb-3" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>বাংলা উচ্চারণ:</p>
