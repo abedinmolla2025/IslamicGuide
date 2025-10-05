@@ -56,7 +56,7 @@ export default function SurahPage() {
                 </div>
 
                 <div 
-                  className="text-center p-6 rounded-2xl bg-emerald-700 shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)] whitespace-pre-line"
+                  className="text-center p-6 rounded-2xl bg-[#0E3B1A] shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)] whitespace-pre-line"
                   style={{ direction: 'rtl', fontFamily: "'Noto Naskh Arabic', serif", fontFeatureSettings: "'liga' 1" }}
                   data-testid="surah-arabic"
                 >
@@ -66,7 +66,7 @@ export default function SurahPage() {
                 </div>
 
                 {selectedSurah.transliteration && (
-                  <div className="p-5 rounded-2xl bg-emerald-700" data-testid="surah-transliteration">
+                  <div className="p-5 rounded-2xl bg-[#0E3B1A]" data-testid="surah-transliteration">
                     <p className="text-xl font-bold text-white mb-3 text-center" style={{ fontFamily: "'Noto Sans Bengali', sans-serif" }}>বিসমিল্লাহির রহমানির রহীম</p>
                     <div className="my-4"></div>
                     <p className="font-black text-base text-white mb-3" style={{ fontFamily: "'Noto Sans Bengali', sans-serif" }}>বাংলা উচ্চারণ:</p>
