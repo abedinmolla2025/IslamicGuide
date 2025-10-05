@@ -7,9 +7,17 @@ import type { QuranVerse as QuranVerseType } from "@shared/schema";
 export default function QuranVerse() {
   const [, setLocation] = useLocation();
   
+  const getMillisecondsUntilMidnight = () => {
+    const now = new Date();
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+    return tomorrow.getTime() - now.getTime();
+  };
+  
   const { data: verse, isLoading } = useQuery<QuranVerseType>({
     queryKey: ["/api/quran/random"],
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: getMillisecondsUntilMidnight(),
   });
 
   const shareVerse = () => {

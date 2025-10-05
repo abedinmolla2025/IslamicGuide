@@ -170,7 +170,12 @@ export class MemStorage implements IStorage {
   async getRandomQuranVerse(): Promise<QuranVerse | undefined> {
     const verses = Array.from(this.quranVerses.values());
     if (verses.length === 0) return undefined;
-    return verses[Math.floor(Math.random() * verses.length)];
+    
+    const today = new Date();
+    const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 1000 / 60 / 60 / 24);
+    const verseIndex = dayOfYear % verses.length;
+    
+    return verses[verseIndex];
   }
 
   async searchQuranVerses(query: string): Promise<QuranVerse[]> {
