@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import BottomNavigation from "@/components/bottom-navigation";
+import TopBar from "@/components/top-bar";
 import { Settings as SettingsIcon, Bell, MapPin, Calculator, Palette } from "lucide-react";
 
 export default function SettingsPage() {
@@ -30,14 +30,8 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="flex flex-col h-full">
-      <header className="bg-muted text-foreground p-4 rounded-b-lg shadow-lg">
-        <h1 className="text-xl font-bold flex items-center" data-testid="settings-title">
-          <SettingsIcon className="mr-2" />
-          Settings
-        </h1>
-        <p className="text-sm opacity-90">Customize your Islamic companion</p>
-      </header>
+    <div className="flex flex-col h-screen bg-gradient-to-b from-emerald-950 to-emerald-900">
+      <TopBar title="Settings" subtitle="Customize your Islamic companion" />
 
       <main className="flex-1 overflow-y-auto p-4 space-y-6">
         {/* Prayer Times Settings */}
@@ -148,8 +142,6 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
       </main>
-
-      <BottomNavigation currentPage="settings" />
     </div>
   );
 }

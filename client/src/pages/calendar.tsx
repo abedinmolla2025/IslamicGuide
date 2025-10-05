@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import BottomNavigation from "@/components/bottom-navigation";
+import TopBar from "@/components/top-bar";
 import { Calendar, Star } from "lucide-react";
 import { getHijriDate, getGregorianFromHijri } from "@/lib/islamic-calendar";
 import type { IslamicEvent } from "@shared/schema";
@@ -19,13 +20,10 @@ export default function CalendarPage() {
   const currentHijriDate = getHijriDate(currentDate);
 
   return (
-    <div className="flex flex-col h-full">
-      <header className="bg-primary text-primary-foreground p-4 rounded-b-lg shadow-lg">
-        <h1 className="text-xl font-bold" data-testid="calendar-title">Islamic Calendar</h1>
-        <p className="text-sm opacity-90">Hijri dates and Islamic events</p>
-      </header>
+    <div className="flex flex-col h-screen bg-gradient-to-b from-emerald-950 to-emerald-900">
+      <TopBar title="Islamic Calendar" subtitle="Hijri dates and Islamic events" />
 
-      <main className="flex-1 overflow-y-auto p-4 space-y-6">
+      <main className="flex-1 overflow-y-auto p-4 pb-20 space-y-6">
         {/* Current Date Display */}
         <Card data-testid="card-current-date">
           <CardHeader className="text-center">

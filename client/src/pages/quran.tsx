@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import BottomNavigation from "@/components/bottom-navigation";
+import TopBar from "@/components/top-bar";
 import { Search, BookOpen, Share } from "lucide-react";
 import type { QuranVerse } from "@shared/schema";
 
@@ -36,13 +37,10 @@ export default function QuranPage() {
   };
 
   return (
-    <div className="flex flex-col h-full">
-      <header className="bg-secondary text-secondary-foreground p-4 rounded-b-lg shadow-lg">
-        <h1 className="text-xl font-bold" data-testid="quran-title">Holy Quran</h1>
-        <p className="text-sm opacity-90">Read and search verses</p>
-      </header>
+    <div className="flex flex-col h-screen bg-gradient-to-b from-emerald-950 to-emerald-900">
+      <TopBar title="Holy Quran" subtitle="Read and search verses" />
 
-      <main className="flex-1 overflow-y-auto p-4 space-y-6">
+      <main className="flex-1 overflow-y-auto p-4 pb-20 space-y-6">
         {/* Search Section */}
         <div className="space-y-4">
           <div className="flex gap-2">

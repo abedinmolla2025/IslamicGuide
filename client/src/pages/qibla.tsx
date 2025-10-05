@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import QiblaCompass from "@/components/qibla-compass";
 import BottomNavigation from "@/components/bottom-navigation";
+import TopBar from "@/components/top-bar";
 
 export default function QiblaPage() {
   const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
@@ -30,13 +31,10 @@ export default function QiblaPage() {
   }, []);
 
   return (
-    <div className="flex flex-col h-full">
-      <header className="bg-secondary text-secondary-foreground p-4 rounded-b-lg shadow-lg">
-        <h1 className="text-xl font-bold" data-testid="qibla-title">Qibla Direction</h1>
-        <p className="text-sm opacity-90">Find the direction to Kaaba</p>
-      </header>
+    <div className="flex flex-col h-screen bg-gradient-to-b from-emerald-950 to-emerald-900">
+      <TopBar title="Qibla Direction" subtitle="Find the direction to Kaaba" />
 
-      <main className="flex-1 p-4 flex items-center justify-center">
+      <main className="flex-1 p-4 pb-20 flex items-center justify-center">
         {location ? (
           <QiblaCompass latitude={location.latitude} longitude={location.longitude} standalone />
         ) : (

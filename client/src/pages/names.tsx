@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import BottomNavigation from "@/components/bottom-navigation";
+import TopBar from "@/components/top-bar";
 import { Search, Heart, Share, Baby, Languages } from "lucide-react";
 import type { IslamicName } from "@shared/schema";
 
@@ -71,16 +72,10 @@ export default function NamesPage() {
   const girlNames = displayNames.filter(name => name.gender === 'girl');
 
   return (
-    <div className="flex flex-col h-full">
-      <header className="bg-accent text-accent-foreground p-4 rounded-b-lg shadow-lg">
-        <h1 className="text-xl font-bold flex items-center" data-testid="names-title">
-          <Baby className="mr-2" />
-          Islamic Baby Names
-        </h1>
-        <p className="text-sm opacity-90">Beautiful names with meanings</p>
-      </header>
+    <div className="flex flex-col h-screen bg-gradient-to-b from-emerald-950 to-emerald-900">
+      <TopBar title="Islamic Baby Names" subtitle="Beautiful names with meanings" />
 
-      <main className="flex-1 overflow-y-auto p-4 space-y-6">
+      <main className="flex-1 overflow-y-auto p-4 pb-20 space-y-6">
         {/* 🔎 Search and Filters */}
         <div className="space-y-4">
           <div className="flex gap-2">
