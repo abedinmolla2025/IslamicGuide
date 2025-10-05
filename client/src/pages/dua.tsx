@@ -2,16 +2,12 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { BookOpen, Printer } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import BottomNavigation from "@/components/bottom-navigation";
 import { duas, Dua } from "@/data/duas";
 
 export default function DuaPage() {
   const [selectedDua, setSelectedDua] = useState<Dua>(duas[0]);
-
-  const handlePrint = () => {
-    window.print();
-  };
 
   const categories = Array.from(new Set(duas.map(d => d.category)));
 
@@ -75,35 +71,19 @@ export default function DuaPage() {
                   </p>
                 </div>
 
-                <div className="p-5 rounded-2xl bg-[#F9B234]" data-testid="dua-transliteration">
-                  <p className="font-black text-base text-emerald-950 mb-3" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>বাংলা উচ্চারণ:</p>
-                  <p className="text-lg text-emerald-950 leading-relaxed font-bold" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif", letterSpacing: '0.01em' }}>
+                <div className="p-7 rounded-2xl bg-[#0E3B1A] shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)]" data-testid="dua-transliteration">
+                  <p className="font-black text-lg text-amber-400 mb-5 border-b border-amber-400/30 pb-3 text-center" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>বাংলা উচ্চারণ:</p>
+                  <p className="text-xl text-white leading-loose font-bold text-center" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif", letterSpacing: '0.02em', lineHeight: '2.2' }}>
                     {selectedDua.transliteration}
                   </p>
                 </div>
 
-                <div className="p-5 rounded-2xl bg-[#0F4220]" data-testid="dua-meaning">
-                  <p className="font-black text-base text-amber-400 mb-3" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>অর্থ:</p>
-                  <p className="text-base text-[#F5FAD7] leading-relaxed font-semibold" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif", letterSpacing: '0.01em' }}>
+                <div className="p-7 rounded-2xl bg-[#0F4220]" data-testid="dua-meaning">
+                  <p className="font-black text-lg text-amber-400 mb-5 border-b border-amber-400/30 pb-3 text-center" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>অর্থ:</p>
+                  <p className="text-lg text-[#F5FAD7] leading-loose font-semibold text-center" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif", letterSpacing: '0.02em', lineHeight: '2' }}>
                     {selectedDua.meaningBengali}
                   </p>
                 </div>
-
-                <div className="pt-2">
-                  <Button 
-                    className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-emerald-950 font-black text-base py-6 shadow-lg"
-                    onClick={handlePrint}
-                    data-testid="button-print"
-                    style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}
-                  >
-                    <Printer className="w-5 h-5 mr-3" />
-                    প্রিন্ট / Save as PDF
-                  </Button>
-                </div>
-
-                <p className="text-xs text-emerald-200/80 text-center italic font-semibold" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>
-                  মুঠোফোনে পোর্টেট মোডে দেখুন
-                </p>
               </div>
             </Card>
 
