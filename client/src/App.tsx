@@ -4,6 +4,8 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import HomePage from "@/pages/home";
+import DuaPage from "@/pages/dua";
+import SurahPage from "@/pages/surah";
 import QiblaPage from "@/pages/qibla";
 import QuranPage from "@/pages/quran";
 import NamesPage from "@/pages/names";
@@ -15,6 +17,8 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={HomePage} />
+      <Route path="/dua" component={DuaPage} />
+      <Route path="/surah" component={SurahPage} />
       <Route path="/qibla" component={QiblaPage} />
       <Route path="/quran" component={QuranPage} />
       <Route path="/names" component={NamesPage} />

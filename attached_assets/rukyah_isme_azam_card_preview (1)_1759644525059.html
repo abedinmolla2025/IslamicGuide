@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ইসমে আজম — রুকইয়া কার্ড (লাইভ প্রিভিউ)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
+  <style id="cardStyle">
+    :root{
+      --bg1: #0b3d17;
+      --bg2: #1a6b2c;
+      --gold: #d4af37;
+    }
+    html,body{height:100%;margin:0;font-family: 'Noto Sans Bengali', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:linear-gradient(180deg,var(--bg1),#072e11);display:flex;align-items:center;justify-content:center;padding:24px}
+    .card{width:360px;max-width:100%;background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));border-radius:18px;box-shadow: 0 10px 30px rgba(3,10,5,0.6);padding:20px;color: #f7f7f7;border: 3px solid rgba(212,175,55,0.12);overflow: hidden}
+    .header{display:flex;align-items:center;gap:12px}
+    .seal{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#f0d28a);display:flex;align-items:center;justify-content:center;color:#08320a;font-weight:700;font-size:22px;box-shadow:0 6px 18px rgba(0,0,0,0.4)}
+    h1{margin:0;font-size:18px;color:var(--gold);font-weight:700}
+    p.lead{margin:6px 0 14px;font-size:12px;opacity:0.95}
+    .arabic{direction: rtl;font-family: 'Noto Naskh Arabic', serif;font-size:20px;line-height:1.6;text-align:center;padding:12px 10px;border-radius:10px;background:rgba(255,255,255,0.02);box-shadow: inset 0 -10px 30px rgba(0,0,0,0.15);margin-bottom:12px;color:#e9f7ee}
+    .translit{font-size:18px;color:#fff;padding:12px 10px;border-radius:8px;margin-bottom:12px;background:linear-gradient(180deg,rgba(212,175,55,0.12),rgba(212,175,55,0.05));font-weight:800;line-height:1.6;text-shadow:0 0 4px rgba(0,0,0,0.4)}
+    .meaning{font-size:14px;color:#e9f7ee;padding:12px;border-radius:8px;background:rgba(0,0,0,0.15);line-height:1.6}
+    .meta{display:flex;gap:8px;margin-top:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .btn{background:var(--gold);color:#08320a;padding:10px 14px;border-radius:10px;font-weight:800;cursor:pointer;border:none;transition:0.3s}
+    .btn:hover{background:#ffd700;color:#052a0b}
+    footer{margin-top:14px;font-size:11px;opacity:0.9;text-align:center}
+    /* small helper modal */
+    .notice{margin-top:10px;padding:10px;background:rgba(255,255,255,0.03);border-radius:8px;font-size:13px}
+    @media print{body{background:white}.card{box-shadow:none;border:none;margin:0}.btn{display:none}}
+  </style>
+</head>
+<body>
+  <div class="card" id="card">
+    <div class="header">
+      <div class="seal">ا</div>
+      <div>
+        <h1>ইসমে আজম — রুকইয়া দোয়া</h1>
+        <p class="lead">আরবি • বাংলা উচ্চারণ • বাংলা অর্থ</p>
+      </div>
+    </div>
+
+    <div class="arabic" id="arabicText">
+      اللهم إني أسألك بأن لك الحمد، لا إله إلا أنت، وحدك لا شريك لك، المنّان، يا بديع السماوات والأرض، يا ذا الجلال والإكرام، يا حي يا قيوم
+    </div>
+
+    <div class="translit" id="translitText">
+      <strong>বাংলা উচ্চারণ:</strong><br>
+      আল্লাহুম্মা ইন্নি আসআলুকা বিআন্না লাকাল হামদু, লা ইলাহা ইল্লা আনতা, ওয়াহদাকা লা শারিকা লাকা, আল-মান্নান, ইয়াবাদীআস্-সামাওয়াতি ওয়াল আরদ, ইয়াযাল-জালালি ওয়াল ইকরাম, ইয়াহাইয়্যু ইয়াকাইয়্যুম।
+    </div>
+
+    <div class="meaning" id="meaningText">
+      <strong>অর্থ:</strong><br>
+      হে আল্লাহ! আমি তোমার কাছে প্রার্থনা করছি, কারণ সমস্ত প্রশংসা তোমারই। তোমা ছাড়া কোনো উপাস্য নেই; তুমি এক, তোমার কোনো অংশীদার নেই। তুমি দাতা (আল-মান্নান), হে আকাশমণ্ডলী ও পৃথিবীর সৃষ্টিকর্তা, হে মহিমা ও মর্যাদার অধিকারী, হে চিরঞ্জীব, চিরস্থায়ী।
+    </div>
+
+    <div class="meta">
+      <button class="btn" id="printBtn">📄 প্রিন্ট / Save as PDF</button>
+      <button class="btn" id="imgBtn">🖼️ Save as Image</button>
+      <div style="font-size:12px;opacity:0.95">মুঠোফোনে পোর্ট্রেট মোডে দেখুন</div>
+    </div>
+
+    <div class="notice">যদি কোন বাটন ব্লক করে (pop-up blocked) — নিচের বিকল্প ব্যবহার করুন: ব্রাউজার মেনু → Share/Print → Save as PDF অথবা Save Image।</div>
+
+    <footer>প্রস্তুত: তোমার রুকইয়া কার্ড • © ইসলামিক স্মৃতি</footer>
+  </div>
+
+  <script>
+    // Robust print: open new window with inline styles. If popup blocked, show alert with fallback instructions.
+    function printCard(){
+      try{
+        const style = document.getElementById('cardStyle').textContent;
+        const html = `<!doctype html><html><head><meta charset="utf-8"><title>Print - রুকইয়া কার্ড</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet"><style>${style} body{display:flex;align-items:center;justify-content:center;padding:20px;background:transparent}</style></head><body>${document.getElementById('card').outerHTML}</body></html>`;
+        const w = window.open('','_blank');
+        if(!w){
+          alert('Pop-up blocked. অনুগ্রহ করে ব্রাউজারের সাইট সেটিংসে pop-ups allow করুন অথবা ব্রাউজার মেনুটি ব্যবহার করে Print → Save as PDF করে নিন।');
+          return;
+        }
+        w.document.open(); w.document.write(html); w.document.close();
+        // ensure fonts load
+        w.onload = ()=>{ w.focus(); setTimeout(()=>{ w.print(); /* don't auto-close, give user choice */ },200); };
+      }catch(e){
+        console.error(e);
+        alert('Print function failed — অনুগ্রহ করে ব্রাউজার মেনু থেকে Print → Save as PDF ব্যবহার করুন।');
+      }
+    }
+
+    // Save as image: try to render SVG with inline styles; fallback: open SVG in new tab for manual save
+    async function downloadCardPNG(){
+      try{
+        const el = document.getElementById('card');
+        const style = document.getElementById('cardStyle').textContent;
+        const width = Math.round(el.offsetWidth);
+        const height = Math.round(el.offsetHeight);
+        const outer = el.outerHTML;
+        const svg = `<?xml version="1.0" encoding="utf-8"?>\n<svg xmlns='http://www.w3.org/2000/svg' width='${width}' height='${height}'>\n  <foreignObject width='100%' height='100%'>\n    <div xmlns='http://www.w3.org/1999/xhtml'>\n      <style>body{margin:0;padding:0;} ${style}</style>\n      ${outer}\n    </div>\n  </foreignObject>\n</svg>`;
+
+        const blob = new Blob([svg], {type: 'image/svg+xml;charset=utf-8'});
+        const url = URL.createObjectURL(blob);
+
+        // try to render to canvas
+        const img = new Image();
+        img.onload = ()=>{
+          try{
+            const canvas = document.createElement('canvas');
+            canvas.width = width*2; canvas.height = height*2; // high res
+            const ctx = canvas.getContext('2d');
+            // background fill
+            ctx.fillStyle = '#0b3d17'; ctx.fillRect(0,0,canvas.width,canvas.height);
+            ctx.drawImage(img,0,0,canvas.width,canvas.height);
+            URL.revokeObjectURL(url);
+            const a = document.createElement('a');
+            a.download = 'IsmeAzam_Ruqyah_Card.png';
+            a.href = canvas.toDataURL('image/png');
+            a.click();
+          }catch(err2){
+            console.error('Canvas draw failed', err2);
+            // fallback: open svg blob in new tab
+            window.open(url, '_blank');
+            alert('Direct image export ব্যর্থ হয়েছে — নতুন ট্যাবে ছবি খোলা হয়েছে, সেখানে long-press -> Save image করুন।');
+          }
+        };
+        img.onerror = ()=>{
+          // fallback: open svg in new tab
+          window.open(url, '_blank');
+          alert('Image conversion blocked by browser — নতুন ট্যাবে খুলে long-press করে "Save image" বা ব্রাউজার মেনু থেকে Save করতে পারবেন।');
+        };
+        img.src = url;
+      }catch(e){
+        console.error(e);
+        alert('Image save ব্যর্থ হয়েছে — অনুগ্রহ করে ব্রাউজার মেনু ব্যবহার করুন (Share → Save image বা Print → Save as PDF)।');
+      }
+    }
+
+    document.getElementById('printBtn').addEventListener('click', printCard);
+    document.getElementById('imgBtn').addEventListener('click', downloadCardPNG);
+  </script>
+</body>
+</html>
