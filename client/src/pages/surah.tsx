@@ -1,17 +1,12 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { BookMarked, Printer } from "lucide-react";
+import { BookMarked } from "lucide-react";
 import BottomNavigation from "@/components/bottom-navigation";
 import { surahs, Surah } from "@/data/surahs";
 
 export default function SurahPage() {
   const [selectedSurah, setSelectedSurah] = useState<Surah | null>(null);
-
-  const handlePrint = () => {
-    window.print();
-  };
 
   return (
     <div className="flex flex-col h-screen bg-gradient-to-b from-emerald-950 to-emerald-900">
@@ -85,22 +80,6 @@ export default function SurahPage() {
                     </p>
                   </div>
                 )}
-
-                <div className="pt-2">
-                  <Button 
-                    className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-emerald-950 font-black text-base py-6 shadow-lg"
-                    onClick={handlePrint}
-                    data-testid="button-print"
-                    style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}
-                  >
-                    <Printer className="w-5 h-5 mr-3" />
-                    প্রিন্ট / Save as PDF
-                  </Button>
-                </div>
-
-                <p className="text-xs text-emerald-200/80 text-center italic font-semibold" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>
-                  মুঠোফোনে পোর্টেট মোডে দেখুন
-                </p>
               </div>
             </Card>
             )}
