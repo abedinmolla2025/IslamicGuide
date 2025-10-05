@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type PrayerTimes, type InsertPrayerTimes, type QuranVerse, type IslamicEvent, type IslamicName, type InsertIslamicName } from "@shared/schema";
+import { type User, type InsertUser, type PrayerTimes, type InsertPrayerTimes, type QuranVerse, type IslamicEvent, type IslamicName, type InsertIslamicName, type DailyQuiz, type InsertDailyQuiz } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { islamicNames as namesData } from "../client/src/data/islamic-names";
 
@@ -20,6 +20,9 @@ export interface IStorage {
   getIslamicNames(gender?: string, category?: string): Promise<IslamicName[]>;
   searchIslamicNames(query: string, gender?: string): Promise<IslamicName[]>;
   getIslamicNameById(id: string): Promise<IslamicName | undefined>;
+  
+  getDailyQuiz(): Promise<DailyQuiz | undefined>;
+  saveDailyQuiz(quiz: InsertDailyQuiz): Promise<DailyQuiz>;
 }
 
 export class MemStorage implements IStorage {
@@ -28,6 +31,8 @@ export class MemStorage implements IStorage {
   private quranVerses: Map<string, QuranVerse>;
   private islamicEvents: Map<string, IslamicEvent>;
   private islamicNames: Map<string, IslamicName>;
+  private dailyQuizzes: Map<string, DailyQuiz>;
+  private currentQuizDate: string | null;
 
   constructor() {
     this.users = new Map();
@@ -35,6 +40,8 @@ export class MemStorage implements IStorage {
     this.quranVerses = new Map();
     this.islamicEvents = new Map();
     this.islamicNames = new Map();
+    this.dailyQuizzes = new Map();
+    this.currentQuizDate = null;
     this.initializeData();
   }
 
@@ -223,6 +230,27 @@ export class MemStorage implements IStorage {
 
   async getIslamicNameById(id: string): Promise<IslamicName | undefined> {
     return this.islamicNames.get(id);
+  }
+
+  async getDailyQuiz(): Promise<DailyQuiz | undefined> {
+    const today = new Date().toISOString().split('T')[0];
+    
+    if (this.currentQuizDate === today && this.dailyQuizzes.size > 0) {
+      return Array.from(this.dailyQuizzes.values())[0];
+    }
+    
+    return undefined;
+  }
+
+  async saveDailyQuiz(insertQuiz: InsertDailyQuiz): Promise<DailyQuiz> {
+    const id = randomUUID();
+    const quiz: DailyQuiz = { ...insertQuiz, id };
+    
+    this.dailyQuizzes.clear();
+    this.dailyQuizzes.set(id, quiz);
+    this.currentQuizDate = new Date().toISOString().split('T')[0];
+    
+    return quiz;
   }
 }
 

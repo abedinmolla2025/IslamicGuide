@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertPrayerTimesSchema } from "@shared/schema";
+import { generateDailyQuiz } from "./openai-quiz";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
@@ -198,6 +199,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(name);
     } catch (error) {
       res.status(500).json({ message: "Failed to get Islamic name" });
+    }
+  });
+
+  // Daily Quiz routes
+  app.get("/api/daily-quiz", async (req, res) => {
+    try {
+      let quiz = await storage.getDailyQuiz();
+      
+      if (!quiz) {
+        const quizData = await generateDailyQuiz();
+        quiz = await storage.saveDailyQuiz(quizData);
+      }
+      
+      res.json(quiz);
+    } catch (error) {
+      console.error("Daily quiz error:", error);
+      res.status(500).json({ message: "Failed to get daily quiz" });
+    }
+  });
+
+  app.post("/api/daily-quiz/refresh", async (req, res) => {
+    try {
+      const quizData = await generateDailyQuiz();
+      const quiz = await storage.saveDailyQuiz(quizData);
+      res.json(quiz);
+    } catch (error) {
+      console.error("Quiz refresh error:", error);
+      res.status(500).json({ message: "Failed to refresh quiz" });
     }
   });
 
