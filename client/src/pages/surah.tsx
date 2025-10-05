@@ -28,24 +28,24 @@ export default function SurahPage() {
               </div>
             </div>
 
-            <Card className="bg-gradient-to-b from-emerald-900/40 to-emerald-950/40 border-2 border-amber-400/20 shadow-2xl overflow-hidden" data-testid="surah-card">
-              <div className="p-5 space-y-4">
+            <Card className="bg-[#0E3B1A] border border-[#1D5E2D] shadow-[0_10px_30px_rgba(0,0,0,0.35)] rounded-3xl overflow-hidden max-w-[420px] mx-auto" data-testid="surah-card">
+              <div className="bg-gradient-to-b from-[#125022] to-[#0E3B1A] p-6 space-y-5">
                 <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg">
-                    <span className="text-2xl font-bold text-emerald-950" data-testid="surah-number">
+                  <div className="w-[72px] h-[72px] mx-auto mb-4 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
+                    <span className="text-3xl font-black text-emerald-950" data-testid="surah-number">
                       {selectedSurah.number}
                     </span>
                   </div>
-                  <h2 className="text-2xl font-bold text-amber-400 mb-1" style={{ fontFamily: "'Noto Naskh Arabic', serif" }} data-testid="surah-name-arabic">
+                  <h2 className="text-3xl font-bold text-amber-400 mb-2" style={{ fontFamily: "'Noto Naskh Arabic', serif", textShadow: '0 2px 8px rgba(251,191,36,0.3)' }} data-testid="surah-name-arabic">
                     {selectedSurah.nameArabic}
                   </h2>
-                  <h3 className="text-lg font-semibold text-emerald-100 mb-1" data-testid="surah-name-bengali">
+                  <h3 className="text-[26px] font-black text-emerald-100 mb-2 leading-tight" data-testid="surah-name-bengali">
                     {selectedSurah.nameBengali}
                   </h3>
-                  <p className="text-xs text-emerald-200 mb-2" data-testid="surah-name-english">
+                  <p className="text-sm text-emerald-200 mb-3 uppercase tracking-wide" data-testid="surah-name-english">
                     {selectedSurah.nameEnglish}
                   </p>
-                  <div className="flex justify-center gap-4 text-xs text-emerald-200">
+                  <div className="flex justify-center gap-4 text-sm text-emerald-200">
                     <span data-testid="surah-type">{selectedSurah.revelationType}</span>
                     <span>•</span>
                     <span data-testid="surah-ayahs">{selectedSurah.numberOfAyahs} আয়াত</span>
@@ -53,45 +53,45 @@ export default function SurahPage() {
                 </div>
 
                 <div 
-                  className="text-center p-4 rounded-lg bg-emerald-950/30 shadow-inner whitespace-pre-line"
-                  style={{ direction: 'rtl', fontFamily: "'Noto Naskh Arabic', serif" }}
+                  className="text-center p-6 rounded-2xl bg-[#0E3B1A] shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)] whitespace-pre-line"
+                  style={{ direction: 'rtl', fontFamily: "'Noto Naskh Arabic', serif", fontFeatureSettings: "'liga' 1" }}
                   data-testid="surah-arabic"
                 >
-                  <p className="text-xl leading-loose text-emerald-50">
+                  <p className="text-[30px] leading-[1.6] text-white font-normal antialiased">
                     {selectedSurah.fullText}
                   </p>
                 </div>
 
                 {selectedSurah.transliteration && (
-                  <div className="p-4 rounded-lg bg-gradient-to-b from-amber-400/10 to-amber-400/5" data-testid="surah-transliteration">
-                    <p className="font-bold text-sm text-amber-400 mb-2">বাংলা উচ্চারণ:</p>
-                    <p className="text-base text-white leading-relaxed font-semibold">
+                  <div className="p-5 rounded-2xl bg-[#F9B234]" data-testid="surah-transliteration">
+                    <p className="font-bold text-base text-emerald-950 mb-3">বাংলা উচ্চারণ:</p>
+                    <p className="text-lg text-emerald-950 leading-relaxed font-semibold">
                       {selectedSurah.transliteration}
                     </p>
                   </div>
                 )}
 
                 {selectedSurah.translation && (
-                  <div className="p-4 rounded-lg bg-emerald-950/20" data-testid="surah-translation">
-                    <p className="font-bold text-sm text-amber-400 mb-2">বাংলা অর্থ:</p>
-                    <p className="text-sm text-emerald-100 leading-relaxed">
+                  <div className="p-5 rounded-2xl bg-[#0F4220]" data-testid="surah-translation">
+                    <p className="font-bold text-base text-amber-400 mb-3">বাংলা অর্থ:</p>
+                    <p className="text-base text-[#F5FAD7] leading-relaxed">
                       {selectedSurah.translation}
                     </p>
                   </div>
                 )}
 
-                <div className="flex gap-3 pt-2">
+                <div className="pt-2">
                   <Button 
-                    className="flex-1 bg-amber-500 hover:bg-amber-600 text-emerald-950 font-bold"
+                    className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-emerald-950 font-bold text-base py-6 shadow-lg"
                     onClick={handlePrint}
                     data-testid="button-print"
                   >
-                    <Printer className="w-4 h-4 mr-2" />
+                    <Printer className="w-5 h-5 mr-3" />
                     প্রিন্ট / Save as PDF
                   </Button>
                 </div>
 
-                <p className="text-xs text-emerald-200/70 text-center">
+                <p className="text-xs text-emerald-200/80 text-center italic">
                   মুঠোফোনে পোর্টেট মোডে দেখুন
                 </p>
               </div>
