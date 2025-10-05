@@ -67,20 +67,20 @@ export default function SurahPage() {
                 </div>
 
                 {selectedSurah.transliteration && (
-                  <div className="p-5 rounded-2xl bg-[#0E3B1A] shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)]" data-testid="surah-transliteration">
-                    <p className="text-xl font-bold text-white mb-3 text-center" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>বিসমিল্লাহির রহমানির রহীম</p>
-                    <div className="my-4"></div>
-                    <p className="font-black text-base text-white mb-3" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>বাংলা উচ্চারণ:</p>
-                    <p className="text-lg text-white leading-relaxed font-bold" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif", letterSpacing: '0.01em' }}>
+                  <div className="p-7 rounded-2xl bg-[#0E3B1A] shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)]" data-testid="surah-transliteration">
+                    <p className="text-2xl font-bold text-white mb-5 text-center" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif", letterSpacing: '0.02em' }}>বিসমিল্লাহির রহমানির রহীম</p>
+                    <div className="my-5"></div>
+                    <p className="font-black text-lg text-amber-400 mb-5 border-b border-amber-400/30 pb-3" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>বাংলা উচ্চারণ:</p>
+                    <p className="text-xl text-white leading-loose font-bold" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif", letterSpacing: '0.02em', lineHeight: '2.2' }}>
                       {selectedSurah.transliteration}
                     </p>
                   </div>
                 )}
 
                 {selectedSurah.translation && (
-                  <div className="p-5 rounded-2xl bg-[#0F4220]" data-testid="surah-translation">
-                    <p className="font-black text-base text-amber-400 mb-3" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>বাংলা অর্থ:</p>
-                    <p className="text-base text-[#F5FAD7] leading-relaxed font-semibold" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif", letterSpacing: '0.01em' }}>
+                  <div className="p-7 rounded-2xl bg-[#0F4220]" data-testid="surah-translation">
+                    <p className="font-black text-lg text-amber-400 mb-5 border-b border-amber-400/30 pb-3" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>বাংলা অর্থ:</p>
+                    <p className="text-lg text-[#F5FAD7] leading-loose font-semibold" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif", letterSpacing: '0.02em', lineHeight: '2' }}>
                       {selectedSurah.translation}
                     </p>
                   </div>
