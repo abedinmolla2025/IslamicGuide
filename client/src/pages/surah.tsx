@@ -7,7 +7,7 @@ import BottomNavigation from "@/components/bottom-navigation";
 import { surahs, Surah } from "@/data/surahs";
 
 export default function SurahPage() {
-  const [selectedSurah, setSelectedSurah] = useState<Surah>(surahs[0]);
+  const [selectedSurah, setSelectedSurah] = useState<Surah | null>(null);
 
   const handlePrint = () => {
     window.print();
@@ -28,7 +28,8 @@ export default function SurahPage() {
               </div>
             </div>
 
-            <Card className="bg-[#0E3B1A] border border-[#1D5E2D] shadow-[0_10px_30px_rgba(0,0,0,0.35)] rounded-3xl overflow-hidden max-w-[420px] mx-auto" data-testid="surah-card">
+            {selectedSurah && (
+              <Card className="bg-[#0E3B1A] border border-[#1D5E2D] shadow-[0_10px_30px_rgba(0,0,0,0.35)] rounded-3xl overflow-hidden max-w-[420px] mx-auto" data-testid="surah-card">
               <div className="bg-gradient-to-b from-[#125022] to-[#0E3B1A] p-6 space-y-5">
                 <div className="text-center">
                   <p className="text-white text-xl font-bold mb-4" style={{ fontFamily: "'Noto Sans Bengali', sans-serif", letterSpacing: '0.02em' }}>
@@ -102,13 +103,14 @@ export default function SurahPage() {
                 </p>
               </div>
             </Card>
+            )}
 
             <div className="grid grid-cols-2 gap-3">
               {surahs.map(surah => (
                 <Card
                   key={surah.id}
                   className={`p-3 cursor-pointer transition-all ${
-                    selectedSurah.id === surah.id
+                    selectedSurah?.id === surah.id
                       ? 'bg-amber-400/20 border-2 border-amber-400'
                       : 'bg-emerald-900/30 border border-amber-400/10 hover:border-amber-400/30'
                   }`}
