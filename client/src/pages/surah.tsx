@@ -56,7 +56,7 @@ export default function SurahPage() {
                 </div>
 
                 <div 
-                  className="text-center p-6 rounded-2xl bg-[#0E3B1A] shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)] whitespace-pre-line"
+                  className="text-center p-6 rounded-2xl bg-emerald-700 shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)] whitespace-pre-line"
                   style={{ direction: 'rtl', fontFamily: "'Noto Naskh Arabic', serif", fontFeatureSettings: "'liga' 1" }}
                   data-testid="surah-arabic"
                 >
