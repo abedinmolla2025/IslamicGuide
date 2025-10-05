@@ -48,15 +48,18 @@ export default function DuaPage() {
             <Card className="bg-[#0E3B1A] border border-[#1D5E2D] shadow-[0_10px_30px_rgba(0,0,0,0.35)] rounded-3xl overflow-hidden max-w-[420px] mx-auto" data-testid="dua-card">
               <div className="bg-gradient-to-b from-[#125022] to-[#0E3B1A] p-6 space-y-5">
                 <div className="text-center relative">
+                  <p className="text-amber-500 text-xl font-bold mb-3" style={{ fontFamily: "'Noto Sans Bengali', sans-serif", letterSpacing: '0.02em' }}>
+                    বিসমিল্লাহির রহমানির রহীম
+                  </p>
                   <div className="w-[72px] h-[72px] mx-auto mb-4 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
                     <span className="text-3xl font-black text-emerald-950">
                       {duas.findIndex(d => d.id === selectedDua.id) + 1}
                     </span>
                   </div>
-                  <h2 className="text-[26px] font-black text-amber-400 mb-2 leading-tight" style={{ textShadow: '0 2px 8px rgba(251,191,36,0.3)' }} data-testid="dua-title-bengali">
+                  <h2 className="text-[28px] font-black text-amber-400 mb-2 leading-tight" style={{ fontFamily: "'Noto Sans Bengali', sans-serif", textShadow: '0 2px 8px rgba(251,191,36,0.3)', letterSpacing: '-0.01em' }} data-testid="dua-title-bengali">
                     {selectedDua.titleBengali}
                   </h2>
-                  <p className="text-sm text-emerald-100 uppercase tracking-wide" data-testid="dua-title-english">
+                  <p className="text-sm text-emerald-100 uppercase tracking-wide font-semibold" style={{ fontFamily: "'Noto Sans Bengali', sans-serif" }} data-testid="dua-title-english">
                     আরবি • বাংলা উচ্চারণ • বাংলা অর্থ
                   </p>
                 </div>
@@ -72,15 +75,15 @@ export default function DuaPage() {
                 </div>
 
                 <div className="p-5 rounded-2xl bg-[#F9B234]" data-testid="dua-transliteration">
-                  <p className="font-bold text-base text-emerald-950 mb-3">বাংলা উচ্চারণ:</p>
-                  <p className="text-lg text-emerald-950 leading-relaxed font-semibold">
+                  <p className="font-black text-base text-emerald-950 mb-3" style={{ fontFamily: "'Noto Sans Bengali', sans-serif" }}>বাংলা উচ্চারণ:</p>
+                  <p className="text-lg text-emerald-950 leading-relaxed font-bold" style={{ fontFamily: "'Noto Sans Bengali', sans-serif", letterSpacing: '0.01em' }}>
                     {selectedDua.transliteration}
                   </p>
                 </div>
 
                 <div className="p-5 rounded-2xl bg-[#0F4220]" data-testid="dua-meaning">
-                  <p className="font-bold text-base text-amber-400 mb-3">অর্থ:</p>
-                  <p className="text-base text-[#F5FAD7] leading-relaxed">
+                  <p className="font-black text-base text-amber-400 mb-3" style={{ fontFamily: "'Noto Sans Bengali', sans-serif" }}>অর্থ:</p>
+                  <p className="text-base text-[#F5FAD7] leading-relaxed font-semibold" style={{ fontFamily: "'Noto Sans Bengali', sans-serif", letterSpacing: '0.01em' }}>
                     {selectedDua.meaningBengali}
                   </p>
                 </div>
