@@ -79,29 +79,49 @@ export default function QuranVerse() {
         </Button>
       </h2>
       
-      <div className="bg-gradient-to-br from-[#0E3B1A] to-[#0A2E14] rounded-2xl p-6 border border-amber-400/20 shadow-[0_8px_24px_rgba(0,0,0,0.3)] hover:shadow-[0_12px_32px_rgba(251,191,36,0.15)] transition-all duration-300 mb-4 space-y-4">
-        <div 
-          className="text-center mb-5 text-3xl font-semibold leading-relaxed text-white" 
-          style={{ fontFamily: "'Noto Naskh Arabic', serif", direction: 'rtl' }}
-          data-testid="text-verse-arabic"
-        >
-          {verse.arabic}
+      <div className="bg-gradient-to-br from-[#0E3B1A] to-[#0A2E14] rounded-2xl p-6 border border-amber-400/20 shadow-[0_8px_24px_rgba(0,0,0,0.3)] hover:shadow-[0_12px_32px_rgba(251,191,36,0.15)] transition-all duration-300 mb-4">
+        <div className="bg-gradient-to-b from-amber-400/5 to-transparent rounded-xl p-6 mb-6 border border-amber-400/10">
+          <div 
+            className="text-center text-4xl font-bold leading-loose text-white mb-6" 
+            style={{ 
+              fontFamily: "'Noto Naskh Arabic', serif", 
+              direction: 'rtl',
+              lineHeight: '2.2',
+              textShadow: '0 2px 12px rgba(251,191,36,0.2)'
+            }}
+            data-testid="text-verse-arabic"
+          >
+            {verse.arabic}
+          </div>
+          
+          <div className="h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent my-6"></div>
+          
+          {verse.translationBengali && (
+            <div 
+              className="text-xl text-amber-100 text-center leading-loose font-bold mb-4 px-4 py-3" 
+              style={{ 
+                fontFamily: "'Noto Sans Bengali', 'Nikosh', 'Kalpurush', sans-serif",
+                lineHeight: '2',
+                letterSpacing: '0.02em'
+              }} 
+              data-testid="text-verse-translation-bengali"
+            >
+              {verse.translationBengali}
+            </div>
+          )}
         </div>
         
-        {verse.translationBengali && (
-          <div className="text-base text-amber-100 text-center leading-relaxed font-bold px-3 py-2 rounded-lg bg-emerald-900/30" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }} data-testid="text-verse-translation-bengali">
-            {verse.translationBengali}
-          </div>
-        )}
-        
-        <div className="text-base text-emerald-100 text-center leading-relaxed italic" data-testid="text-verse-translation">
+        <div className="text-base text-emerald-100 text-center leading-relaxed italic px-2" data-testid="text-verse-translation">
           "{verse.translation}"
         </div>
         
         {verse.aiInsightBengali && (
-          <div className="mt-4 p-4 bg-amber-400/10 rounded-lg border-l-4 border-amber-400">
-            <p className="text-sm text-amber-300 font-semibold mb-2" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>আজকের প্রতিফলন:</p>
-            <p className="text-sm text-emerald-100 leading-relaxed" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }} data-testid="text-verse-insight-bengali">
+          <div className="mt-6 p-4 bg-gradient-to-r from-amber-400/10 to-amber-400/5 rounded-xl border border-amber-400/20">
+            <p className="text-sm text-amber-300 font-bold mb-3 flex items-center gap-2" style={{ fontFamily: "'Noto Sans Bengali', 'Nikosh', 'Kalpurush', sans-serif" }}>
+              <span className="w-1 h-4 bg-amber-400 rounded-full"></span>
+              আজকের প্রতিফলন
+            </p>
+            <p className="text-base text-emerald-100 leading-relaxed" style={{ fontFamily: "'Noto Sans Bengali', 'Nikosh', 'Kalpurush', sans-serif", lineHeight: '1.8' }} data-testid="text-verse-insight-bengali">
               {verse.aiInsightBengali}
             </p>
           </div>
