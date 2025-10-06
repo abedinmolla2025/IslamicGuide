@@ -329,40 +329,40 @@ function NameCard({ name, selectedLanguage, onShare }: NameCardProps) {
   };
 
   const genderColor = name.gender === 'boy' 
-    ? 'from-blue-500/20 to-blue-600/20 border-blue-500/30' 
-    : 'from-pink-500/20 to-pink-600/20 border-pink-500/30';
+    ? 'from-blue-900/40 to-blue-800/40 border-blue-500/40' 
+    : 'from-pink-900/40 to-pink-800/40 border-pink-500/40';
 
   const genderBadgeColor = name.gender === 'boy'
-    ? 'bg-blue-500/20 text-blue-300 border-blue-500/30'
-    : 'bg-pink-500/20 text-pink-300 border-pink-500/30';
+    ? 'bg-blue-500/30 text-blue-200 border-blue-400/50'
+    : 'bg-pink-500/30 text-pink-200 border-pink-400/50';
 
   return (
     <Card 
       className={`group relative overflow-hidden bg-gradient-to-br ${genderColor} backdrop-blur-md border hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:border-white/30`}
       data-testid={`card-name-${name.name.toLowerCase().replace(/\s+/g, '-')}`}
     >
-      <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full blur-2xl group-hover:bg-white/10 transition-all"></div>
+      <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-3xl group-hover:bg-white/10 transition-all"></div>
       
       <CardContent className="p-5 relative z-10">
         <div className="flex justify-between items-start mb-4">
           <div className="flex-1">
             <div className="flex items-start gap-3 mb-2">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-amber-400/20 to-amber-600/20 flex items-center justify-center border border-amber-500/30">
-                <Baby className={`h-6 w-6 ${name.gender === 'boy' ? 'text-blue-400' : 'text-pink-400'}`} />
+              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-amber-500/30 to-amber-600/30 flex items-center justify-center border border-amber-400/40 shadow-lg">
+                <Baby className={`h-6 w-6 ${name.gender === 'boy' ? 'text-blue-300' : 'text-pink-300'}`} />
               </div>
               <div className="flex-1">
-                <h3 className={`${getNameClass()} bg-gradient-to-r from-amber-200 to-amber-100 bg-clip-text text-transparent`} data-testid={`text-name-${name.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                <h3 className={`${getNameClass()} text-white drop-shadow-lg`} data-testid={`text-name-${name.name.toLowerCase().replace(/\s+/g, '-')}`}>
                   {getDisplayName()}
                 </h3>
                 {selectedLanguage !== "english" && (
-                  <p className="text-sm text-emerald-200/60 mt-1">
+                  <p className="text-sm text-emerald-200/80 mt-1 font-medium">
                     {name.name}
                   </p>
                 )}
               </div>
             </div>
             <Badge 
-              className={`${genderBadgeColor} border font-medium`}
+              className={`${genderBadgeColor} border font-semibold shadow-sm`}
               data-testid={`badge-gender-${name.name.toLowerCase().replace(/\s+/g, '-')}`}
             >
               {name.gender === 'boy' ? '👦 Boy' : '👧 Girl'}
@@ -373,29 +373,29 @@ function NameCard({ name, selectedLanguage, onShare }: NameCardProps) {
               variant="ghost"
               size="sm"
               onClick={() => setIsFavorite(!isFavorite)}
-              className="hover:bg-white/10 hover:scale-110 transition-all"
+              className="hover:bg-white/20 hover:scale-110 transition-all"
               data-testid={`button-favorite-${name.name.toLowerCase().replace(/\s+/g, '-')}`}
             >
-              <Heart className={`h-4 w-4 transition-all ${isFavorite ? 'fill-red-500 text-red-500 scale-110' : 'text-emerald-200'}`} />
+              <Heart className={`h-4 w-4 transition-all ${isFavorite ? 'fill-red-400 text-red-400 scale-110' : 'text-white/80'}`} />
             </Button>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => onShare(name)}
-              className="hover:bg-white/10 hover:scale-110 transition-all"
+              className="hover:bg-white/20 hover:scale-110 transition-all"
               data-testid={`button-share-${name.name.toLowerCase().replace(/\s+/g, '-')}`}
             >
-              <Share className="h-4 w-4 text-emerald-200" />
+              <Share className="h-4 w-4 text-white/80" />
             </Button>
           </div>
         </div>
         
-        <div className="space-y-3 bg-white/5 rounded-lg p-4 backdrop-blur-sm">
+        <div className="space-y-3 bg-black/20 rounded-lg p-4 backdrop-blur-sm border border-white/10">
           <div className="flex items-start gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-2 flex-shrink-0"></div>
-            <div>
-              <span className="text-xs font-semibold text-amber-300 uppercase tracking-wider">Meaning</span>
-              <p className="text-sm text-emerald-100 leading-relaxed mt-1">
+            <div className="flex-1">
+              <span className="text-xs font-bold text-amber-300 uppercase tracking-wider">Meaning</span>
+              <p className="text-sm text-white/90 leading-relaxed mt-1">
                 {getDisplayMeaning()}
               </p>
             </div>
@@ -403,9 +403,9 @@ function NameCard({ name, selectedLanguage, onShare }: NameCardProps) {
           
           <div className="flex items-start gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-teal-400 mt-2 flex-shrink-0"></div>
-            <div>
-              <span className="text-xs font-semibold text-teal-300 uppercase tracking-wider">Origin</span>
-              <p className="text-sm text-emerald-100 leading-relaxed mt-1">
+            <div className="flex-1">
+              <span className="text-xs font-bold text-teal-300 uppercase tracking-wider">Origin</span>
+              <p className="text-sm text-white/90 leading-relaxed mt-1">
                 {name.origin}
               </p>
             </div>
@@ -413,7 +413,7 @@ function NameCard({ name, selectedLanguage, onShare }: NameCardProps) {
           
           {name.category && (
             <div className="pt-2">
-              <Badge className="bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-200 border-emerald-500/30 text-xs">
+              <Badge className="bg-gradient-to-r from-emerald-500/30 to-teal-500/30 text-emerald-100 border-emerald-400/40 text-xs font-semibold">
                 <Sparkles className="h-3 w-3 mr-1" />
                 {name.category}
               </Badge>
