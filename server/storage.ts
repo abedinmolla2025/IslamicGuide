@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type PrayerTimes, type InsertPrayerTimes, type QuranVerse, type IslamicEvent, type IslamicName, type InsertIslamicName, type DailyQuiz, type InsertDailyQuiz } from "@shared/schema";
+import { type User, type InsertUser, type PrayerTimes, type InsertPrayerTimes, type QuranVerse, type IslamicEvent, type IslamicName, type InsertIslamicName, type DailyQuiz, type InsertDailyQuiz, type Hadith, type InsertHadith } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { islamicNames as namesData } from "../client/src/data/islamic-names";
 
@@ -23,6 +23,9 @@ export interface IStorage {
   
   getDailyQuiz(): Promise<DailyQuiz | undefined>;
   saveDailyQuiz(quiz: InsertDailyQuiz): Promise<DailyQuiz>;
+  
+  getRandomHadith(): Promise<Hadith | undefined>;
+  getDailyHadith(): Promise<Hadith | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -32,6 +35,7 @@ export class MemStorage implements IStorage {
   private islamicEvents: Map<string, IslamicEvent>;
   private islamicNames: Map<string, IslamicName>;
   private dailyQuizzes: Map<string, DailyQuiz>;
+  private hadiths: Map<string, Hadith>;
   private currentQuizDate: string | null;
 
   constructor() {
