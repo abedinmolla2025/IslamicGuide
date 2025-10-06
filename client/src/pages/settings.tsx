@@ -5,7 +5,7 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import TopBar from "@/components/top-bar";
-import { Settings as SettingsIcon, Bell, MapPin, Calculator, Palette } from "lucide-react";
+import { Settings as SettingsIcon, Bell, MapPin, Calculator, Palette, Download, Smartphone } from "lucide-react";
 
 export default function SettingsPage() {
   const [notifications, setNotifications] = useState(true);
@@ -124,6 +124,37 @@ export default function SettingsPage() {
             <p className="text-sm text-muted-foreground">
               Toggle between light and dark themes
             </p>
+          </CardContent>
+        </Card>
+
+        {/* Download APK Section */}
+        <Card data-testid="card-download-apk" className="border-amber-500/50">
+          <CardHeader>
+            <CardTitle className="flex items-center text-amber-500">
+              <Download className="mr-2 h-5 w-5" />
+              Download Android App
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-sm text-muted-foreground">
+              Install Islamic Companion as a native Android app on your device
+            </p>
+            <div className="flex flex-col gap-3">
+              <Button 
+                onClick={() => {
+                  const currentUrl = window.location.origin;
+                  window.open(`https://www.pwabuilder.com/reportcard?site=${encodeURIComponent(currentUrl)}`, '_blank');
+                }}
+                className="bg-amber-500 hover:bg-amber-600 text-white"
+                data-testid="button-download-apk"
+              >
+                <Smartphone className="mr-2 h-4 w-4" />
+                Generate & Download APK
+              </Button>
+              <p className="text-xs text-muted-foreground">
+                This will open PWA Builder where you can generate and download the Android APK file
+              </p>
+            </div>
           </CardContent>
         </Card>
 
