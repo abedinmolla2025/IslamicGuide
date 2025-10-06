@@ -96,7 +96,7 @@ export default function QuranVerse() {
           
           <div className="h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent my-6"></div>
           
-          {verse.translationBengali && (
+          {verse.translationBengali && verse.translationBengali !== verse.translation && (
             <div 
               className="text-xl text-amber-100 text-center leading-loose font-bold mb-4 px-4 py-3" 
               style={{ 
