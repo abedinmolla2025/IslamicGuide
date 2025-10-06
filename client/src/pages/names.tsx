@@ -329,16 +329,16 @@ function NameCard({ name, selectedLanguage, onShare }: NameCardProps) {
   };
 
   const genderGradient = name.gender === 'boy' 
-    ? 'from-yellow-600/50 via-yellow-500/40 to-yellow-600/50' 
-    : 'from-yellow-600/50 via-yellow-500/40 to-yellow-600/50';
+    ? 'from-emerald-900/70 via-green-900/60 to-teal-900/70' 
+    : 'from-emerald-900/70 via-green-900/60 to-teal-900/70';
 
   const genderBorder = name.gender === 'boy'
-    ? 'border-yellow-500/50'
-    : 'border-yellow-500/50';
+    ? 'border-emerald-600/40'
+    : 'border-emerald-600/40';
 
   const genderAccent = name.gender === 'boy'
-    ? 'from-yellow-500 to-yellow-600'
-    : 'from-yellow-500 to-yellow-600';
+    ? 'from-emerald-600 to-teal-600'
+    : 'from-emerald-600 to-teal-600';
 
   return (
     <div
