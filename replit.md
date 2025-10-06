@@ -62,3 +62,19 @@ The application implements custom Islamic calculations for prayer times and Qibl
 
 ### Geolocation and Device APIs
 The app utilizes browser APIs for geolocation services to automatically detect user location for prayer times and Qibla direction. Device orientation APIs are used for the compass functionality where supported by the device and browser.
+
+### Progressive Web App (PWA) Implementation
+The application is configured as a Progressive Web App with full PWA infrastructure:
+- **manifest.json**: Defines app metadata, icons, theme colors, and display mode
+- **service-worker.js**: Enables offline functionality and app-like installation
+- **Install prompt**: Captures the browser's `beforeinstallprompt` event for one-click installation on Android devices
+- **Icons**: Complete icon set (192x192, 512x512) for various device sizes
+
+The PWA implementation allows users to install the app directly from their browser with a single click, providing an app-like experience without going through app stores.
+
+### Android APK Download
+The app provides options for Android users to get the application:
+1. **One-Click PWA Install**: True one-click installation via browser's native install prompt (works on Chrome/Edge for Android)
+2. **APK Generation**: Link to PWABuilder for users who need a downloadable APK file
+
+For true one-click APK downloads, see `APK_GENERATION_GUIDE.md` for instructions on generating and hosting a pre-built APK file.

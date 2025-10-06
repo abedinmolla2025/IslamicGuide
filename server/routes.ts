@@ -238,6 +238,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // APK download endpoint
+  app.get("/download/apk", (req, res) => {
+    const protocol = req.headers['x-forwarded-proto'] || 'https';
+    const host = req.headers.host || req.headers['x-forwarded-host'];
+    const fullUrl = `${protocol}://${host}`;
+    
+    const pwaBuilderUrl = `https://www.pwabuilder.com/reportcard?site=${encodeURIComponent(fullUrl)}`;
+    res.redirect(pwaBuilderUrl);
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

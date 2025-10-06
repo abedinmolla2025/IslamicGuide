@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -11,6 +11,41 @@ export default function SettingsPage() {
   const [notifications, setNotifications] = useState(true);
   const [calculationMethod, setCalculationMethod] = useState("ISNA");
   const [darkMode, setDarkMode] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isInstallable, setIsInstallable] = useState(false);
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setIsInstallable(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handler);
+
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) {
+      alert('Installation not available. You may have already installed the app or your browser does not support installation.');
+      return;
+    }
+
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    
+    if (outcome === 'accepted') {
+      setDeferredPrompt(null);
+      setIsInstallable(false);
+    }
+  };
+
+  const handleDownloadAPK = () => {
+    const currentUrl = window.location.origin;
+    const downloadUrl = `/download/apk`;
+    window.open(downloadUrl, '_blank');
+  };
 
   const calculationMethods = [
     { value: "ISNA", label: "Islamic Society of North America (ISNA)" },
@@ -132,28 +167,43 @@ export default function SettingsPage() {
           <CardHeader>
             <CardTitle className="flex items-center text-amber-500">
               <Download className="mr-2 h-5 w-5" />
-              Download Android App
+              Install Android App
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-sm text-muted-foreground">
-              Install Islamic Companion as a native Android app on your device
+              Get Islamic Companion on your Android device
             </p>
             <div className="flex flex-col gap-3">
-              <Button 
-                onClick={() => {
-                  const currentUrl = window.location.origin;
-                  window.open(`https://www.pwabuilder.com/reportcard?site=${encodeURIComponent(currentUrl)}`, '_blank');
-                }}
-                className="bg-amber-500 hover:bg-amber-600 text-white"
-                data-testid="button-download-apk"
-              >
-                <Smartphone className="mr-2 h-4 w-4" />
-                Generate & Download APK
-              </Button>
-              <p className="text-xs text-muted-foreground">
-                This will open PWA Builder where you can generate and download the Android APK file
-              </p>
+              {isInstallable && (
+                <div className="space-y-2">
+                  <Button 
+                    onClick={handleInstallClick}
+                    className="w-full bg-green-600 hover:bg-green-700 text-white"
+                    data-testid="button-install-pwa"
+                  >
+                    <Smartphone className="mr-2 h-4 w-4" />
+                    One-Click Install (Recommended)
+                  </Button>
+                  <p className="text-xs text-muted-foreground">
+                    Instant installation - just click and confirm
+                  </p>
+                </div>
+              )}
+              <div className="space-y-2">
+                <Button 
+                  onClick={handleDownloadAPK}
+                  className="w-full bg-amber-500 hover:bg-amber-600 text-white"
+                  data-testid="button-download-apk"
+                  variant={isInstallable ? "outline" : "default"}
+                >
+                  <Download className="mr-2 h-4 w-4" />
+                  {isInstallable ? "Alternative: Generate APK" : "Generate APK File"}
+                </Button>
+                <p className="text-xs text-muted-foreground">
+                  Opens APK builder tool - follow steps to download
+                </p>
+              </div>
             </div>
           </CardContent>
         </Card>
