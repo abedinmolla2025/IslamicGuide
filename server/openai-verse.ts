@@ -14,11 +14,12 @@ interface EnhancedVerse {
 
 export async function enhanceVerseWithAI(verse: QuranVerse): Promise<QuranVerse> {
   if (!openai) {
-    // Return verse with fallback values if OpenAI is not configured
+    // Return verse without Bengali translation if OpenAI is not configured
+    // This ensures we don't show English text as "Bengali"
     return {
       ...verse,
-      translationBengali: verse.translation,
-      surahNameBengali: verse.surahName,
+      translationBengali: null,
+      surahNameBengali: null,
       aiInsight: "This verse offers guidance and wisdom for believers.",
       aiInsightBengali: "এই আয়াতটি বিশ্বাসীদের জন্য নির্দেশনা এবং প্রজ্ঞা প্রদান করে।",
     };
