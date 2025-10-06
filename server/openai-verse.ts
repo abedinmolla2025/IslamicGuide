@@ -1,9 +1,9 @@
 import OpenAI from "openai";
 import type { QuranVerse } from "@shared/schema";
 
-const openai = new OpenAI({
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-});
+}) : null;
 
 interface EnhancedVerse {
   translationBengali: string;
@@ -13,6 +13,17 @@ interface EnhancedVerse {
 }
 
 export async function enhanceVerseWithAI(verse: QuranVerse): Promise<QuranVerse> {
+  if (!openai) {
+    // Return verse with fallback values if OpenAI is not configured
+    return {
+      ...verse,
+      translationBengali: verse.translation,
+      surahNameBengali: verse.surahName,
+      aiInsight: "This verse offers guidance and wisdom for believers.",
+      aiInsightBengali: "এই আয়াতটি বিশ্বাসীদের জন্য নির্দেশনা এবং প্রজ্ঞা প্রদান করে।",
+    };
+  }
+
   try {
     const prompt = `You are an Islamic scholar and Bengali translator. For the following Quran verse, provide:
 
