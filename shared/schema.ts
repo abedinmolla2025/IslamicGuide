@@ -78,6 +78,20 @@ export const dailyQuizzes = pgTable("daily_quizzes", {
   category: text("category").notNull(),
 });
 
+export const hadiths = pgTable("hadiths", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  arabic: text("arabic").notNull(),
+  translation: text("translation").notNull(),
+  translationBengali: text("translation_bengali"),
+  narrator: text("narrator").notNull(),
+  narratorBengali: text("narrator_bengali"),
+  bookName: text("book_name").notNull(),
+  bookNameBengali: text("book_name_bengali"),
+  reference: text("reference").notNull(),
+  aiInsight: text("ai_insight"),
+  aiInsightBengali: text("ai_insight_bengali"),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -107,6 +121,10 @@ export const insertDailyQuizSchema = createInsertSchema(dailyQuizzes).omit({
   id: true,
 });
 
+export const insertHadithSchema = createInsertSchema(hadiths).omit({
+  id: true,
+});
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type PrayerTimes = typeof prayerTimes.$inferSelect;
@@ -119,6 +137,8 @@ export type IslamicName = typeof islamicNames.$inferSelect;
 export type InsertIslamicName = z.infer<typeof insertIslamicNameSchema>;
 export type DailyQuiz = typeof dailyQuizzes.$inferSelect;
 export type InsertDailyQuiz = z.infer<typeof insertDailyQuizSchema>;
+export type Hadith = typeof hadiths.$inferSelect;
+export type InsertHadith = z.infer<typeof insertHadithSchema>;
 
 // Raw interface for names before Bengali translation is applied
 export interface RawIslamicName {
