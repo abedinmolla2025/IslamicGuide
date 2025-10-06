@@ -68,7 +68,7 @@ export default function NamesPage() {
   const girlNames = displayNames.filter(name => name.gender === 'girl');
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-br from-emerald-950 via-emerald-900 to-teal-950">
+    <div className="flex flex-col h-screen bg-gradient-to-br from-amber-950 via-yellow-900 to-orange-950">
       <TopBar title="Islamic Baby Names" subtitle="Beautiful names with meanings" />
 
       <main className="flex-1 overflow-y-auto p-4 pb-20 space-y-6">
