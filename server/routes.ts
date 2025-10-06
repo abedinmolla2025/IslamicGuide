@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertPrayerTimesSchema } from "@shared/schema";
 import { generateDailyQuiz } from "./openai-quiz";
+import { enhanceVerseWithAI } from "./openai-verse";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
@@ -97,12 +98,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Quran verses routes
   app.get("/api/quran/random", async (req, res) => {
     try {
-      const verse = await storage.getRandomQuranVerse();
+      let verse = await storage.getRandomQuranVerse();
       if (!verse) {
         return res.status(404).json({ message: "No verses found" });
       }
+      
+      // Enhance verse with AI if it doesn't have Bengali translation or AI insights
+      if (!verse.translationBengali || !verse.aiInsight) {
+        verse = await enhanceVerseWithAI(verse);
+      }
+      
       res.json(verse);
     } catch (error) {
+      console.error("Error in /api/quran/random:", error);
       res.status(500).json({ message: "Failed to get random verse" });
     }
   });

@@ -54,8 +54,12 @@ export class MemStorage implements IStorage {
         verseNumber: 2,
         arabic: "وَمَن يَتَّقِ ٱللَّهَ يَجْعَل لَّهُۥ مَخْرَجًا",
         translation: "And whoever fears Allah - He will make for him a way out.",
+        translationBengali: null,
         transliteration: "Wa man yattaqi Allaha yaj'al lahu makhrajan",
-        surahName: "At-Talaq"
+        surahName: "At-Talaq",
+        surahNameBengali: null,
+        aiInsight: null,
+        aiInsightBengali: null
       },
       {
         id: randomUUID(),
@@ -63,8 +67,12 @@ export class MemStorage implements IStorage {
         verseNumber: 255,
         arabic: "ٱللَّهُ لَآ إِلَـٰهَ إِلَّا هُوَ ٱلۡحَيُّ ٱلۡقَيُّومُۚ لَا تَأۡخُذُهُۥ سِنَةٞ وَلَا نَوۡمٞۚ",
         translation: "Allah - there is no deity except Him, the Ever-Living, the Sustainer of existence. Neither drowsiness overtakes Him nor sleep.",
+        translationBengali: null,
         transliteration: "Allahu la ilaha illa huwa al-hayyu al-qayyum. La ta'khuzuhu sinatun wa la nawm.",
-        surahName: "Al-Baqarah"
+        surahName: "Al-Baqarah",
+        surahNameBengali: null,
+        aiInsight: null,
+        aiInsightBengali: null
       }
     ];
 

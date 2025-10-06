@@ -79,7 +79,7 @@ export default function QuranVerse() {
         </Button>
       </h2>
       
-      <div className="bg-gradient-to-br from-[#0E3B1A] to-[#0A2E14] rounded-2xl p-6 border border-amber-400/20 shadow-[0_8px_24px_rgba(0,0,0,0.3)] hover:shadow-[0_12px_32px_rgba(251,191,36,0.15)] transition-all duration-300 mb-4">
+      <div className="bg-gradient-to-br from-[#0E3B1A] to-[#0A2E14] rounded-2xl p-6 border border-amber-400/20 shadow-[0_8px_24px_rgba(0,0,0,0.3)] hover:shadow-[0_12px_32px_rgba(251,191,36,0.15)] transition-all duration-300 mb-4 space-y-4">
         <div 
           className="text-center mb-5 text-3xl font-semibold leading-relaxed text-white" 
           style={{ fontFamily: "'Noto Naskh Arabic', serif", direction: 'rtl' }}
@@ -87,12 +87,31 @@ export default function QuranVerse() {
         >
           {verse.arabic}
         </div>
-        <div className="text-base text-emerald-100 mb-4 text-center leading-relaxed italic" data-testid="text-verse-translation">
+        
+        {verse.translationBengali && (
+          <div className="text-base text-amber-100 text-center leading-relaxed font-bold px-3 py-2 rounded-lg bg-emerald-900/30" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }} data-testid="text-verse-translation-bengali">
+            {verse.translationBengali}
+          </div>
+        )}
+        
+        <div className="text-base text-emerald-100 text-center leading-relaxed italic" data-testid="text-verse-translation">
           "{verse.translation}"
         </div>
+        
+        {verse.aiInsightBengali && (
+          <div className="mt-4 p-4 bg-amber-400/10 rounded-lg border-l-4 border-amber-400">
+            <p className="text-sm text-amber-300 font-semibold mb-2" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}>আজকের প্রতিফলন:</p>
+            <p className="text-sm text-emerald-100 leading-relaxed" style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }} data-testid="text-verse-insight-bengali">
+              {verse.aiInsightBengali}
+            </p>
+          </div>
+        )}
+        
         <div className="flex justify-between items-center pt-3 border-t border-amber-400/20">
-          <span className="text-sm text-amber-400 font-semibold" data-testid="text-verse-reference">
-            {verse.surahName} {verse.surahNumber}:{verse.verseNumber}
+          <span className="text-sm font-semibold" data-testid="text-verse-reference">
+            <span className="text-amber-400">{verse.surahNameBengali || verse.surahName}</span>
+            <span className="text-emerald-300 mx-1">•</span>
+            <span className="text-emerald-300">{verse.surahNumber}:{verse.verseNumber}</span>
           </span>
           <Button 
             variant="ghost"

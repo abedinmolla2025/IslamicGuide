@@ -37,8 +37,12 @@ export const quranVerses = pgTable("quran_verses", {
   verseNumber: integer("verse_number").notNull(),
   arabic: text("arabic").notNull(),
   translation: text("translation").notNull(),
+  translationBengali: text("translation_bengali"),
   transliteration: text("transliteration"),
   surahName: text("surah_name").notNull(),
+  surahNameBengali: text("surah_name_bengali"),
+  aiInsight: text("ai_insight"),
+  aiInsightBengali: text("ai_insight_bengali"),
 });
 
 export const islamicEvents = pgTable("islamic_events", {
