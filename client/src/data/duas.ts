@@ -127,7 +127,7 @@ export const duas: Dua[] = [
     category: "শক্তিশালী রুকইয়া"
   },
   {
-    "id": "1",
+    "id": "14",
     "titleBengali": "বদনজর থেকে সুরক্ষা",
     "titleEnglish": "Protection from Evil Eye",
     "arabic": "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ شَرِّ مَا خَلَقَ",
@@ -136,7 +136,7 @@ export const duas: Dua[] = [
     "category": "সুরক্ষা"
   },
   {
-    "id": "2",
+    "id": "15",
     "titleBengali": "জাদু ও জ্বিন থেকে সুরক্ষা",
     "titleEnglish": "Protection from Magic and Jinn",
     "arabic": "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ",
@@ -145,7 +145,7 @@ export const duas: Dua[] = [
     "category": "সুরক্ষা"
   },
   {
-    "id": "3",
+    "id": "16",
     "titleBengali": "ভয় দূর করার দোয়া",
     "titleEnglish": "Dua for Removing Fear",
     "arabic": "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",
@@ -154,7 +154,7 @@ export const duas: Dua[] = [
     "category": "সাহস"
   },
   {
-    "id": "4",
+    "id": "17",
     "titleBengali": "কষ্ট ও দুঃখে",
     "titleEnglish": "During Hardship",
     "arabic": "إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ",
@@ -163,7 +163,7 @@ export const duas: Dua[] = [
     "category": "ধৈর্য"
   },
   {
-    "id": "5",
+    "id": "18",
     "titleBengali": "সকাল-সন্ধ্যার যিকির",
     "titleEnglish": "Morning & Evening Protection",
     "arabic": "اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ",
@@ -172,7 +172,7 @@ export const duas: Dua[] = [
     "category": "সুরক্ষা"
   },
   {
-    "id": "6",
+    "id": "19",
     "titleBengali": "রিজিক বৃদ্ধি",
     "titleEnglish": "Increase in Rizq",
     "arabic": "اللَّهُمَّ اكْفِنِي بِحَلَالِكَ عَنْ حَرَامِكَ وَأَغْنِنِي بِفَضْلِكَ عَمَّنْ سِوَاكَ",
@@ -181,7 +181,7 @@ export const duas: Dua[] = [
     "category": "রিজিক"
   },
   {
-    "id": "7",
+    "id": "20",
     "titleBengali": "মাফ চাওয়ার দোয়া",
     "titleEnglish": "Seeking Forgiveness",
     "arabic": "رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ إِنَّكَ أَنْتَ التَّوَّابُ الرَّحِيمُ",
@@ -190,7 +190,7 @@ export const duas: Dua[] = [
     "category": "ক্ষমা"
   },
   {
-    "id": "8",
+    "id": "21",
     "titleBengali": "ভ্রমণ দোয়া",
     "titleEnglish": "Dua for Traveling",
     "arabic": "سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَىٰ رَبِّنَا لَمُنْقَلِبُونَ",
@@ -199,7 +199,7 @@ export const duas: Dua[] = [
     "category": "ভ্রমণ"
   },
   {
-    "id": "9",
+    "id": "22",
     "titleBengali": "দুঃশ্চিন্তায়",
     "titleEnglish": "In Distress",
     "arabic": "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ",
@@ -208,7 +208,7 @@ export const duas: Dua[] = [
     "category": "শান্তি"
   },
   {
-    "id": "10",
+    "id": "23",
     "titleBengali": "রোগমুক্তির দোয়া",
     "titleEnglish": "Dua for Healing",
     "arabic": "اللَّهُمَّ رَبَّ النَّاسِ أَذْهِبِ الْبَأْسَ اشْفِ أَنْتَ الشَّافِي لَا شِفَاءَ إِلَّا شِفَاؤُكَ",
@@ -217,7 +217,7 @@ export const duas: Dua[] = [
     "category": "শিফা"
   },
   {
-    "id": "11",
+    "id": "24",
     "titleBengali": "অসুস্থকে দেখলে দোয়া",
     "titleEnglish": "Dua for Sick Person",
     "arabic": "لَا بَأْسَ طَهُورٌ إِنْ شَاءَ اللَّهُ",
@@ -226,7 +226,7 @@ export const duas: Dua[] = [
     "category": "শিফা"
   },
   {
-    "id": "12",
+    "id": "25",
     "titleBengali": "চিন্তা ও দুঃখ দূর",
     "titleEnglish": "Relief from Anxiety",
     "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ",
@@ -235,7 +235,7 @@ export const duas: Dua[] = [
     "category": "শান্তি"
   },
   {
-    "id": "13",
+    "id": "26",
     "titleBengali": "কোনো কাজ শুরু করার আগে",
     "titleEnglish": "Before Starting Work",
     "arabic": "بِسْمِ اللَّهِ",
@@ -244,7 +244,7 @@ export const duas: Dua[] = [
     "category": "বরকত"
   },
   {
-    "id": "14",
+    "id": "27",
     "titleBengali": "অপদেবতা থেকে সুরক্ষা",
     "titleEnglish": "Protection from Evil",
     "arabic": "أَعُوذُ بِاللَّهِ السَّمِيعِ الْعَلِيمِ مِنَ الشَّيْطَانِ الرَّجِيمِ",
@@ -253,7 +253,7 @@ export const duas: Dua[] = [
     "category": "সুরক্ষা"
   },
   {
-    "id": "15",
+    "id": "28",
     "titleBengali": "সন্তানকে দোয়া",
     "titleEnglish": "Dua for Children",
     "arabic": "اللَّهُمَّ اجْعَلْهُ بَارًّا تَقِيًّا وَاجْعَلْهُ مِنْ أَهْلِ الصَّلاحِ",
@@ -262,7 +262,7 @@ export const duas: Dua[] = [
     "category": "সন্তান"
   },
   {
-    "id": "16",
+    "id": "29",
     "titleBengali": "ঘুমানোর আগে",
     "titleEnglish": "Before Sleeping",
     "arabic": "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
@@ -271,7 +271,7 @@ export const duas: Dua[] = [
     "category": "ঘুম"
   },
   {
-    "id": "17",
+    "id": "30",
     "titleBengali": "ঘুম থেকে উঠলে",
     "titleEnglish": "After Waking Up",
     "arabic": "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ",
@@ -280,7 +280,7 @@ export const duas: Dua[] = [
     "category": "ঘুম"
   },
   {
-    "id": "18",
+    "id": "31",
     "titleBengali": "ক্ষমা প্রার্থনা",
     "titleEnglish": "Seeking Forgiveness",
     "arabic": "أَسْتَغْفِرُ اللَّهَ",
@@ -289,7 +289,7 @@ export const duas: Dua[] = [
     "category": "ক্ষমা"
   },
   {
-    "id": "19",
+    "id": "32",
     "titleBengali": "সুস্থ সন্তানের জন্য দোয়া",
     "titleEnglish": "Dua for Healthy Child",
     "arabic": "رَبِّ هَبْ لِي مِنَ الصَّالِحِينَ",
@@ -298,7 +298,7 @@ export const duas: Dua[] = [
     "category": "সন্তান"
   },
   {
-    "id": "20",
+    "id": "33",
     "titleBengali": "সর্বসাধারণের দোয়া",
     "titleEnglish": "Comprehensive Dua",
     "arabic": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
