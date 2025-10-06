@@ -1,10 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
+/* Using Noto Sans Bengali from Google Fonts for Bengali text */
 @font-face {
   font-family: 'Nikosh';
-  src: url('/fonts/Nikosh.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+  src: local('Noto Sans Bengali'), local('NotoSansBengali');
   font-display: swap;
 }
 
