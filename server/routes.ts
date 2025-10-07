@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { insertPrayerTimesSchema } from "@shared/schema";
 import { generateDailyQuiz } from "./openai-quiz";
 import { enhanceVerseWithAI } from "./openai-verse";
+import { searchNearbyMosques } from "./google-maps";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
@@ -235,6 +236,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Quiz refresh error:", error);
       res.status(500).json({ message: "Failed to refresh quiz" });
+    }
+  });
+
+  // Mosque finder route
+  app.get("/api/mosques/nearby", async (req, res) => {
+    try {
+      const { latitude, longitude, radius } = req.query;
+      
+      if (!latitude || !longitude) {
+        return res.status(400).json({ message: "Latitude and longitude are required" });
+      }
+
+      const lat = parseFloat(latitude as string);
+      const lng = parseFloat(longitude as string);
+      const searchRadius = radius ? parseFloat(radius as string) : 5000;
+      
+      const mosques = await searchNearbyMosques(lat, lng, searchRadius);
+      res.json(mosques);
+    } catch (error) {
+      console.error("Mosque finder error:", error);
+      res.status(500).json({ message: "Failed to find nearby mosques" });
     }
   });
 
