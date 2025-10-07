@@ -1,7 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Clock, Sun, Moon, Star } from "lucide-react";
 import { calculateNextPrayer, formatTimeRemaining } from "@/lib/prayer-times";
+import { schedulePrayerNotifications, getNotificationPreferences } from "@/lib/notifications";
 import type { PrayerTimes as PrayerTimesType } from "@shared/schema";
 
 interface PrayerTimesProps {
@@ -15,6 +17,37 @@ export default function PrayerTimes({ latitude, longitude }: PrayerTimesProps) {
   const { data: prayerTimes, isLoading } = useQuery<PrayerTimesType>({
     queryKey: ["/api/prayer-times", { latitude, longitude, date: today }],
   });
+
+  useEffect(() => {
+    const scheduleNotifications = () => {
+      if (prayerTimes) {
+        const prefs = getNotificationPreferences();
+        if (prefs.enabled && prefs.prayerNotifications) {
+          const prayers = [
+            { name: "Fajr", time: prayerTimes.fajr, icon: Star },
+            { name: "Sunrise", time: prayerTimes.sunrise, icon: Sun },
+            { name: "Dhuhr", time: prayerTimes.dhuhr, icon: Sun },
+            { name: "Asr", time: prayerTimes.asr, icon: Sun },
+            { name: "Maghrib", time: prayerTimes.maghrib, icon: Moon },
+            { name: "Isha", time: prayerTimes.isha, icon: Star },
+          ];
+          schedulePrayerNotifications(prayers);
+        }
+      }
+    };
+
+    scheduleNotifications();
+
+    const handleReschedule = () => {
+      scheduleNotifications();
+    };
+
+    window.addEventListener("rescheduleNotifications", handleReschedule);
+
+    return () => {
+      window.removeEventListener("rescheduleNotifications", handleReschedule);
+    };
+  }, [prayerTimes]);
 
   if (isLoading) {
     return (

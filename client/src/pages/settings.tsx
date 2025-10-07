@@ -5,7 +5,14 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import TopBar from "@/components/top-bar";
-import { Settings as SettingsIcon, Bell, MapPin, Calculator, Palette, Download, Smartphone } from "lucide-react";
+import { Settings as SettingsIcon, Bell, MapPin, Calculator, Palette, Download, Smartphone, AlertCircle } from "lucide-react";
+import { 
+  requestNotificationPermission, 
+  getNotificationPermissionStatus,
+  getNotificationPreferences,
+  saveNotificationPreferences,
+  clearPrayerNotifications
+} from "@/lib/notifications";
 
 export default function SettingsPage() {
   const [notifications, setNotifications] = useState(true);
@@ -13,6 +20,9 @@ export default function SettingsPage() {
   const [darkMode, setDarkMode] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isInstallable, setIsInstallable] = useState(false);
+  const [notificationPermission, setNotificationPermission] = useState("default");
+  const [reminderMinutes, setReminderMinutes] = useState(15);
+  const [soundEnabled, setSoundEnabled] = useState(true);
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -23,8 +33,48 @@ export default function SettingsPage() {
 
     window.addEventListener('beforeinstallprompt', handler);
 
+    const prefs = getNotificationPreferences();
+    setNotifications(prefs.prayerNotifications);
+    setReminderMinutes(prefs.reminderMinutes);
+    setSoundEnabled(prefs.soundEnabled);
+    setNotificationPermission(getNotificationPermissionStatus());
+
     return () => window.removeEventListener('beforeinstallprompt', handler);
   }, []);
+
+  const handleRequestNotificationPermission = async () => {
+    const granted = await requestNotificationPermission();
+    if (granted) {
+      setNotificationPermission("granted");
+      window.dispatchEvent(new CustomEvent("rescheduleNotifications"));
+      alert("Notification permission granted! You will now receive prayer time notifications.");
+    } else {
+      alert("Notification permission denied. Please enable notifications in your browser settings.");
+    }
+  };
+
+  const handleNotificationToggle = (checked: boolean) => {
+    setNotifications(checked);
+    saveNotificationPreferences({ prayerNotifications: checked });
+    
+    if (!checked) {
+      clearPrayerNotifications();
+    } else {
+      window.dispatchEvent(new CustomEvent("rescheduleNotifications"));
+    }
+  };
+
+  const handleReminderMinutesChange = (value: string) => {
+    const minutes = parseInt(value);
+    setReminderMinutes(minutes);
+    saveNotificationPreferences({ reminderMinutes: minutes });
+    window.dispatchEvent(new CustomEvent("rescheduleNotifications"));
+  };
+
+  const handleSoundToggle = (checked: boolean) => {
+    setSoundEnabled(checked);
+    saveNotificationPreferences({ soundEnabled: checked });
+  };
 
   const handleInstallClick = async () => {
     if (!deferredPrompt) {
@@ -105,18 +155,69 @@ export default function SettingsPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
+            {notificationPermission !== "granted" && (
+              <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 space-y-2">
+                <div className="flex items-start gap-2">
+                  <AlertCircle className="h-5 w-5 text-amber-500 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-amber-500">Enable Notifications</p>
+                    <p className="text-sm text-muted-foreground">
+                      Allow notifications to receive prayer time reminders
+                    </p>
+                  </div>
+                </div>
+                <Button 
+                  onClick={handleRequestNotificationPermission}
+                  className="w-full"
+                  data-testid="button-request-notification"
+                >
+                  Enable Notifications
+                </Button>
+              </div>
+            )}
+            
             <div className="flex items-center justify-between">
               <Label htmlFor="prayer-notifications">Prayer Time Notifications</Label>
               <Switch
                 id="prayer-notifications"
                 checked={notifications}
-                onCheckedChange={setNotifications}
+                onCheckedChange={handleNotificationToggle}
                 data-testid="switch-notifications"
               />
             </div>
             <p className="text-sm text-muted-foreground">
               Get notified when it's time for prayer
             </p>
+
+            {notifications && (
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="reminder-minutes">Reminder Before Prayer</Label>
+                  <Select value={reminderMinutes.toString()} onValueChange={handleReminderMinutesChange}>
+                    <SelectTrigger id="reminder-minutes" data-testid="select-reminder-minutes">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="0">No reminder</SelectItem>
+                      <SelectItem value="5">5 minutes before</SelectItem>
+                      <SelectItem value="10">10 minutes before</SelectItem>
+                      <SelectItem value="15">15 minutes before</SelectItem>
+                      <SelectItem value="30">30 minutes before</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="sound-enabled">Notification Sound</Label>
+                  <Switch
+                    id="sound-enabled"
+                    checked={soundEnabled}
+                    onCheckedChange={handleSoundToggle}
+                    data-testid="switch-sound"
+                  />
+                </div>
+              </>
+            )}
           </CardContent>
         </Card>
 
