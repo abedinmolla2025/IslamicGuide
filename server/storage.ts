@@ -26,6 +26,7 @@ export interface IStorage {
   
   getRandomHadith(): Promise<Hadith | undefined>;
   getDailyHadith(): Promise<Hadith | undefined>;
+  setDailyHadith(hadith: Hadith): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
@@ -37,6 +38,8 @@ export class MemStorage implements IStorage {
   private dailyQuizzes: Map<string, DailyQuiz>;
   private hadiths: Map<string, Hadith>;
   private currentQuizDate: string | null;
+  private currentHadithDate: string | null;
+  private currentHadith: Hadith | null;
 
   constructor() {
     this.users = new Map();
@@ -45,7 +48,10 @@ export class MemStorage implements IStorage {
     this.islamicEvents = new Map();
     this.islamicNames = new Map();
     this.dailyQuizzes = new Map();
+    this.hadiths = new Map();
     this.currentQuizDate = null;
+    this.currentHadithDate = null;
+    this.currentHadith = null;
     this.initializeData();
   }
 
@@ -123,6 +129,79 @@ export class MemStorage implements IStorage {
 
     names.forEach(name => {
       this.islamicNames.set(name.id, name);
+    });
+
+    // Initialize some Hadiths
+    const hadiths = [
+      {
+        id: randomUUID(),
+        arabic: "إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ",
+        translation: "Actions are but by intentions, and every man shall have only that which he intended.",
+        translationBengali: "কাজের ফলাফল নিয়তের উপর নির্ভরশীল এবং প্রত্যেক ব্যক্তি তার নিয়ত অনুযায়ী ফল পাবে।",
+        narrator: "Umar ibn Al-Khattab",
+        narratorBengali: "উমর ইবনুল খাত্তাব (রা.)",
+        bookName: "Sahih Bukhari",
+        bookNameBengali: "সহীহ বুখারী",
+        reference: "Book 1, Hadith 1",
+        aiInsight: "This fundamental hadith teaches that the value of our actions depends on our intentions. Before performing any deed, we should ensure our intention is purely for Allah's pleasure.",
+        aiInsightBengali: "এই মৌলিক হাদীসটি শিক্ষা দেয় যে আমাদের কাজের মূল্য আমাদের নিয়তের উপর নির্ভর করে। যেকোনো কাজ করার আগে আমাদের নিয়ত শুধুমাত্র আল্লাহর সন্তুষ্টির জন্য হওয়া উচিত।"
+      },
+      {
+        id: randomUUID(),
+        arabic: "خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ",
+        translation: "The best among you are those who learn the Quran and teach it.",
+        translationBengali: "তোমাদের মধ্যে সর্বোত্তম ব্যক্তি হলো সে, যে কুরআন শেখে এবং অন্যদের শেখায়।",
+        narrator: "Uthman ibn Affan",
+        narratorBengali: "উসমান ইবন আফফান (রা.)",
+        bookName: "Sahih Bukhari",
+        bookNameBengali: "সহীহ বুখারী",
+        reference: "Book 66, Hadith 21",
+        aiInsight: "This hadith emphasizes the importance of learning and teaching the Quran. It encourages Muslims to dedicate time to understanding Allah's word and sharing that knowledge with others.",
+        aiInsightBengali: "এই হাদিসটি কুরআন শেখা এবং শেখানোর গুরুত্ব তুলে ধরে। এটি মুসলমানদের আল্লাহর বাণী বোঝার জন্য সময় উৎসর্গ করতে এবং সেই জ্ঞান অন্যদের সাথে ভাগ করতে উৎসাহিত করে।"
+      },
+      {
+        id: randomUUID(),
+        arabic: "الْمُؤْمِنُ لِلْمُؤْمِنِ كَالْبُنْيَانِ يَشُدُّ بَعْضُهُ بَعْضًا",
+        translation: "The believer to another believer is like a building whose different parts enforce each other.",
+        translationBengali: "একজন মুমিন অপর মুমিনের জন্য ভবনের মতো যার এক অংশ অপর অংশকে শক্তিশালী করে।",
+        narrator: "Abu Musa Al-Ash'ari",
+        narratorBengali: "আবু মুসা আল-আশআরী (রা.)",
+        bookName: "Sahih Bukhari",
+        bookNameBengali: "সহীহ বুখারী",
+        reference: "Book 8, Hadith 88",
+        aiInsight: "This beautiful metaphor teaches us about the unity and mutual support that should exist among believers. Just as a building needs all its parts working together to stand strong, Muslims should support each other.",
+        aiInsightBengali: "এই সুন্দর রূপকটি আমাদের শেখায় যে বিশ্বাসীদের মধ্যে একতা এবং পারস্পরিক সহায়তা থাকা উচিত। যেমন একটি ভবনের সমস্ত অংশ একসাথে কাজ করে শক্তিশালী হয়, তেমনি মুসলমানদেরও একে অপরকে সমর্থন করা উচিত।"
+      },
+      {
+        id: randomUUID(),
+        arabic: "مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الْآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ",
+        translation: "Whoever believes in Allah and the Last Day should speak good or remain silent.",
+        translationBengali: "যে ব্যক্তি আল্লাহ ও পরকালে বিশ্বাস করে, সে যেন ভালো কথা বলে অথবা চুপ থাকে।",
+        narrator: "Abu Hurairah",
+        narratorBengali: "আবু হুরায়রা (রা.)",
+        bookName: "Sahih Bukhari",
+        bookNameBengali: "সহীহ বুখারী",
+        reference: "Book 73, Hadith 47",
+        aiInsight: "This hadith teaches us the importance of mindful speech. We should only speak when our words bring benefit, otherwise it's better to remain silent to avoid causing harm.",
+        aiInsightBengali: "এই হাদিসটি আমাদের সচেতন কথা বলার গুরুত্ব শেখায়। আমাদের শুধুমাত্র তখনই কথা বলা উচিত যখন আমাদের কথা উপকার নিয়ে আসে, অন্যথায় ক্ষতি এড়াতে চুপ থাকাই ভালো।"
+      },
+      {
+        id: randomUUID(),
+        arabic: "الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ",
+        translation: "A Muslim is the one from whose tongue and hands the Muslims are safe.",
+        translationBengali: "প্রকৃত মুসলমান সে, যার মুখ ও হাত থেকে অন্য মুসলমানরা নিরাপদ।",
+        narrator: "Abdullah ibn Amr",
+        narratorBengali: "আবদুল্লাহ ইবন আমর (রা.)",
+        bookName: "Sahih Bukhari",
+        bookNameBengali: "সহীহ বুখারী",
+        reference: "Book 2, Hadith 9",
+        aiInsight: "This hadith defines the core character of a true Muslim - one who doesn't harm others through words or actions. It reminds us to be mindful of how we treat fellow Muslims.",
+        aiInsightBengali: "এই হাদিসটি একজন প্রকৃত মুসলমানের মূল চরিত্র সংজ্ঞায়িত করে - যে কথা বা কাজের মাধ্যমে অন্যদের ক্ষতি করে না। এটি আমাদের সহ-মুসলমানদের সাথে আচরণের বিষয়ে সচেতন হতে মনে করিয়ে দেয়।"
+      }
+    ];
+
+    hadiths.forEach(hadith => {
+      this.hadiths.set(hadith.id, hadith);
     });
   }
 
@@ -263,6 +342,43 @@ export class MemStorage implements IStorage {
     this.currentQuizDate = new Date().toISOString().split('T')[0];
     
     return quiz;
+  }
+
+  async getRandomHadith(): Promise<Hadith | undefined> {
+    const hadithArray = Array.from(this.hadiths.values());
+    if (hadithArray.length === 0) return undefined;
+    
+    const randomIndex = Math.floor(Math.random() * hadithArray.length);
+    return hadithArray[randomIndex];
+  }
+
+  async getDailyHadith(): Promise<Hadith | undefined> {
+    const today = new Date().toISOString().split('T')[0];
+    
+    // If we have a current hadith for today, return it
+    if (this.currentHadithDate === today && this.currentHadith) {
+      return this.currentHadith;
+    }
+    
+    // Otherwise, select a new one for today
+    const hadithArray = Array.from(this.hadiths.values());
+    if (hadithArray.length === 0) return undefined;
+    
+    // Use day of year to select consistent hadith for the day
+    const todayDate = new Date();
+    const dayOfYear = Math.floor((todayDate.getTime() - new Date(todayDate.getFullYear(), 0, 0).getTime()) / 1000 / 60 / 60 / 24);
+    const hadithIndex = dayOfYear % hadithArray.length;
+    
+    this.currentHadith = hadithArray[hadithIndex];
+    this.currentHadithDate = today;
+    
+    return this.currentHadith;
+  }
+
+  async setDailyHadith(hadith: Hadith): Promise<void> {
+    const today = new Date().toISOString().split('T')[0];
+    this.currentHadith = hadith;
+    this.currentHadithDate = today;
   }
 }
 

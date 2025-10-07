@@ -28,24 +28,33 @@ export default function MosquePage() {
   const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
   const [radius, setRadius] = useState(5000);
+  const [requestingLocation, setRequestingLocation] = useState(false);
 
-  useEffect(() => {
+  const requestLocation = () => {
     if (navigator.geolocation) {
+      setRequestingLocation(true);
+      setLocationError(null);
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setUserLocation({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
           });
+          setRequestingLocation(false);
         },
         (error) => {
           setLocationError("Location permission denied. Please enable location to find nearby mosques.");
           console.error("Geolocation error:", error);
+          setRequestingLocation(false);
         }
       );
     } else {
       setLocationError("Geolocation is not supported by your browser.");
     }
+  };
+
+  useEffect(() => {
+    requestLocation();
   }, []);
 
   const queryKey = userLocation 
@@ -101,12 +110,32 @@ export default function MosquePage() {
 
             {locationError && (
               <Card className="bg-red-900/20 border border-red-500/30">
-                <CardContent className="p-4 flex items-start gap-3">
-                  <AlertCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-red-400">Location Error</p>
-                    <p className="text-sm text-red-200">{locationError}</p>
+                <CardContent className="p-4 space-y-3">
+                  <div className="flex items-start gap-3">
+                    <AlertCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="text-sm font-semibold text-red-400">লোকেশন অ্যাক্সেস প্রয়োজন</p>
+                      <p className="text-sm text-red-200">{locationError}</p>
+                    </div>
                   </div>
+                  <Button
+                    onClick={requestLocation}
+                    disabled={requestingLocation}
+                    className="w-full bg-amber-500 hover:bg-amber-600"
+                    data-testid="button-request-location"
+                  >
+                    {requestingLocation ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        অনুরোধ করা হচ্ছে...
+                      </>
+                    ) : (
+                      <>
+                        <MapPin className="h-4 w-4 mr-2" />
+                        লোকেশন অনুমতি দিন
+                      </>
+                    )}
+                  </Button>
                 </CardContent>
               </Card>
             )}

@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import HomePage from "@/pages/home";
 import DuaPage from "@/pages/dua";
+import HadithPage from "@/pages/hadith";
 import SurahPage from "@/pages/surah";
 import QiblaPage from "@/pages/qibla";
 import QuranPage from "@/pages/quran";
@@ -19,6 +20,7 @@ function Router() {
     <Switch>
       <Route path="/" component={HomePage} />
       <Route path="/dua" component={DuaPage} />
+      <Route path="/hadith" component={HadithPage} />
       <Route path="/surah" component={SurahPage} />
       <Route path="/qibla" component={QiblaPage} />
       <Route path="/quran" component={QuranPage} />
