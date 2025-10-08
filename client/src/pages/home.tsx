@@ -69,6 +69,26 @@ export default function HomePage() {
 
           <QuranVerse />
           <DailyHadith />
+          
+          {/* Bukhari Button */}
+          <section className="p-4">
+            <a 
+              href="/bukhari" 
+              className="block bg-gradient-to-br from-amber-900/50 to-amber-950/50 border border-amber-400/30 rounded-lg p-4 hover:from-amber-900/70 hover:to-amber-950/70 transition-all"
+              data-testid="link-bukhari"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-amber-400 font-semibold text-lg">সহীহ বুখারী</h3>
+                  <p className="text-emerald-200 text-sm mt-1">Sahih al-Bukhari - 7277 Hadiths</p>
+                </div>
+                <svg className="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </a>
+          </section>
+          
           <DailyQuiz />
           <AsmaUlHusna />
         </div>

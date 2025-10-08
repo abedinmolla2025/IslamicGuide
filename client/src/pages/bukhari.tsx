@@ -214,7 +214,7 @@ export default function BukhariPage() {
         </ScrollArea>
       </main>
 
-      <BottomNavigation currentPage="bukhari" />
+      <BottomNavigation currentPage="hadith" />
     </div>
   );
 }
