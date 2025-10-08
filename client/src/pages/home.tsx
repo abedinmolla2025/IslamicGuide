@@ -5,6 +5,7 @@ import QiblaCompass from "@/components/qibla-compass";
 import DhikrCounter from "@/components/dhikr-counter";
 import IslamicCalendar from "@/components/islamic-calendar";
 import QuranVerse from "@/components/quran-verse";
+import DailyHadith from "@/components/daily-hadith";
 import DailyQuiz from "@/components/daily-quiz";
 import AsmaUlHusna from "@/components/asma-ul-husna";
 import BottomNavigation from "@/components/bottom-navigation";
@@ -67,6 +68,7 @@ export default function HomePage() {
           </section>
 
           <QuranVerse />
+          <DailyHadith />
           <DailyQuiz />
           <AsmaUlHusna />
         </div>

@@ -163,7 +163,7 @@ export default function HadithPage() {
         </ScrollArea>
       </main>
 
-      <BottomNavigation currentPage="dua" />
+      <BottomNavigation currentPage="hadith" />
     </div>
   );
 }
