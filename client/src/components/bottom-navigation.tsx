@@ -3,7 +3,7 @@ import { Home, Compass, BookOpen, Calendar, Smile, Book, BookText, MapPin } from
 import { useLocation } from "wouter";
 
 interface BottomNavigationProps {
-  currentPage: "home" | "qibla" | "quran" | "calendar" | "names" | "dua" | "surah" | "mosque";
+  currentPage: "home" | "qibla" | "quran" | "calendar" | "names" | "dua" | "surah" | "mosque" | "hadith";
 }
 
 export default function BottomNavigation({ currentPage }: BottomNavigationProps) {
@@ -12,6 +12,7 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
   const navigationItems = [
     { id: "home", icon: Home, label: "Home", path: "/" },
     { id: "dua", icon: Book, label: "Dua", path: "/dua" },
+    { id: "hadith", icon: BookText, label: "Hadith", path: "/hadith" },
     { id: "mosque", icon: MapPin, label: "Mosque", path: "/mosque" },
     { id: "qibla", icon: Compass, label: "Qibla", path: "/qibla" },
     { id: "quran", icon: BookOpen, label: "Quran", path: "/quran" },
