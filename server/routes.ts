@@ -294,6 +294,73 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Bukhari Hadith routes
+  app.get("/api/bukhari/all", async (req, res) => {
+    try {
+      const hadiths = await storage.getAllBukhariHadiths();
+      res.json(hadiths);
+    } catch (error) {
+      console.error("Get all Bukhari hadiths error:", error);
+      res.status(500).json({ message: "Failed to get Bukhari hadiths" });
+    }
+  });
+
+  app.get("/api/bukhari/search", async (req, res) => {
+    try {
+      const { q } = req.query;
+      if (!q || typeof q !== 'string') {
+        return res.status(400).json({ message: "Search query is required" });
+      }
+      
+      const hadiths = await storage.searchBukhariHadiths(q);
+      res.json(hadiths);
+    } catch (error) {
+      console.error("Search Bukhari hadiths error:", error);
+      res.status(500).json({ message: "Failed to search Bukhari hadiths" });
+    }
+  });
+
+  app.get("/api/bukhari/random", async (req, res) => {
+    try {
+      const hadith = await storage.getRandomBukhariHadith();
+      if (!hadith) {
+        return res.status(404).json({ message: "No Bukhari hadith found" });
+      }
+      res.json(hadith);
+    } catch (error) {
+      console.error("Get random Bukhari hadith error:", error);
+      res.status(500).json({ message: "Failed to get random Bukhari hadith" });
+    }
+  });
+
+  app.get("/api/bukhari/book/:bookNumber", async (req, res) => {
+    try {
+      const bookNumber = parseInt(req.params.bookNumber);
+      if (isNaN(bookNumber)) {
+        return res.status(400).json({ message: "Invalid book number" });
+      }
+      
+      const hadiths = await storage.getBukhariHadithsByBook(bookNumber);
+      res.json(hadiths);
+    } catch (error) {
+      console.error("Get Bukhari hadiths by book error:", error);
+      res.status(500).json({ message: "Failed to get Bukhari hadiths by book" });
+    }
+  });
+
+  app.get("/api/bukhari/:id", async (req, res) => {
+    try {
+      const hadith = await storage.getBukhariHadithById(req.params.id);
+      if (!hadith) {
+        return res.status(404).json({ message: "Bukhari hadith not found" });
+      }
+      res.json(hadith);
+    } catch (error) {
+      console.error("Get Bukhari hadith by ID error:", error);
+      res.status(500).json({ message: "Failed to get Bukhari hadith" });
+    }
+  });
+
   // Mosque finder route
   app.get("/api/mosques/nearby", async (req, res) => {
     try {

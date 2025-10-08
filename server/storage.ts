@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type PrayerTimes, type InsertPrayerTimes, type QuranVerse, type IslamicEvent, type IslamicName, type InsertIslamicName, type DailyQuiz, type InsertDailyQuiz, type Hadith, type InsertHadith } from "@shared/schema";
+import { type User, type InsertUser, type PrayerTimes, type InsertPrayerTimes, type QuranVerse, type IslamicEvent, type IslamicName, type InsertIslamicName, type DailyQuiz, type InsertDailyQuiz, type Hadith, type InsertHadith, type BukhariHadith, type InsertBukhariHadith } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { islamicNames as namesData } from "../client/src/data/islamic-names";
 
@@ -27,6 +27,12 @@ export interface IStorage {
   getRandomHadith(): Promise<Hadith | undefined>;
   getDailyHadith(): Promise<Hadith | undefined>;
   setDailyHadith(hadith: Hadith): Promise<void>;
+  
+  getAllBukhariHadiths(): Promise<BukhariHadith[]>;
+  getBukhariHadithById(id: string): Promise<BukhariHadith | undefined>;
+  searchBukhariHadiths(query: string): Promise<BukhariHadith[]>;
+  getRandomBukhariHadith(): Promise<BukhariHadith | undefined>;
+  getBukhariHadithsByBook(bookNumber: number): Promise<BukhariHadith[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -37,6 +43,7 @@ export class MemStorage implements IStorage {
   private islamicNames: Map<string, IslamicName>;
   private dailyQuizzes: Map<string, DailyQuiz>;
   private hadiths: Map<string, Hadith>;
+  private bukhariHadiths: Map<string, BukhariHadith>;
   private currentQuizDate: string | null;
   private currentHadithDate: string | null;
   private currentHadith: Hadith | null;
@@ -49,6 +56,7 @@ export class MemStorage implements IStorage {
     this.islamicNames = new Map();
     this.dailyQuizzes = new Map();
     this.hadiths = new Map();
+    this.bukhariHadiths = new Map();
     this.currentQuizDate = null;
     this.currentHadithDate = null;
     this.currentHadith = null;
@@ -202,6 +210,74 @@ export class MemStorage implements IStorage {
 
     hadiths.forEach(hadith => {
       this.hadiths.set(hadith.id, hadith);
+    });
+
+    // Initialize Sahih Bukhari Hadiths
+    const bukhariHadiths = [
+      {
+        id: randomUUID(),
+        bookNumber: 1,
+        bookNameEnglish: "Revelation",
+        bookNameArabic: "كتاب بدء الوحي",
+        bookNameBengali: "ওহীর সূচনা",
+        chapterNumber: 1,
+        chapterNameEnglish: "How the Divine Inspiration started to be revealed to Allah's Messenger",
+        chapterNameArabic: "باب كَيْفَ كَانَ بَدْءُ الْوَحْىِ إِلَى رَسُولِ اللَّهِ صلى الله عليه وسلم",
+        chapterNameBengali: "রাসূলুল্লাহ (সাঃ) এর নিকট ওহী অবতরণের সূচনা কিভাবে হয়েছিল",
+        hadithNumber: 1,
+        arabicText: "إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى، فَمَنْ كَانَتْ هِجْرَتُهُ إِلَى دُنْيَا يُصِيبُهَا أَوْ إِلَى امْرَأَةٍ يَنْكِحُهَا فَهِجْرَتُهُ إِلَى مَا هَاجَرَ إِلَيْهِ",
+        englishTranslation: "The deeds are considered by the intentions, and a person will get the reward according to his intention. So whoever emigrated for Allah and His Messenger, his emigration will be for Allah and His Messenger; and whoever emigrated for worldly benefits or for a woman to marry, his emigration would be for what he emigrated for.",
+        bengaliTranslation: "সমস্ত কাজ নিয়তের উপর নির্ভরশীল এবং প্রত্যেক ব্যক্তির জন্য তাই রয়েছে যা সে নিয়ত করেছে। অতএব যার হিজরত আল্লাহ ও তাঁর রাসূলের উদ্দেশ্যে হয়, তার হিজরত আল্লাহ ও তাঁর রাসূলের জন্যই গণ্য হবে। আর যার হিজরত দুনিয়া অর্জন অথবা কোন নারীকে বিয়ে করার উদ্দেশ্যে হয়, তার হিজরত সেই উদ্দেশ্যেই হবে।",
+        narrator: "Umar ibn Al-Khattab",
+        narratorBengali: "উমর ইবনুল খাত্তাব (রা.)",
+        grading: "Sahih",
+        explanation: "This is the most famous hadith in Islamic literature, emphasizing the importance of intention in all actions. It teaches that the value and acceptance of any deed depends on the sincerity and purity of one's intention.",
+        explanationBengali: "এটি ইসলামী সাহিত্যের সবচেয়ে বিখ্যাত হাদীস, যা সকল কাজে নিয়তের গুরুত্ব তুলে ধরে। এটি শেখায় যে কোনো কাজের মূল্য এবং গ্রহণযোগ্যতা নির্ভর করে নিয়তের আন্তরিকতা ও পবিত্রতার উপর।"
+      },
+      {
+        id: randomUUID(),
+        bookNumber: 2,
+        bookNameEnglish: "Belief (Faith)",
+        bookNameArabic: "كتاب الإيمان",
+        bookNameBengali: "ঈমান",
+        chapterNumber: 1,
+        chapterNameEnglish: "Islam is based on five principles",
+        chapterNameArabic: "باب الإِيمَانُ وَقَوْلُ النَّبِيِّ صلى الله عليه وسلم بُنِيَ الإِسْلاَمُ عَلَى خَمْسٍ",
+        chapterNameBengali: "ইসলাম পাঁচটি ভিত্তির উপর প্রতিষ্ঠিত",
+        hadithNumber: 8,
+        arabicText: "بُنِيَ الإِسْلاَمُ عَلَى خَمْسٍ شَهَادَةِ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللَّهِ، وَإِقَامِ الصَّلاَةِ، وَإِيتَاءِ الزَّكَاةِ، وَالْحَجِّ، وَصَوْمِ رَمَضَانَ",
+        englishTranslation: "Islam is based on five principles: To testify that none has the right to be worshipped but Allah and Muhammad is Allah's Messenger; to offer prayers perfectly; to pay Zakat; to perform Hajj; and to observe fasting during the month of Ramadan.",
+        bengaliTranslation: "ইসলাম পাঁচটি ভিত্তির উপর প্রতিষ্ঠিত: সাক্ষ্য দেওয়া যে আল্লাহ ছাড়া কোন উপাস্য নেই এবং মুহাম্মাদ (সাঃ) আল্লাহর রাসূল; সালাত কায়েম করা; যাকাত আদায় করা; হজ্জ সম্পাদন করা এবং রমজান মাসে রোজা পালন করা।",
+        narrator: "Abdullah bin Umar",
+        narratorBengali: "আবদুল্লাহ ইবনে উমর (রা.)",
+        grading: "Sahih",
+        explanation: "This fundamental hadith outlines the five pillars of Islam, which form the foundation of a Muslim's faith and practice.",
+        explanationBengali: "এই মৌলিক হাদীস ইসলামের পাঁচটি স্তম্ভ বর্ণনা করে, যা একজন মুসলমানের বিশ্বাস ও আমলের ভিত্তি তৈরি করে।"
+      },
+      {
+        id: randomUUID(),
+        bookNumber: 10,
+        bookNameEnglish: "Times of the Prayers",
+        bookNameArabic: "كتاب مواقيت الصلاة",
+        bookNameBengali: "সালাতের সময়",
+        chapterNumber: 1,
+        chapterNameEnglish: "The superiority of offering prayers at their early stated times",
+        chapterNameArabic: "باب فَضْلِ الصَّلاَةِ لِوَقْتِهَا",
+        chapterNameBengali: "নির্ধারিত সময়ে সালাত আদায়ের ফজিলত",
+        hadithNumber: 527,
+        arabicText: "أَفْضَلُ الأَعْمَالِ الصَّلاَةُ لِوَقْتِهَا",
+        englishTranslation: "The most virtuous deed is to offer the prayer at its early stated time.",
+        bengaliTranslation: "সর্বোত্তম আমল হলো নির্ধারিত সময়ে সালাত আদায় করা।",
+        narrator: "Abdullah bin Masud",
+        narratorBengali: "আবদুল্লাহ ইবনে মাসউদ (রা.)",
+        grading: "Sahih",
+        explanation: "This hadith emphasizes the importance of praying on time, showing that punctuality in worship is beloved to Allah.",
+        explanationBengali: "এই হাদীস সময়মত সালাত আদায়ের গুরুত্ব তুলে ধরে, দেখায় যে ইবাদতে সময়ানুবর্তিতা আল্লাহর কাছে প্রিয়।"
+      }
+    ];
+
+    bukhariHadiths.forEach(hadith => {
+      this.bukhariHadiths.set(hadith.id, hadith);
     });
   }
 
@@ -379,6 +455,45 @@ export class MemStorage implements IStorage {
     const today = new Date().toISOString().split('T')[0];
     this.currentHadith = hadith;
     this.currentHadithDate = today;
+  }
+
+  async getAllBukhariHadiths(): Promise<BukhariHadith[]> {
+    return Array.from(this.bukhariHadiths.values());
+  }
+
+  async getBukhariHadithById(id: string): Promise<BukhariHadith | undefined> {
+    return this.bukhariHadiths.get(id);
+  }
+
+  async searchBukhariHadiths(query: string): Promise<BukhariHadith[]> {
+    const lowerQuery = query.toLowerCase();
+    return Array.from(this.bukhariHadiths.values()).filter(hadith => 
+      hadith.arabicText.toLowerCase().includes(lowerQuery) ||
+      hadith.englishTranslation.toLowerCase().includes(lowerQuery) ||
+      hadith.bengaliTranslation.toLowerCase().includes(lowerQuery) ||
+      hadith.bookNameEnglish.toLowerCase().includes(lowerQuery) ||
+      hadith.bookNameBengali.toLowerCase().includes(lowerQuery) ||
+      hadith.chapterNameEnglish.toLowerCase().includes(lowerQuery) ||
+      hadith.chapterNameBengali.toLowerCase().includes(lowerQuery) ||
+      hadith.narrator.toLowerCase().includes(lowerQuery) ||
+      hadith.narratorBengali.toLowerCase().includes(lowerQuery) ||
+      (hadith.explanation?.toLowerCase().includes(lowerQuery)) ||
+      (hadith.explanationBengali?.toLowerCase().includes(lowerQuery))
+    );
+  }
+
+  async getRandomBukhariHadith(): Promise<BukhariHadith | undefined> {
+    const hadithArray = Array.from(this.bukhariHadiths.values());
+    if (hadithArray.length === 0) return undefined;
+    
+    const randomIndex = Math.floor(Math.random() * hadithArray.length);
+    return hadithArray[randomIndex];
+  }
+
+  async getBukhariHadithsByBook(bookNumber: number): Promise<BukhariHadith[]> {
+    return Array.from(this.bukhariHadiths.values()).filter(
+      hadith => hadith.bookNumber === bookNumber
+    );
   }
 }
 

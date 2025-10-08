@@ -92,6 +92,27 @@ export const hadiths = pgTable("hadiths", {
   aiInsightBengali: text("ai_insight_bengali"),
 });
 
+export const bukhariHadiths = pgTable("bukhari_hadiths", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  bookNumber: integer("book_number").notNull(),
+  bookNameEnglish: text("book_name_english").notNull(),
+  bookNameArabic: text("book_name_arabic").notNull(),
+  bookNameBengali: text("book_name_bengali").notNull(),
+  chapterNumber: integer("chapter_number").notNull(),
+  chapterNameEnglish: text("chapter_name_english").notNull(),
+  chapterNameArabic: text("chapter_name_arabic"),
+  chapterNameBengali: text("chapter_name_bengali").notNull(),
+  hadithNumber: integer("hadith_number").notNull(),
+  arabicText: text("arabic_text").notNull(),
+  englishTranslation: text("english_translation").notNull(),
+  bengaliTranslation: text("bengali_translation").notNull(),
+  narrator: text("narrator").notNull(),
+  narratorBengali: text("narrator_bengali").notNull(),
+  grading: text("grading").notNull(),
+  explanation: text("explanation"),
+  explanationBengali: text("explanation_bengali"),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -125,6 +146,10 @@ export const insertHadithSchema = createInsertSchema(hadiths).omit({
   id: true,
 });
 
+export const insertBukhariHadithSchema = createInsertSchema(bukhariHadiths).omit({
+  id: true,
+});
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type PrayerTimes = typeof prayerTimes.$inferSelect;
@@ -139,6 +164,8 @@ export type DailyQuiz = typeof dailyQuizzes.$inferSelect;
 export type InsertDailyQuiz = z.infer<typeof insertDailyQuizSchema>;
 export type Hadith = typeof hadiths.$inferSelect;
 export type InsertHadith = z.infer<typeof insertHadithSchema>;
+export type BukhariHadith = typeof bukhariHadiths.$inferSelect;
+export type InsertBukhariHadith = z.infer<typeof insertBukhariHadithSchema>;
 
 // Raw interface for names before Bengali translation is applied
 export interface RawIslamicName {
