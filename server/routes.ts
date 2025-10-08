@@ -361,6 +361,217 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Bukhari Quiz endpoints
+  app.get("/api/bukhari/quiz/daily", async (req, res) => {
+    try {
+      const allHadiths = await storage.getAllBukhariHadiths();
+      if (allHadiths.length === 0) {
+        return res.status(404).json({ message: "No Bukhari hadiths found" });
+      }
+
+      // Use day of year for consistent daily quiz
+      const today = new Date();
+      const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 1000 / 60 / 60 / 24);
+      const hadithIndex = dayOfYear % allHadiths.length;
+      const hadith = allHadiths[hadithIndex];
+
+      // Generate quiz question
+      const questionTypes = ['narrator', 'book', 'meaning'];
+      const questionType = questionTypes[dayOfYear % questionTypes.length];
+
+      let question, questionBengali, options, optionsBengali, correctAnswer;
+
+      if (questionType === 'narrator') {
+        question = "Who narrated this hadith?";
+        questionBengali = "এই হাদীসটি কে বর্ণনা করেছেন?";
+        
+        // Get unique narrators and deduplicate
+        const uniqueNarrators = Array.from(new Set(
+          allHadiths
+            .filter(h => h.narrator !== hadith.narrator)
+            .map(h => h.narrator)
+        )).slice(0, 15);  // Get more to choose from
+        
+        // Shuffle and pick 3
+        const shuffled = uniqueNarrators.sort(() => Math.random() - 0.5).slice(0, 3);
+        const wrongNarrators = shuffled.map(narrator => {
+          const found = allHadiths.find(h => h.narrator === narrator);
+          return { en: narrator, bn: found?.narratorBengali || narrator };
+        });
+        
+        // Combine with correct answer
+        const allOptions = [
+          { en: hadith.narrator, bn: hadith.narratorBengali },
+          ...wrongNarrators
+        ].sort(() => Math.random() - 0.5);
+
+        options = allOptions.map(o => o.en);
+        optionsBengali = allOptions.map(o => o.bn);
+        correctAnswer = allOptions.findIndex(o => o.en === hadith.narrator);
+
+      } else if (questionType === 'book') {
+        question = "Which chapter is this hadith from?";
+        questionBengali = "এই হাদীসটি কোন অধ্যায় থেকে?";
+        
+        // Get unique chapters and deduplicate
+        const uniqueChapters = Array.from(new Set(
+          allHadiths
+            .filter(h => h.chapterNameEnglish !== hadith.chapterNameEnglish)
+            .map(h => h.chapterNameEnglish)
+        )).slice(0, 15);
+        
+        // Shuffle and pick 3
+        const shuffled = uniqueChapters.sort(() => Math.random() - 0.5).slice(0, 3);
+        const wrongChapters = shuffled.map(chapter => {
+          const found = allHadiths.find(h => h.chapterNameEnglish === chapter);
+          return { en: chapter, bn: found?.chapterNameBengali || chapter };
+        });
+        
+        // Combine with correct answer
+        const allOptions = [
+          { en: hadith.chapterNameEnglish, bn: hadith.chapterNameBengali },
+          ...wrongChapters
+        ].sort(() => Math.random() - 0.5);
+
+        options = allOptions.map(o => o.en);
+        optionsBengali = allOptions.map(o => o.bn);
+        correctAnswer = allOptions.findIndex(o => o.en === hadith.chapterNameEnglish);
+
+      } else {
+        question = `What does the Prophet (ﷺ) teach in this hadith? "${hadith.englishTranslation.substring(0, 100)}..."`;
+        questionBengali = `এই হাদীসে নবী (সাঃ) কী শিক্ষা দিয়েছেন? "${hadith.bengaliTranslation.substring(0, 100)}..."`;
+        
+        const meaningOptions = [
+          { en: hadith.explanation || "This hadith emphasizes the importance of intention and sincerity", bn: "এই হাদীস নিয়ত এবং আন্তরিকতার গুরুত্ব তুলে ধরে" },
+          { en: "The importance of praying five times a day", bn: "দিনে পাঁচবার সালাত আদায়ের গুরুত্ব" },
+          { en: "The virtues of fasting during Ramadan", bn: "রমজানে রোজা রাখার ফজিলত" },
+          { en: "The obligation of paying Zakat", bn: "যাকাত প্রদানের বাধ্যবাধকতা" }
+        ].sort(() => Math.random() - 0.5);
+        
+        options = meaningOptions.map(o => o.en);
+        optionsBengali = meaningOptions.map(o => o.bn);
+        correctAnswer = meaningOptions.findIndex(o => o.en === (hadith.explanation || "This hadith emphasizes the importance of intention and sincerity"));
+      }
+
+      res.json({
+        hadith,
+        question,
+        questionBengali,
+        options,
+        optionsBengali,
+        correctAnswer,
+        explanation: hadith.explanation || "Study the hadith carefully to understand its meaning",
+        explanationBengali: hadith.explanationBengali || "হাদীসটি ভালোভাবে পড়ুন এবং এর অর্থ বোঝার চেষ্টা করুন"
+      });
+    } catch (error) {
+      console.error("Bukhari daily quiz error:", error);
+      res.status(500).json({ message: "Failed to generate daily quiz" });
+    }
+  });
+
+  app.get("/api/bukhari/quiz/random", async (req, res) => {
+    try {
+      const hadith = await storage.getRandomBukhariHadith();
+      if (!hadith) {
+        return res.status(404).json({ message: "No Bukhari hadiths found" });
+      }
+
+      const allHadiths = await storage.getAllBukhariHadiths();
+
+      // Random question type
+      const questionTypes = ['narrator', 'book', 'meaning'];
+      const questionType = questionTypes[Math.floor(Math.random() * questionTypes.length)];
+
+      let question, questionBengali, options, optionsBengali, correctAnswer;
+
+      if (questionType === 'narrator') {
+        question = "Who narrated this hadith?";
+        questionBengali = "এই হাদীসটি কে বর্ণনা করেছেন?";
+        
+        // Get unique narrators and deduplicate
+        const uniqueNarrators = Array.from(new Set(
+          allHadiths
+            .filter(h => h.narrator !== hadith.narrator)
+            .map(h => h.narrator)
+        )).slice(0, 15);  // Get more to choose from
+        
+        // Shuffle and pick 3
+        const shuffled = uniqueNarrators.sort(() => Math.random() - 0.5).slice(0, 3);
+        const wrongNarrators = shuffled.map(narrator => {
+          const found = allHadiths.find(h => h.narrator === narrator);
+          return { en: narrator, bn: found?.narratorBengali || narrator };
+        });
+        
+        // Combine with correct answer
+        const allOptions = [
+          { en: hadith.narrator, bn: hadith.narratorBengali },
+          ...wrongNarrators
+        ].sort(() => Math.random() - 0.5);
+
+        options = allOptions.map(o => o.en);
+        optionsBengali = allOptions.map(o => o.bn);
+        correctAnswer = allOptions.findIndex(o => o.en === hadith.narrator);
+
+      } else if (questionType === 'book') {
+        question = "Which chapter is this hadith from?";
+        questionBengali = "এই হাদীসটি কোন অধ্যায় থেকে?";
+        
+        // Get unique chapters and deduplicate
+        const uniqueChapters = Array.from(new Set(
+          allHadiths
+            .filter(h => h.chapterNameEnglish !== hadith.chapterNameEnglish)
+            .map(h => h.chapterNameEnglish)
+        )).slice(0, 15);
+        
+        // Shuffle and pick 3
+        const shuffled = uniqueChapters.sort(() => Math.random() - 0.5).slice(0, 3);
+        const wrongChapters = shuffled.map(chapter => {
+          const found = allHadiths.find(h => h.chapterNameEnglish === chapter);
+          return { en: chapter, bn: found?.chapterNameBengali || chapter };
+        });
+        
+        // Combine with correct answer
+        const allOptions = [
+          { en: hadith.chapterNameEnglish, bn: hadith.chapterNameBengali },
+          ...wrongChapters
+        ].sort(() => Math.random() - 0.5);
+
+        options = allOptions.map(o => o.en);
+        optionsBengali = allOptions.map(o => o.bn);
+        correctAnswer = allOptions.findIndex(o => o.en === hadith.chapterNameEnglish);
+
+      } else {
+        question = `What does the Prophet (ﷺ) teach in this hadith? "${hadith.englishTranslation.substring(0, 100)}..."`;
+        questionBengali = `এই হাদীসে নবী (সাঃ) কী শিক্ষা দিয়েছেন? "${hadith.bengaliTranslation.substring(0, 100)}..."`;
+        
+        const meaningOptions = [
+          { en: hadith.explanation || "This hadith emphasizes the importance of intention and sincerity", bn: "এই হাদীস নিয়ত এবং আন্তরিকতার গুরুত্ব তুলে ধরে" },
+          { en: "The importance of praying five times a day", bn: "দিনে পাঁচবার সালাত আদায়ের গুরুত্ব" },
+          { en: "The virtues of fasting during Ramadan", bn: "রমজানে রোজা রাখার ফজিলত" },
+          { en: "The obligation of paying Zakat", bn: "যাকাত প্রদানের বাধ্যবাধকতা" }
+        ].sort(() => Math.random() - 0.5);
+        
+        options = meaningOptions.map(o => o.en);
+        optionsBengali = meaningOptions.map(o => o.bn);
+        correctAnswer = meaningOptions.findIndex(o => o.en === (hadith.explanation || "This hadith emphasizes the importance of intention and sincerity"));
+      }
+
+      res.json({
+        hadith,
+        question,
+        questionBengali,
+        options,
+        optionsBengali,
+        correctAnswer,
+        explanation: hadith.explanation || "Study the hadith carefully to understand its meaning",
+        explanationBengali: hadith.explanationBengali || "হাদীসটি ভালোভাবে পড়ুন এবং এর অর্থ বোঝার চেষ্টা করুন"
+      });
+    } catch (error) {
+      console.error("Bukhari random quiz error:", error);
+      res.status(500).json({ message: "Failed to generate random quiz" });
+    }
+  });
+
   // Mosque finder route
   app.get("/api/mosques/nearby", async (req, res) => {
     try {
