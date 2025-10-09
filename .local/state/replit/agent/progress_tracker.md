@@ -56,3 +56,6 @@
 - ✅ Updated explanations to show both Bengali and English versions
 - ✅ Set all UI text (search, tabs, buttons) to Bengali as primary language
 - ✅ Fixed all LSP errors after removing showBengali state
+- ✅ Fixed duplicate translation display - now only shows Bengali if different from English
+- ✅ Smart label switching - shows "অনুবাদ:" when only one translation, "English Translation:" when both exist
+- ⚠️ Note: Current Bukhari JSON data doesn't have actual Bengali translations (uses English as placeholder)

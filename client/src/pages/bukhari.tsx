@@ -87,10 +87,18 @@ export default function BukhariPage() {
                         <CardHeader>
                           <CardTitle className="text-amber-400 flex items-center gap-2 text-base">
                             <BookOpen className="h-4 w-4" />
-                            <span style={{ fontFamily: "'Noto Sans Bengali', 'Nikosh', 'Kalpurush', sans-serif" }}>
-                              {hadith.bookNameBengali || hadith.bookNameEnglish}
+                            <span style={{ 
+                              fontFamily: hadith.bookNameBengali && hadith.bookNameBengali !== hadith.bookNameEnglish 
+                                ? "'Noto Sans Bengali', 'Nikosh', 'Kalpurush', sans-serif" 
+                                : "inherit" 
+                            }}>
+                              {hadith.bookNameBengali && hadith.bookNameBengali !== hadith.bookNameEnglish 
+                                ? hadith.bookNameBengali 
+                                : hadith.bookNameEnglish}
                               {" - "}
-                              {hadith.chapterNameBengali || hadith.chapterNameEnglish}
+                              {hadith.chapterNameBengali && hadith.chapterNameBengali !== hadith.chapterNameEnglish
+                                ? hadith.chapterNameBengali
+                                : hadith.chapterNameEnglish}
                             </span>
                           </CardTitle>
                         </CardHeader>
@@ -106,8 +114,8 @@ export default function BukhariPage() {
                             </p>
                           </div>
 
-                          {/* Bengali Translation */}
-                          {hadith.bengaliTranslation && (
+                          {/* Bengali Translation - only show if different from English */}
+                          {hadith.bengaliTranslation && hadith.bengaliTranslation !== hadith.englishTranslation && (
                             <div className="border-t border-emerald-700/30 pt-3">
                               <p className="text-sm text-emerald-300 mb-1 font-semibold">
                                 বাংলা অনুবাদ:
@@ -125,23 +133,21 @@ export default function BukhariPage() {
                             </div>
                           )}
 
-                          {/* English Translation */}
-                          {hadith.englishTranslation && (
-                            <div className="border-t border-emerald-700/30 pt-3">
-                              <p className="text-sm text-emerald-300 mb-1 font-semibold">
-                                English Translation:
-                              </p>
-                              <p className="text-emerald-100 leading-relaxed text-sm italic" data-testid={`text-translation-${hadith.id}`}>
-                                {hadith.englishTranslation}
-                              </p>
-                            </div>
-                          )}
+                          {/* Translation */}
+                          <div className="border-t border-emerald-700/30 pt-3">
+                            <p className="text-sm text-emerald-300 mb-1 font-semibold">
+                              {hadith.bengaliTranslation && hadith.bengaliTranslation !== hadith.englishTranslation ? "English Translation:" : "অনুবাদ:"}
+                            </p>
+                            <p className="text-emerald-100 leading-relaxed" data-testid={`text-translation-${hadith.id}`}>
+                              {hadith.englishTranslation}
+                            </p>
+                          </div>
 
-                          {/* Bengali Explanation */}
-                          {hadith.explanationBengali && (
+                          {/* Bengali Explanation - only show if different from English */}
+                          {hadith.explanationBengali && hadith.explanationBengali !== hadith.explanation && (
                             <div className="border-t border-emerald-700/30 pt-3">
                               <p className="text-sm text-emerald-300 mb-1 font-semibold">
-                                ব্যাখ্যা:
+                                বাংলা ব্যাখ্যা:
                               </p>
                               <p 
                                 className="text-emerald-100 text-sm leading-relaxed"
@@ -155,13 +161,13 @@ export default function BukhariPage() {
                             </div>
                           )}
 
-                          {/* English Explanation */}
+                          {/* Explanation */}
                           {hadith.explanation && (
                             <div className="border-t border-emerald-700/30 pt-3">
                               <p className="text-sm text-emerald-300 mb-1 font-semibold">
-                                Explanation:
+                                {hadith.explanationBengali && hadith.explanationBengali !== hadith.explanation ? "English Explanation:" : "ব্যাখ্যা:"}
                               </p>
-                              <p className="text-emerald-100 text-sm leading-relaxed italic">
+                              <p className="text-emerald-100 text-sm leading-relaxed">
                                 {hadith.explanation}
                               </p>
                             </div>
@@ -171,10 +177,16 @@ export default function BukhariPage() {
                           <div className="flex flex-wrap gap-2 pt-2">
                             <Badge 
                               className="bg-emerald-700 text-white" 
-                              style={{ fontFamily: "'Noto Sans Bengali', 'Nikosh', 'Kalpurush', sans-serif" }}
+                              style={{ 
+                                fontFamily: hadith.narratorBengali && hadith.narratorBengali !== hadith.narrator
+                                  ? "'Noto Sans Bengali', 'Nikosh', 'Kalpurush', sans-serif"
+                                  : "inherit"
+                              }}
                               data-testid={`badge-narrator-${hadith.id}`}
                             >
-                              {hadith.narratorBengali || hadith.narrator}
+                              {hadith.narratorBengali && hadith.narratorBengali !== hadith.narrator
+                                ? hadith.narratorBengali
+                                : hadith.narrator}
                             </Badge>
                             <Badge className="bg-amber-600 text-white">
                               হাদীস নং {hadith.hadithNumber}
