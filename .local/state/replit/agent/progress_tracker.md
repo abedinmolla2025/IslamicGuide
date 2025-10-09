@@ -48,3 +48,11 @@
 - ✅ Added proper Bengali font styling for better readability
 - ✅ Updated AI insights to show both Bengali and English versions
 - ✅ Set Bengali as primary language for narrator and book names
+
+## Sahih Bukhari Page Updates (October 09, 2025)
+- ✅ Updated Bukhari page to display Arabic text with both Bengali and English translations
+- ✅ Removed language toggle button - all translations now show simultaneously
+- ✅ Added Bengali font styling for book names, chapter names, and narrator badges
+- ✅ Updated explanations to show both Bengali and English versions
+- ✅ Set all UI text (search, tabs, buttons) to Bengali as primary language
+- ✅ Fixed all LSP errors after removing showBengali state

@@ -13,7 +13,6 @@ import type { BukhariHadith } from "@shared/schema";
 import { useLocation } from "wouter";
 
 export default function BukhariPage() {
-  const [showBengali, setShowBengali] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [, setLocation] = useLocation();
 
@@ -39,29 +38,16 @@ export default function BukhariPage() {
       <main className="flex-1 overflow-hidden pb-16">
         <ScrollArea className="h-full">
           <div className="p-4 space-y-4">
-            {/* Language Toggle */}
-            <div className="flex justify-end">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowBengali(!showBengali)}
-                className="text-emerald-200 hover:text-amber-400"
-                data-testid="button-toggle-language"
-              >
-                {showBengali ? "EN" : "বাং"}
-              </Button>
-            </div>
-
             {/* Tabs for Browse and Quiz */}
             <Tabs defaultValue="browse" className="w-full">
               <TabsList className="grid w-full grid-cols-2 bg-emerald-900/50">
                 <TabsTrigger value="browse" data-testid="tab-browse">
                   <Search className="h-4 w-4 mr-2" />
-                  {showBengali ? "খুঁজুন" : "Browse"}
+                  খুঁজুন
                 </TabsTrigger>
                 <TabsTrigger value="quiz" data-testid="tab-quiz">
                   <Brain className="h-4 w-4 mr-2" />
-                  {showBengali ? "কুইজ" : "Quiz"}
+                  কুইজ
                 </TabsTrigger>
               </TabsList>
 
@@ -71,7 +57,7 @@ export default function BukhariPage() {
                   <Search className="absolute left-3 top-3 h-4 w-4 text-emerald-400" />
                   <Input
                     type="text"
-                    placeholder={showBengali ? "হাদীস খুঁজুন..." : "Search hadiths..."}
+                    placeholder="হাদীস খুঁজুন..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="pl-10 bg-emerald-900/30 border-emerald-700 text-emerald-100 placeholder:text-emerald-400"
@@ -84,7 +70,7 @@ export default function BukhariPage() {
                   <div className="flex flex-col items-center justify-center py-12 space-y-4">
                     <Loader2 className="h-12 w-12 animate-spin text-amber-400" />
                     <p className="text-emerald-200 font-semibold">
-                      {showBengali ? "হাদীস লোড হচ্ছে..." : "Loading hadiths..."}
+                      হাদীস লোড হচ্ছে...
                     </p>
                   </div>
                 )}
@@ -101,9 +87,11 @@ export default function BukhariPage() {
                         <CardHeader>
                           <CardTitle className="text-amber-400 flex items-center gap-2 text-base">
                             <BookOpen className="h-4 w-4" />
-                            {showBengali ? hadith.bookNameBengali : hadith.bookNameEnglish}
-                            {" - "}
-                            {showBengali ? hadith.chapterNameBengali : hadith.chapterNameEnglish}
+                            <span style={{ fontFamily: "'Noto Sans Bengali', 'Nikosh', 'Kalpurush', sans-serif" }}>
+                              {hadith.bookNameBengali || hadith.bookNameEnglish}
+                              {" - "}
+                              {hadith.chapterNameBengali || hadith.chapterNameEnglish}
+                            </span>
                           </CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-3">
@@ -118,37 +106,78 @@ export default function BukhariPage() {
                             </p>
                           </div>
 
-                          {/* Translation */}
-                          <div className="border-t border-emerald-700/30 pt-3">
-                            <p className="text-sm text-emerald-300 mb-1 font-semibold">
-                              {showBengali ? "অনুবাদ:" : "Translation:"}
-                            </p>
-                            <p className="text-emerald-100 leading-relaxed" data-testid={`text-translation-${hadith.id}`}>
-                              {showBengali ? hadith.bengaliTranslation : hadith.englishTranslation}
-                            </p>
-                          </div>
+                          {/* Bengali Translation */}
+                          {hadith.bengaliTranslation && (
+                            <div className="border-t border-emerald-700/30 pt-3">
+                              <p className="text-sm text-emerald-300 mb-1 font-semibold">
+                                বাংলা অনুবাদ:
+                              </p>
+                              <p 
+                                className="text-emerald-100 leading-relaxed text-base"
+                                style={{ 
+                                  fontFamily: "'Noto Sans Bengali', 'Nikosh', 'Kalpurush', sans-serif",
+                                  lineHeight: '1.8'
+                                }}
+                                data-testid={`text-translation-bengali-${hadith.id}`}
+                              >
+                                {hadith.bengaliTranslation}
+                              </p>
+                            </div>
+                          )}
 
-                          {/* Explanation */}
+                          {/* English Translation */}
+                          {hadith.englishTranslation && (
+                            <div className="border-t border-emerald-700/30 pt-3">
+                              <p className="text-sm text-emerald-300 mb-1 font-semibold">
+                                English Translation:
+                              </p>
+                              <p className="text-emerald-100 leading-relaxed text-sm italic" data-testid={`text-translation-${hadith.id}`}>
+                                {hadith.englishTranslation}
+                              </p>
+                            </div>
+                          )}
+
+                          {/* Bengali Explanation */}
+                          {hadith.explanationBengali && (
+                            <div className="border-t border-emerald-700/30 pt-3">
+                              <p className="text-sm text-emerald-300 mb-1 font-semibold">
+                                ব্যাখ্যা:
+                              </p>
+                              <p 
+                                className="text-emerald-100 text-sm leading-relaxed"
+                                style={{ 
+                                  fontFamily: "'Noto Sans Bengali', 'Nikosh', 'Kalpurush', sans-serif",
+                                  lineHeight: '1.8'
+                                }}
+                              >
+                                {hadith.explanationBengali}
+                              </p>
+                            </div>
+                          )}
+
+                          {/* English Explanation */}
                           {hadith.explanation && (
                             <div className="border-t border-emerald-700/30 pt-3">
                               <p className="text-sm text-emerald-300 mb-1 font-semibold">
-                                {showBengali ? "ব্যাখ্যা:" : "Explanation:"}
+                                Explanation:
                               </p>
-                              <p className="text-emerald-100 text-sm leading-relaxed">
-                                {showBengali && hadith.explanationBengali
-                                  ? hadith.explanationBengali
-                                  : hadith.explanation}
+                              <p className="text-emerald-100 text-sm leading-relaxed italic">
+                                {hadith.explanation}
                               </p>
                             </div>
                           )}
 
                           {/* Metadata */}
                           <div className="flex flex-wrap gap-2 pt-2">
-                            <Badge className="bg-emerald-700 text-white" data-testid={`badge-narrator-${hadith.id}`}>
-                              {showBengali ? hadith.narratorBengali : hadith.narrator}
+                            <Badge 
+                              className="bg-emerald-700 text-white" 
+                              style={{ fontFamily: "'Noto Sans Bengali', 'Nikosh', 'Kalpurush', sans-serif" }}
+                              data-testid={`badge-narrator-${hadith.id}`}
+                            >
+                              {hadith.narratorBengali || hadith.narrator}
                             </Badge>
                             <Badge className="bg-amber-600 text-white">
-                              {showBengali ? "হাদীস নং" : "Hadith"} {hadith.hadithNumber}
+                              হাদীস নং {hadith.hadithNumber}
                             </Badge>
                             <Badge variant="outline" className="border-emerald-500 text-emerald-200">
                               {hadith.grading}
@@ -165,7 +194,7 @@ export default function BukhariPage() {
                   <Card className="bg-emerald-900/20 border border-emerald-700/30">
                     <CardContent className="p-8 text-center">
                       <p className="text-emerald-300">
-                        {showBengali ? "কোন হাদীস পাওয়া যায়নি" : "No hadiths found"}
+                        কোন হাদীস পাওয়া যায়নি
                       </p>
                     </CardContent>
                   </Card>
@@ -177,14 +206,12 @@ export default function BukhariPage() {
                   <CardHeader>
                     <CardTitle className="text-amber-400 flex items-center gap-2">
                       <Brain className="h-5 w-5" />
-                      {showBengali ? "হাদীস কুইজ" : "Hadith Quiz"}
+                      হাদীস কুইজ
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <p className="text-emerald-200">
-                      {showBengali
-                        ? "আপনার হাদীসের জ্ঞান পরীক্ষা করুন! নিচের বোতাম থেকে কুইজ শুরু করুন।"
-                        : "Test your knowledge of hadith! Start a quiz from the buttons below."}
+                      আপনার হাদীসের জ্ঞান পরীক্ষা করুন! নিচের বোতাম থেকে কুইজ শুরু করুন।
                     </p>
 
                     <div className="space-y-3">
@@ -194,7 +221,7 @@ export default function BukhariPage() {
                         data-testid="button-daily-quiz"
                       >
                         <BookOpen className="h-4 w-4 mr-2" />
-                        {showBengali ? "দৈনিক কুইজ" : "Daily Quiz"}
+                        দৈনিক কুইজ
                       </Button>
 
                       <Button
@@ -203,7 +230,7 @@ export default function BukhariPage() {
                         data-testid="button-unlimited-quiz"
                       >
                         <Dices className="h-4 w-4 mr-2" />
-                        {showBengali ? "আনলিমিটেড কুইজ" : "Unlimited Quiz"}
+                        আনলিমিটেড কুইজ
                       </Button>
                     </div>
                   </CardContent>
