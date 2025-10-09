@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,8 +10,6 @@ import { queryClient, apiRequest } from "@/lib/queryClient";
 import type { Hadith } from "@shared/schema";
 
 export default function HadithPage() {
-  const [showBengali, setShowBengali] = useState(true);
-
   const { data: hadith, isLoading, error } = useQuery<Hadith>({
     queryKey: ["/api/hadith/daily"],
   });
@@ -54,21 +51,10 @@ export default function HadithPage() {
                 {/* Hadith Card */}
                 <Card className="bg-gradient-to-br from-emerald-900/50 to-emerald-950/50 border border-amber-400/30">
                   <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-amber-400 flex items-center gap-2">
-                        <BookOpen className="h-5 w-5" />
-                        {showBengali ? "আজকের হাদিস" : "Hadith of the Day"}
-                      </CardTitle>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setShowBengali(!showBengali)}
-                        className="text-emerald-200 hover:text-amber-400"
-                        data-testid="button-toggle-language"
-                      >
-                        {showBengali ? "EN" : "বাং"}
-                      </Button>
-                    </div>
+                    <CardTitle className="text-amber-400 flex items-center gap-2">
+                      <BookOpen className="h-5 w-5" />
+                      আজকের হাদিস
+                    </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {/* Arabic Text */}
@@ -82,32 +68,45 @@ export default function HadithPage() {
                       </p>
                     </div>
 
-                    {/* Translation */}
+                    {/* Bengali Translation */}
+                    {hadith.translationBengali && (
+                      <div className="border-t border-emerald-700/30 pt-4">
+                        <p className="text-sm text-emerald-300 mb-2 font-semibold">
+                          বাংলা অনুবাদ:
+                        </p>
+                        <p 
+                          className="text-emerald-100 leading-relaxed text-lg"
+                          style={{ 
+                            fontFamily: "'Noto Sans Bengali', 'Nikosh', 'Kalpurush', sans-serif",
+                            lineHeight: '1.8'
+                          }}
+                          data-testid="text-hadith-translation-bengali"
+                        >
+                          {hadith.translationBengali}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* English Translation */}
                     <div className="border-t border-emerald-700/30 pt-4">
                       <p className="text-sm text-emerald-300 mb-2 font-semibold">
-                        {showBengali ? "অনুবাদ:" : "Translation:"}
+                        English Translation:
                       </p>
                       <p 
-                        className="text-emerald-100 leading-relaxed text-base"
+                        className="text-emerald-100 leading-relaxed text-base italic"
                         data-testid="text-hadith-translation"
                       >
-                        {showBengali && hadith.translationBengali
-                          ? hadith.translationBengali
-                          : hadith.translation}
+                        {hadith.translation}
                       </p>
                     </div>
 
                     {/* Narrator & Source */}
                     <div className="flex flex-wrap gap-2 pt-2">
                       <Badge className="bg-emerald-700 text-white" data-testid="badge-narrator">
-                        {showBengali && hadith.narratorBengali
-                          ? hadith.narratorBengali
-                          : hadith.narrator}
+                        {hadith.narratorBengali || hadith.narrator}
                       </Badge>
                       <Badge className="bg-amber-600 text-white" data-testid="badge-book">
-                        {showBengali && hadith.bookNameBengali
-                          ? hadith.bookNameBengali
-                          : hadith.bookName}
+                        {hadith.bookNameBengali || hadith.bookName}
                       </Badge>
                       <Badge variant="outline" className="border-emerald-500 text-emerald-200" data-testid="badge-reference">
                         {hadith.reference}
@@ -122,18 +121,34 @@ export default function HadithPage() {
                     <CardHeader>
                       <CardTitle className="text-amber-400 flex items-center gap-2 text-lg">
                         <Sparkles className="h-5 w-5" />
-                        {showBengali ? "এআই ব্যাখ্যা" : "AI Insight"}
+                        এআই ব্যাখ্যা
                       </CardTitle>
                     </CardHeader>
-                    <CardContent>
-                      <p 
-                        className="text-emerald-100 leading-relaxed"
-                        data-testid="text-ai-insight"
-                      >
-                        {showBengali && hadith.aiInsightBengali
-                          ? hadith.aiInsightBengali
-                          : hadith.aiInsight}
-                      </p>
+                    <CardContent className="space-y-3">
+                      {hadith.aiInsightBengali && (
+                        <div>
+                          <p 
+                            className="text-emerald-100 leading-relaxed text-base"
+                            style={{ 
+                              fontFamily: "'Noto Sans Bengali', 'Nikosh', 'Kalpurush', sans-serif",
+                              lineHeight: '1.8'
+                            }}
+                            data-testid="text-ai-insight-bengali"
+                          >
+                            {hadith.aiInsightBengali}
+                          </p>
+                        </div>
+                      )}
+                      {hadith.aiInsight && (
+                        <div className={hadith.aiInsightBengali ? "border-t border-emerald-700/30 pt-3" : ""}>
+                          <p 
+                            className="text-emerald-100 leading-relaxed text-sm italic"
+                            data-testid="text-ai-insight"
+                          >
+                            {hadith.aiInsight}
+                          </p>
+                        </div>
+                      )}
                     </CardContent>
                   </Card>
                 )}
@@ -148,12 +163,12 @@ export default function HadithPage() {
                   {refreshMutation.isPending ? (
                     <>
                       <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      {showBengali ? "নতুন হাদিস লোড হচ্ছে..." : "Loading new hadith..."}
+                      নতুন হাদিস লোড হচ্ছে...
                     </>
                   ) : (
                     <>
                       <RefreshCw className="h-4 w-4 mr-2" />
-                      {showBengali ? "নতুন হাদিস দেখুন" : "Get New Hadith"}
+                      নতুন হাদিস দেখুন
                     </>
                   )}
                 </Button>

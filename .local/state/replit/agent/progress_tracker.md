@@ -41,3 +41,10 @@
 - ✅ Created quiz UI with answer selection and result display
 - ✅ Fixed quiz generation logic with deduplication and Bengali translations
 - ✅ Added navigation button on home page to access Bukhari section
+
+## Hadith Page Updates (October 09, 2025)
+- ✅ Updated Hadith page to display Arabic text with both Bengali and English translations
+- ✅ Removed language toggle - now shows all translations simultaneously
+- ✅ Added proper Bengali font styling for better readability
+- ✅ Updated AI insights to show both Bengali and English versions
+- ✅ Set Bengali as primary language for narrator and book names
