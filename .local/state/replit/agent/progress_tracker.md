@@ -26,6 +26,13 @@
 [x] 20. Set up OPENAI_API_KEY in environment - COMPLETED
 [ ] 21. Complete Bengali translation of all 7,277 hadiths - PENDING (needs OpenAI credits)
 
+## Android APK Setup (October 09, 2025 - 5:24 PM)
+[x] 22. Configured API client to use Render backend URL - COMPLETED
+[x] 23. Updated queryClient with environment-based API URL - COMPLETED
+[x] 24. Verified PWA configuration (manifest, service worker, icons) - COMPLETED
+[x] 25. Created production build script (build-for-apk.sh) - COMPLETED
+[x] 26. Created comprehensive APK generation guide (BUILD_APK_GUIDE.md) - COMPLETED
+
 ## Migration Summary
 - All dependencies installed successfully
 - Application running on port 5000
@@ -82,6 +89,31 @@
 - ⚠️ Translation incomplete: OpenAI API key quota exceeded
 - 📝 Translation files location: `server/data/bukhari-bengali-translations.json`
 - 📝 To complete translation: Add OpenAI credits and run `cd server/data && tsx translate-bukhari.ts`
+
+## Android APK Configuration (October 09, 2025)
+- ✅ Configured app to work with Render backend (https://islamicguide-qqaq.onrender.com)
+- ✅ Updated API client to use VITE_API_URL environment variable
+- ✅ PWA fully configured with manifest, service worker, and icons
+- ✅ Created build script: `./build-for-apk.sh`
+- ✅ Created comprehensive guide: `BUILD_APK_GUIDE.md`
+
+### APK Generation Methods:
+1. **PWABuilder (Easiest):** https://www.pwabuilder.com/
+   - Deploy web app to any hosting
+   - Use PWABuilder to generate APK from URL
+   
+2. **Capacitor (Advanced):** 
+   - Install Capacitor
+   - Build with Android Studio
+   
+3. **Online Tools:**
+   - AppsGeyser: https://appsgeyser.com/
+   - WebIntoApp: https://webintoapp.com/
+
+### Files Created:
+- `BUILD_APK_GUIDE.md` - Complete Bengali/English guide for APK generation
+- `build-for-apk.sh` - Automated build script for production
+- `client/.env` - Environment configuration with Render backend URL
 
 ## How to Complete Bengali Translation
 ### Option 1: Using OpenAI (Recommended - Automatic)
