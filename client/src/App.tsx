@@ -15,6 +15,7 @@ import NamesPage from "@/pages/names";
 import CalendarPage from "@/pages/calendar";
 import MosquePage from "@/pages/mosque";
 import SettingsPage from "@/pages/settings";
+import DownloadPage from "@/pages/DownloadPage";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -32,6 +33,7 @@ function Router() {
       <Route path="/calendar" component={CalendarPage} />
       <Route path="/mosque" component={MosquePage} />
       <Route path="/settings" component={SettingsPage} />
+      <Route path="/download" component={DownloadPage} />
       <Route component={NotFound} />
     </Switch>
   );
