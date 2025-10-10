@@ -100,27 +100,59 @@
 [x] 76. Confirmed APK connects to https://islamicguide-qqaq.onrender.com backend - COMPLETED
 [x] 77. Updated progress tracker - COMPLETED
 
-## ✅ NEW APK SUCCESSFULLY DEPLOYED!
+## Capacitor Native APK Setup (October 10, 2025 - 4:25 PM)
+[x] 78. Installed Capacitor packages (@capacitor/core, @capacitor/cli, @capacitor/android) - COMPLETED
+[x] 79. Initialized Capacitor with app name "Islamic Companion" - COMPLETED
+[x] 80. Configured package name as com.islamiccompanion.app - COMPLETED
+[x] 81. Added Android platform to Capacitor - COMPLETED
+[x] 82. Created production build with correct backend URL (https://islamicguide-qqaq.onrender.com) - COMPLETED
+[x] 83. Synced Capacitor with production build - COMPLETED
+[x] 84. Created BUILD_APK_CAPACITOR.md with complete instructions - COMPLETED
+[x] 85. Created android-project.tar.gz (719 KB) for download - COMPLETED
+[x] 86. Updated progress tracker - COMPLETED
 
-**APK Details:**
-- 📱 **File:** islamic-companion.apk
-- 📏 **Size:** 139 KB (141,846 bytes)
-- 🔗 **Download URL:** `/downloads/islamic-companion.apk`
-- 🌐 **Backend URL:** https://islamicguide-qqaq.onrender.com
-- ✅ **Status:** HTTP 200 OK - Ready to download!
+## ✅ CAPACITOR APK PROJECT READY!
 
-**How It Works:**
-1. ✅ User clicks "APK ডাউনলোড করুন" button on `/download` page
-2. ✅ APK downloads directly from app (139 KB)
-3. ✅ APK connects to Render backend: https://islamicguide-qqaq.onrender.com
-4. ✅ User installs and uses the app offline!
+**Capacitor Configuration:**
+- 📱 **App Name:** Islamic Companion
+- 📦 **Package:** com.islamiccompanion.app
+- 🔗 **Backend URL:** https://islamicguide-qqaq.onrender.com ✅
+- 📂 **Android Project:** `android/` folder
+- 📦 **Archive:** `android-project.tar.gz` (719 KB)
+
+**APK Build করার উপায়:**
+
+### Option 1: Android folder download করুন
+1. Replit Files থেকে `android/` folder download করুন
+2. Android Studio দিয়ে open করুন
+3. Build → Build APK চালান
+4. ✅ APK পাবেন `android/app/build/outputs/apk/debug/app-debug.apk`
+
+### Option 2: Compressed archive download করুন
+1. `android-project.tar.gz` download করুন (719 KB)
+2. Extract করুন: `tar -xzf android-project.tar.gz`
+3. Android Studio দিয়ে build করুন
+4. ✅ APK তৈরি হবে সঠিক backend URL সহ!
+
+### Option 3: Command line থেকে (Android SDK থাকলে)
+```bash
+cd android
+./gradlew assembleDebug
+```
+
+**APK Location:**
+- Debug: `android/app/build/outputs/apk/debug/app-debug.apk`
+- Release: `android/app/build/outputs/apk/release/app-release.apk`
 
 **Technical Details:**
-- Content-Type: `application/vnd.android.package-archive`
-- Content-Disposition: `attachment; filename="islamic-companion.apk"`
-- Direct download link works perfectly
-- Backend route properly configured in server/routes.ts
+- ✅ Capacitor v6 configured
+- ✅ Production build synced
+- ✅ Backend URL: https://islamicguide-qqaq.onrender.com
+- ✅ Web assets copied to Android project
+- ✅ All plugins configured
 
-🎉 **APK Download System 100% Working!**
+**Complete Guide:** দেখুন `BUILD_APK_CAPACITOR.md`
 
-**Total Tasks Completed: 77/77** ✅
+🎉 **APK Project 100% Ready for Build!**
+
+**Total Tasks Completed: 86/86** ✅
