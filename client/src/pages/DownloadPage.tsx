@@ -4,11 +4,6 @@ import { Download, Smartphone, CheckCircle, AlertCircle } from "lucide-react";
 
 export default function DownloadPage() {
   const APK_DOWNLOAD_URL = "https://cadd8b2b-df7b-4b57-8a16-ad4e8f72bb86-00-10f7rusvamvhx.worf.replit.dev";
-  
-  const handleDownload = () => {
-    // Open the download link in a new tab
-    window.open(APK_DOWNLOAD_URL, '_blank');
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-emerald-900 to-emerald-950 text-white p-4">
@@ -34,14 +29,18 @@ export default function DownloadPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button 
-              onClick={handleDownload}
-              className="w-full bg-amber-500 hover:bg-amber-600 text-black font-bold text-lg py-6"
+            <a 
+              href={APK_DOWNLOAD_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full bg-amber-500 hover:bg-amber-600 text-black font-bold text-lg py-4 rounded-md text-center transition-colors"
               data-testid="button-download-apk"
             >
-              <Download className="mr-2 h-5 w-5" />
-              APK ডাউনলোড করুন
-            </Button>
+              <div className="flex items-center justify-center gap-2">
+                <Download className="h-5 w-5" />
+                APK ডাউনলোড করুন
+              </div>
+            </a>
             <p className="text-sm text-emerald-300 mt-3 text-center">
               Version: 1.0.0 | Size: 1.2 MB
             </p>
