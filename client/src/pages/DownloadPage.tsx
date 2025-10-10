@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Download, Smartphone, CheckCircle, AlertCircle } from "lucide-react";
 
 export default function DownloadPage() {
-  const APK_DOWNLOAD_URL = "https://cadd8b2b-df7b-4b57-8a16-ad4e8f72bb86-00-10f7rusvamvhx.worf.replit.dev";
+  const APK_DOWNLOAD_URL = "/downloads/islamic-companion.apk";
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-emerald-900 to-emerald-950 text-white p-4">
@@ -42,7 +42,7 @@ export default function DownloadPage() {
               </div>
             </a>
             <p className="text-sm text-emerald-300 mt-3 text-center">
-              Version: 1.0.0 | Size: 1.2 MB
+              Version: 1.0.0 | Size: 139 KB
             </p>
           </CardContent>
         </Card>
