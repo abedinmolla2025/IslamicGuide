@@ -20,6 +20,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
     });
   });
+
+  // TWA assetlinks.json route for Android verification
+  app.get("/.well-known/assetlinks.json", (req, res) => {
+    const assetlinksPath = path.join(process.cwd(), "dist/public/.well-known/assetlinks.json");
+    res.setHeader("Content-Type", "application/json");
+    res.sendFile(assetlinksPath, (err) => {
+      if (err) {
+        console.error("Assetlinks error:", err);
+        res.status(404).json({ error: "Assetlinks not found" });
+      }
+    });
+  });
   
   // Prayer times routes
   app.get("/api/prayer-times", async (req, res) => {
