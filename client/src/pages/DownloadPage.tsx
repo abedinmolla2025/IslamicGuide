@@ -3,10 +3,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Download, Smartphone, CheckCircle, AlertCircle } from "lucide-react";
 
 export default function DownloadPage() {
-  const APK_DOWNLOAD_URL = "https://github.com/YOUR_USERNAME/islamic-companion/releases/download/v1.0.0/islamic-companion.apk";
+  const APK_DOWNLOAD_URL = "/downloads/islamic-companion.apk";
   
   const handleDownload = () => {
-    window.open(APK_DOWNLOAD_URL, '_blank');
+    // Create a temporary link element to trigger download
+    const link = document.createElement('a');
+    link.href = APK_DOWNLOAD_URL;
+    link.download = 'islamic-companion.apk';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -42,7 +48,7 @@ export default function DownloadPage() {
               APK ডাউনলোড করুন
             </Button>
             <p className="text-sm text-emerald-300 mt-3 text-center">
-              Version: 1.0.0 | Size: ~5 MB
+              Version: 1.0.0 | Size: 1.2 MB
             </p>
           </CardContent>
         </Card>
