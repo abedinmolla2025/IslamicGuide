@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.onrender.islamicguide_qqag.twa",
+        "sha256_cert_fingerprints": ["42:EE:CF:A2:53:CF:C5:47:19:B3:A5:4C:EF:AC:C9:B4:9C:53:E8:B9:85:CF:C3:4D:45:30:E0:D8:04:AB:62:A2"]
+      }
+    }]
