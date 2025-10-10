@@ -6,13 +6,8 @@ export default function DownloadPage() {
   const APK_DOWNLOAD_URL = "https://cadd8b2b-df7b-4b57-8a16-ad4e8f72bb86-00-10f7rusvamvhx.worf.replit.dev";
   
   const handleDownload = () => {
-    // Create a temporary link element to trigger download
-    const link = document.createElement('a');
-    link.href = APK_DOWNLOAD_URL;
-    link.download = 'islamic-companion.apk';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // Open the download link in a new tab
+    window.open(APK_DOWNLOAD_URL, '_blank');
   };
 
   return (
