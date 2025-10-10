@@ -6,8 +6,20 @@ import { generateDailyQuiz } from "./openai-quiz";
 import { enhanceVerseWithAI } from "./openai-verse";
 import { enhanceHadithWithAI } from "./openai-hadith";
 import { searchNearbyMosques } from "./google-maps";
+import path from "path";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  
+  // APK Download route
+  app.get("/downloads/islamic-companion.apk", (req, res) => {
+    const apkPath = path.join(process.cwd(), "dist/public/downloads/islamic-companion.apk");
+    res.download(apkPath, "islamic-companion.apk", (err) => {
+      if (err) {
+        console.error("APK download error:", err);
+        res.status(500).send("Error downloading APK");
+      }
+    });
+  });
   
   // Prayer times routes
   app.get("/api/prayer-times", async (req, res) => {
