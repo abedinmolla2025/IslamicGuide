@@ -3,6 +3,7 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import InstallPrompt from "@/components/install-prompt";
 import HomePage from "@/pages/home";
 import DuaPage from "@/pages/dua";
 import HadithPage from "@/pages/hadith";
@@ -45,6 +46,7 @@ function App() {
       <TooltipProvider>
         <div className="h-full max-w-md mx-auto bg-card shadow-xl islamic-pattern">
           <Toaster />
+          <InstallPrompt />
           <Router />
         </div>
       </TooltipProvider>
