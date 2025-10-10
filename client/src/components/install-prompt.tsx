@@ -45,7 +45,7 @@ export default function InstallPrompt() {
 
   return (
     <div className="fixed top-4 left-4 right-4 z-50 max-w-md mx-auto">
-      <div className="bg-gradient-to-r from-emerald-700 to-emerald-600 text-white p-4 rounded-lg shadow-2xl border border-emerald-500">
+      <div className="bg-gradient-to-r from-emerald-700 to-emerald-600 text-white p-4 rounded-lg shadow-2xl border border-emerald-500 relative">
         <div className="flex items-start gap-3">
           <Download className="w-6 h-6 flex-shrink-0 mt-1" />
           <div className="flex-1">
@@ -53,15 +53,21 @@ export default function InstallPrompt() {
             <p className="text-sm text-emerald-50 mb-3">
               Chrome থেকে সরাসরি আপনার ফোনে app install করুন - কোনো APK download লাগবে না!
             </p>
-            <div className="flex gap-2">
+            <div className="flex gap-2 relative">
               <Button
                 onClick={handleInstallClick}
                 data-testid="button-install-app"
-                className="bg-white text-emerald-700 hover:bg-emerald-50 font-semibold"
+                className="bg-white text-emerald-700 hover:bg-emerald-50 font-semibold relative"
               >
                 <Download className="w-4 h-4 mr-2" />
                 Install করুন
               </Button>
+              
+              {/* Animated Hand Pointer */}
+              <div className="absolute -bottom-14 left-8 animate-bounce pointer-events-none">
+                <div className="text-5xl animate-pulse">👆</div>
+              </div>
+              
               <Button
                 onClick={handleClose}
                 data-testid="button-close-install"
