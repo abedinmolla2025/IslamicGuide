@@ -88,6 +88,25 @@ export default function HomePage() {
               </div>
             </a>
           </section>
+
+          {/* Download APK Button */}
+          <section className="p-4">
+            <a 
+              href="/download" 
+              className="block bg-gradient-to-br from-blue-900/50 to-blue-950/50 border border-blue-400/30 rounded-lg p-4 hover:from-blue-900/70 hover:to-blue-950/70 transition-all"
+              data-testid="link-download"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-blue-400 font-semibold text-lg">📱 Android অ্যাপ ডাউনলোড করুন</h3>
+                  <p className="text-emerald-200 text-sm mt-1">APK ডাউনলোড করুন - অফলাইনে ব্যবহার করুন</p>
+                </div>
+                <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+              </div>
+            </a>
+          </section>
           
           <DailyQuiz />
           <AsmaUlHusna />
