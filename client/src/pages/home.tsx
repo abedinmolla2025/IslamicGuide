@@ -14,34 +14,55 @@ import { getHijriDate } from "@/lib/islamic-calendar";
 
 export default function HomePage() {
   const [location, setLocation] = useState<{ city: string; latitude: number; longitude: number } | null>(null);
+  const [locationError, setLocationError] = useState<string | null>(null);
 
-  useEffect(() => {
-    // Get user location
+  const requestLocation = () => {
+    setLocationError(null);
+    
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setLocation({
-            city: "Current Location",
+            city: "আপনার অবস্থান",
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
           });
+          setLocationError(null);
         },
-        () => {
-          // Default to New York if geolocation fails
+        (error) => {
+          // Handle different error types
+          let errorMessage = "Location permission denied";
+          
+          if (error.code === error.PERMISSION_DENIED) {
+            errorMessage = "Location permission denied. Using default location.";
+          } else if (error.code === error.POSITION_UNAVAILABLE) {
+            errorMessage = "Location unavailable. Using default location.";
+          } else if (error.code === error.TIMEOUT) {
+            errorMessage = "Location request timed out. Using default location.";
+          }
+          
+          setLocationError(errorMessage);
+          
+          // Default to Dhaka if geolocation fails
           setLocation({
-            city: "New York, NY",
-            latitude: 40.7128,
-            longitude: -74.0060
+            city: "Dhaka, Bangladesh",
+            latitude: 23.8103,
+            longitude: 90.4125
           });
         }
       );
     } else {
+      setLocationError("Geolocation not supported");
       setLocation({
-        city: "New York, NY",
-        latitude: 40.7128,
-        longitude: -74.0060
+        city: "Dhaka, Bangladesh",
+        latitude: 23.8103,
+        longitude: 90.4125
       });
     }
+  };
+
+  useEffect(() => {
+    requestLocation();
   }, []);
 
   const hijriDate = getHijriDate(new Date());
@@ -49,6 +70,20 @@ export default function HomePage() {
   return (
     <div className="flex flex-col h-screen bg-gradient-to-b from-emerald-950 to-emerald-900 overflow-hidden">
       <TopBar subtitle={location?.city || "Loading..."} />
+      
+      {/* Location Error Banner */}
+      {locationError && (
+        <div className="bg-amber-900/50 border-b border-amber-700 px-4 py-2 flex items-center justify-between">
+          <p className="text-amber-200 text-sm flex-1">{locationError}</p>
+          <button
+            onClick={requestLocation}
+            data-testid="button-retry-location"
+            className="text-amber-400 hover:text-amber-300 text-sm font-semibold underline ml-2"
+          >
+            Retry
+          </button>
+        </div>
+      )}
 
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto pb-20 scrollbar-thin scrollbar-thumb-emerald-700 scrollbar-track-transparent">
