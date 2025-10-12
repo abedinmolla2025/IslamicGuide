@@ -23,8 +23,8 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-emerald-950 via-emerald-900 to-emerald-900/95 backdrop-blur-xl border-t border-emerald-700/50 shadow-2xl z-50" data-testid="bottom-navigation">
-      <div className="max-w-2xl mx-auto py-2.5">
-        <div className="flex gap-1 items-center overflow-x-auto px-2 scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+      <div className="w-full overflow-x-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <div className="flex gap-2 items-center px-3 py-3 min-w-max">
           {navigationItems.map((item) => {
             const IconComponent = item.icon;
             const isActive = currentPage === item.id;
@@ -34,34 +34,24 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
                 key={item.id}
                 variant="ghost"
                 size="sm"
-                className={`flex flex-col items-center gap-1.5 p-2 min-w-[70px] flex-shrink-0 transition-all duration-300 ${
+                className={`flex flex-col items-center gap-1 p-2 transition-all duration-300 ${
                   isActive 
                     ? "text-amber-400" 
-                    : "text-emerald-200 hover:text-amber-300 hover:scale-105"
+                    : "text-emerald-200 hover:text-amber-300"
                 }`}
                 onClick={() => setLocation(item.path)}
                 data-testid={`nav-${item.id}`}
               >
-                <div className={`relative transition-all duration-300 ${isActive ? 'scale-110' : ''}`}>
-                  {isActive && (
-                    <div className="absolute inset-0 bg-amber-400/20 rounded-xl blur-md"></div>
-                  )}
-                  <div className={`relative ${isActive ? 'bg-amber-400/10 rounded-xl p-2 border border-amber-400/30' : 'p-2'}`}>
-                    <IconComponent 
-                      className={`h-5 w-5 transition-all duration-300 ${
-                        isActive 
-                          ? 'stroke-[2.5] drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]' 
-                          : 'stroke-[2]'
-                      }`} 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round"
-                    />
-                  </div>
-                  {isActive && (
-                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-amber-400 rounded-full shadow-[0_0_8px_rgba(251,191,36,0.8)]"></div>
-                  )}
-                </div>
-                <span className={`text-[10px] font-bold tracking-wide whitespace-nowrap ${isActive ? 'text-amber-400' : 'text-emerald-200'}`}>
+                <IconComponent 
+                  className={`h-5 w-5 transition-all duration-300 ${
+                    isActive 
+                      ? 'stroke-[2.5]' 
+                      : 'stroke-[2]'
+                  }`} 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                />
+                <span className={`text-[9px] font-semibold ${isActive ? 'text-amber-400' : 'text-emerald-200'}`}>
                   {item.label}
                 </span>
               </Button>
