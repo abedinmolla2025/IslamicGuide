@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Home, Compass, BookOpen, Calendar, Smile, Book, BookText, MapPin, Layers } from "lucide-react";
+import { Home, Compass, BookOpen, Calendar, User, BookMarked, ScrollText, Library, Building2 } from "lucide-react";
 import { useLocation } from "wouter";
 
 interface BottomNavigationProps {
@@ -11,13 +11,13 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
 
   const navigationItems = [
     { id: "home", icon: Home, label: "Home", path: "/" },
-    { id: "dua", icon: Book, label: "Dua", path: "/dua" },
-    { id: "hadith", icon: BookText, label: "Hadith", path: "/hadith" },
-    { id: "surah", icon: Layers, label: "Surah", path: "/surah" },
-    { id: "mosque", icon: MapPin, label: "Mosque", path: "/mosque" },
+    { id: "dua", icon: BookMarked, label: "Dua", path: "/dua" },
+    { id: "hadith", icon: ScrollText, label: "Hadith", path: "/hadith" },
+    { id: "surah", icon: Library, label: "Surah", path: "/surah" },
+    { id: "mosque", icon: Building2, label: "Mosque", path: "/mosque" },
     { id: "qibla", icon: Compass, label: "Qibla", path: "/qibla" },
     { id: "quran", icon: BookOpen, label: "Quran", path: "/quran" },
-    { id: "names", icon: Smile, label: "Names", path: "/names" },
+    { id: "names", icon: User, label: "Names", path: "/names" },
     { id: "calendar", icon: Calendar, label: "Calendar", path: "/calendar" },
   ];
 
