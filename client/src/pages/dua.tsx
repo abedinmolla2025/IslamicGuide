@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { BookOpen, ChevronDown, ChevronUp } from "lucide-react";
@@ -7,9 +7,20 @@ import { duas, Dua } from "@/data/duas";
 
 export default function DuaPage() {
   const [expandedDuaId, setExpandedDuaId] = useState<string | null>(null);
+  const duaRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   const toggleDua = (duaId: string) => {
-    setExpandedDuaId(expandedDuaId === duaId ? null : duaId);
+    const newExpandedId = expandedDuaId === duaId ? null : duaId;
+    setExpandedDuaId(newExpandedId);
+    
+    if (newExpandedId) {
+      setTimeout(() => {
+        duaRefs.current[duaId]?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start'
+        });
+      }, 100);
+    }
   };
 
   return (
@@ -29,7 +40,11 @@ export default function DuaPage() {
 
             <div className="grid grid-cols-2 gap-3">
               {duas.map((dua) => (
-                <div key={dua.id} className="col-span-2">
+                <div 
+                  key={dua.id} 
+                  className="col-span-2"
+                  ref={(el) => duaRefs.current[dua.id] = el}
+                >
                   <Card
                     className={`p-3 cursor-pointer transition-all ${
                       expandedDuaId === dua.id
