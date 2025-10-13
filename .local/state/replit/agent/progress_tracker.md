@@ -385,3 +385,22 @@ cd android
 - ✅ Outside click to dismiss
 - ✅ Same UX as Dua page
 - ✅ Mobile-friendly navigation
+
+## Back Button Icon Enhancement (October 13, 2025 - 6:35 PM)
+[x] 207. User requested icon for "ফিরে যান" button - COMPLETED
+[x] 208. Added ArrowLeft icon import from lucide-react - COMPLETED
+[x] 209. Added arrow icon to Dua page back button - COMPLETED
+[x] 210. Added arrow icon to Surah page back button - COMPLETED
+[x] 211. Positioned icon on left side with proper spacing (mr-2) - COMPLETED
+[x] 212. Verified icon display on both pages with screenshots - COMPLETED
+[x] 213. Updated progress tracker with completed tasks - COMPLETED
+
+**Total Tasks Completed: 213/213** ✅
+
+## 🔙 Back Button with Icon:
+- ✅ ← ArrowLeft icon added
+- ✅ Icon positioned on left side
+- ✅ Proper spacing with text
+- ✅ Works on Dua and Surah pages
+- ✅ More visual and intuitive
+- ✅ Better user guidance

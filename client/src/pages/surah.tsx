@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { BookMarked, BookOpen, X } from "lucide-react";
+import { BookMarked, BookOpen, X, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import BottomNavigation from "@/components/bottom-navigation";
 import { surahs, Surah } from "@/data/surahs";
@@ -140,6 +140,7 @@ export default function SurahPage() {
                         style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}
                         data-testid="button-back-surah"
                       >
+                        <ArrowLeft className="mr-2 h-5 w-5" />
                         ফিরে যান
                       </Button>
                     </div>
