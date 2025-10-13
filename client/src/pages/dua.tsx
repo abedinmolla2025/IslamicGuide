@@ -118,6 +118,18 @@ export default function DuaPage() {
                         {selectedDua.meaningBengali}
                       </p>
                     </div>
+
+                    {/* Back Button */}
+                    <div className="pt-4">
+                      <Button
+                        onClick={closeDua}
+                        className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-6 text-lg"
+                        style={{ fontFamily: "'Nikosh', 'Kalpurush', sans-serif" }}
+                        data-testid="button-back-dua"
+                      >
+                        ফিরে যান
+                      </Button>
+                    </div>
                   </div>
                 )}
               </DialogContent>
