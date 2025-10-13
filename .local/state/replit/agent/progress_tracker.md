@@ -290,3 +290,24 @@ cd android
 - ✅ Visual guide box with amber border
 - ✅ All instructions in Bengali
 - ✅ Works on both Mosque and Qibla pages
+
+## Device-Level Location Permission (October 13, 2025 - 6:10 PM)
+[x] 166. User requested device/phone location permission instead of browser only - COMPLETED
+[x] 167. Updated Mosque page with device-level location instructions - COMPLETED
+[x] 168. Updated Qibla page with device-level location instructions - COMPLETED
+[x] 169. Added Bengali instructions: ফোনের Settings → Location → চালু (ON) - COMPLETED
+[x] 170. Added two-step process: Device location ON + Browser permission Allow - COMPLETED
+[x] 171. Clarified that button click requests permission from device - COMPLETED
+[x] 172. Verified both pages showing device instructions with screenshots - COMPLETED
+[x] 173. Updated progress tracker with completed tasks - COMPLETED
+
+**Total Tasks Completed: 173/173** ✅
+
+## 📱 Device Location Permission Steps:
+- ✅ Step 1: ফোনের Settings খুলুন
+- ✅ Step 2: Location/স্থান option এ যান
+- ✅ Step 3: Location service চালু (ON) করুন
+- ✅ Step 4: App এ ফিরে এসে button click করুন
+- ✅ Step 5: Device থেকে permission চাইলে "Allow" দিন
+- ✅ Clear two-step process explanation
+- ✅ Works on Mosque and Qibla pages

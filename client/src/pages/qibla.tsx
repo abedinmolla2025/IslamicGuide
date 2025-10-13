@@ -69,14 +69,20 @@ export default function QiblaPage() {
             <h3 className="text-xl font-bold text-white">Location Access করুন</h3>
             <p className="text-amber-100">{error}</p>
             
-            <div className="bg-amber-900/30 p-4 rounded-lg border border-amber-500/30 space-y-2 text-left">
-              <p className="text-xs font-semibold text-amber-400">📍 Location Permission Reset করুন:</p>
-              <ol className="text-xs text-amber-100 space-y-1 list-decimal list-inside">
-                <li>URL bar এ <span className="font-bold text-white">🔒 lock icon</span> অথবা <span className="font-bold text-white">tune (⚙️) icon</span> click করুন</li>
-                <li><span className="font-bold text-white">"Site Settings"</span> অথবা <span className="font-bold text-white">"Permissions"</span> এ যান</li>
-                <li><span className="font-bold text-white">"Location"</span> খুঁজুন এবং <span className="font-bold text-green-400">"Allow"</span> select করুন</li>
-                <li>Page reload করুন এবং নিচের button click করুন</li>
-              </ol>
+            <div className="bg-amber-900/30 p-4 rounded-lg border border-amber-500/30 space-y-3 text-left">
+              <div className="space-y-2">
+                <p className="text-xs font-semibold text-amber-400">📱 ফোনের Location চালু করুন:</p>
+                <ol className="text-xs text-amber-100 space-y-1 list-decimal list-inside">
+                  <li>ফোনের <span className="font-bold text-white">Settings</span> খুলুন</li>
+                  <li><span className="font-bold text-white">Location</span> অথবা <span className="font-bold text-white">স্থান</span> option এ যান</li>
+                  <li>Location service <span className="font-bold text-green-400">চালু (ON)</span> করুন</li>
+                  <li>এই app এ ফিরে আসুন এবং নিচের button click করুন</li>
+                </ol>
+              </div>
+              <div className="border-t border-amber-500/20 pt-2 space-y-1">
+                <p className="text-xs font-semibold text-amber-400">🌐 Browser Permission:</p>
+                <p className="text-xs text-amber-100">Button click করলে ডিভাইস থেকে permission চাইবে। <span className="font-bold text-green-400">"Allow"</span> দিন।</p>
+              </div>
             </div>
 
             <div className="space-y-3">
