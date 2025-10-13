@@ -32,9 +32,9 @@ export default function QiblaPage() {
       (err) => {
         setLoading(false);
         if (err.code === 1) {
-          setError("Location permission দিন। Browser settings থেকে location enable করুন।");
+          setError("Browser location permission BLOCK করে দিয়েছে। নিচের নির্দেশনা দেখুন।");
         } else if (err.code === 2) {
-          setError("Location পাওয়া যাচ্ছে না। GPS চালু করুন।");
+          setError("Location পাওয়া যাচ্ছে না। GPS/Location service চালু করুন।");
         } else {
           setError("Location access করতে সমস্যা হচ্ছে।");
         }
@@ -64,10 +64,21 @@ export default function QiblaPage() {
         )}
 
         {error && (
-          <div className="text-center space-y-4 max-w-md">
+          <div className="text-center space-y-4 max-w-md px-4">
             <AlertCircle className="h-16 w-16 text-amber-500 mx-auto" />
             <h3 className="text-xl font-bold text-white">Location Access করুন</h3>
             <p className="text-amber-100">{error}</p>
+            
+            <div className="bg-amber-900/30 p-4 rounded-lg border border-amber-500/30 space-y-2 text-left">
+              <p className="text-xs font-semibold text-amber-400">📍 Location Permission Reset করুন:</p>
+              <ol className="text-xs text-amber-100 space-y-1 list-decimal list-inside">
+                <li>URL bar এ <span className="font-bold text-white">🔒 lock icon</span> অথবা <span className="font-bold text-white">tune (⚙️) icon</span> click করুন</li>
+                <li><span className="font-bold text-white">"Site Settings"</span> অথবা <span className="font-bold text-white">"Permissions"</span> এ যান</li>
+                <li><span className="font-bold text-white">"Location"</span> খুঁজুন এবং <span className="font-bold text-green-400">"Allow"</span> select করুন</li>
+                <li>Page reload করুন এবং নিচের button click করুন</li>
+              </ol>
+            </div>
+
             <div className="space-y-3">
               <p className="text-sm text-amber-200">
                 Qibla direction দেখতে আপনার location প্রয়োজন। 

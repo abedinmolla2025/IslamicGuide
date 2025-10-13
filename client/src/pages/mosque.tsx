@@ -43,8 +43,14 @@ export default function MosquePage() {
           setRequestingLocation(false);
         },
         (error) => {
-          setLocationError("Location permission denied. Please enable location to find nearby mosques.");
           console.error("Geolocation error:", error);
+          if (error.code === 1) {
+            setLocationError("Browser location permission BLOCK করে দিয়েছে। নিচের নির্দেশনা দেখুন।");
+          } else if (error.code === 2) {
+            setLocationError("Location পাওয়া যাচ্ছে না। GPS/Location service চালু করুন।");
+          } else {
+            setLocationError("Location access করতে সমস্যা হচ্ছে।");
+          }
           setRequestingLocation(false);
         }
       );
@@ -110,14 +116,25 @@ export default function MosquePage() {
 
             {locationError && (
               <Card className="bg-red-900/20 border border-red-500/30">
-                <CardContent className="p-4 space-y-3">
+                <CardContent className="p-4 space-y-4">
                   <div className="flex items-start gap-3">
                     <AlertCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
-                    <div>
+                    <div className="flex-1">
                       <p className="text-sm font-semibold text-red-400">লোকেশন অ্যাক্সেস প্রয়োজন</p>
-                      <p className="text-sm text-red-200">{locationError}</p>
+                      <p className="text-sm text-red-200 mt-1">{locationError}</p>
                     </div>
                   </div>
+                  
+                  <div className="bg-amber-900/30 p-3 rounded-lg border border-amber-500/30 space-y-2">
+                    <p className="text-xs font-semibold text-amber-400">📍 Location Permission Reset করুন:</p>
+                    <ol className="text-xs text-amber-100 space-y-1 list-decimal list-inside">
+                      <li>URL bar এ <span className="font-bold text-white">🔒 lock icon</span> অথবা <span className="font-bold text-white">tune (⚙️) icon</span> click করুন</li>
+                      <li><span className="font-bold text-white">"Site Settings"</span> অথবা <span className="font-bold text-white">"Permissions"</span> এ যান</li>
+                      <li><span className="font-bold text-white">"Location"</span> খুঁজুন এবং <span className="font-bold text-green-400">"Allow"</span> select করুন</li>
+                      <li>Page reload করুন এবং নিচের button click করুন</li>
+                    </ol>
+                  </div>
+
                   <Button
                     onClick={requestLocation}
                     disabled={requestingLocation}
@@ -132,7 +149,7 @@ export default function MosquePage() {
                     ) : (
                       <>
                         <MapPin className="h-4 w-4 mr-2" />
-                        লোকেশন অনুমতি দিন
+                        আবার চেষ্টা করুন
                       </>
                     )}
                   </Button>

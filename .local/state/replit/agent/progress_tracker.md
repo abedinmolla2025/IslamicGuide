@@ -267,3 +267,26 @@ cd android
 - ✅ Retry button for easy access
 - ✅ Loading spinner with status
 - ✅ User-friendly instructions
+
+## Blocked Location Permission Fix (October 13, 2025 - 6:05 PM)
+[x] 156. User reported Mosque and Qibla not working - location blocked - COMPLETED
+[x] 157. Identified browser blocked location permission (ignored prompts multiple times) - COMPLETED
+[x] 158. Updated Mosque page with detailed Bengali reset instructions - COMPLETED
+[x] 159. Updated Qibla page with detailed Bengali reset instructions - COMPLETED
+[x] 160. Added step-by-step guide: lock icon → Site Settings → Location → Allow - COMPLETED
+[x] 161. Added visual instructions box with amber background for visibility - COMPLETED
+[x] 162. Changed button text to "আবার চেষ্টা করুন" for clarity - COMPLETED
+[x] 163. Added specific error message: "Browser location permission BLOCK করে দিয়েছে" - COMPLETED
+[x] 164. Verified both pages showing instructions correctly with screenshots - COMPLETED
+[x] 165. Updated progress tracker with completed tasks - COMPLETED
+
+**Total Tasks Completed: 165/165** ✅
+
+## 📍 Location Permission Reset Instructions:
+- ✅ Step 1: URL bar এ 🔒 lock icon click
+- ✅ Step 2: "Site Settings" / "Permissions" select
+- ✅ Step 3: "Location" → "Allow" enable করুন
+- ✅ Step 4: Page reload এবং retry button click
+- ✅ Visual guide box with amber border
+- ✅ All instructions in Bengali
+- ✅ Works on both Mosque and Qibla pages
