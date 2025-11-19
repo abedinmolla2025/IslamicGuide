@@ -12,7 +12,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // SEO Routes - robots.txt
   app.get("/robots.txt", (req, res) => {
-    const robotsPath = path.join(process.cwd(), "client/public/robots.txt");
+    // Try production path first, fallback to development path
+    const productionPath = path.join(process.cwd(), "dist/public/robots.txt");
+    const devPath = path.join(process.cwd(), "client/public/robots.txt");
+    const robotsPath = process.env.NODE_ENV === "production" ? productionPath : devPath;
+    
     res.setHeader("Content-Type", "text/plain");
     res.sendFile(robotsPath, (err) => {
       if (err) {
@@ -24,7 +28,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // SEO Routes - sitemap.xml
   app.get("/sitemap.xml", (req, res) => {
-    const sitemapPath = path.join(process.cwd(), "client/public/sitemap.xml");
+    // Try production path first, fallback to development path
+    const productionPath = path.join(process.cwd(), "dist/public/sitemap.xml");
+    const devPath = path.join(process.cwd(), "client/public/sitemap.xml");
+    const sitemapPath = process.env.NODE_ENV === "production" ? productionPath : devPath;
+    
     res.setHeader("Content-Type", "application/xml");
     res.sendFile(sitemapPath, (err) => {
       if (err) {
