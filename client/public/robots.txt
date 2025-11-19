@@ -1,0 +1,28 @@
+# robots.txt for Islamic Companion (quranbangla.in)
+
+# Allow all search engines to crawl the site
+User-agent: *
+Allow: /
+
+# Disallow private or backend routes
+Disallow: /api/
+Disallow: /admin/
+Disallow: /.well-known/
+
+# Allow specific pages
+Allow: /
+Allow: /quran
+Allow: /hadith
+Allow: /dua
+Allow: /prayer-times
+Allow: /qibla
+Allow: /calendar
+Allow: /names
+Allow: /mosque
+Allow: /surah
+
+# Sitemap location
+Sitemap: https://quranbangla.in/sitemap.xml
+
+# Crawl delay (optional - helpful for server load)
+Crawl-delay: 1

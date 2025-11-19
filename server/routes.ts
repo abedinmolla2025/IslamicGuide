@@ -10,6 +10,30 @@ import path from "path";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
+  // SEO Routes - robots.txt
+  app.get("/robots.txt", (req, res) => {
+    const robotsPath = path.join(process.cwd(), "client/public/robots.txt");
+    res.setHeader("Content-Type", "text/plain");
+    res.sendFile(robotsPath, (err) => {
+      if (err) {
+        console.error("robots.txt error:", err);
+        res.status(404).send("robots.txt not found");
+      }
+    });
+  });
+
+  // SEO Routes - sitemap.xml
+  app.get("/sitemap.xml", (req, res) => {
+    const sitemapPath = path.join(process.cwd(), "client/public/sitemap.xml");
+    res.setHeader("Content-Type", "application/xml");
+    res.sendFile(sitemapPath, (err) => {
+      if (err) {
+        console.error("sitemap.xml error:", err);
+        res.status(404).send("sitemap.xml not found");
+      }
+    });
+  });
+  
   // APK Download route
   app.get("/downloads/islamic-companion.apk", (req, res) => {
     const apkPath = path.join(process.cwd(), "dist/public/downloads/islamic-companion.apk");
