@@ -95,6 +95,13 @@ export default function HomePage() {
             </>
           )}
           
+          <section className="p-4">
+            <div className="grid grid-cols-2 gap-4">
+              <DhikrCounter />
+              <IslamicCalendar />
+            </div>
+          </section>
+          
           {/* কুরআন বাংলা Section */}
           <section className="p-4">
             <a 
@@ -119,13 +126,6 @@ export default function HomePage() {
                 </svg>
               </div>
             </a>
-          </section>
-          
-          <section className="p-4">
-            <div className="grid grid-cols-2 gap-4">
-              <DhikrCounter />
-              <IslamicCalendar />
-            </div>
           </section>
 
           <QuranVerse />
