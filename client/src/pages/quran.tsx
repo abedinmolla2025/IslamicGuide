@@ -2,131 +2,217 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
-import { Search, BookOpen, Share } from "lucide-react";
-import type { QuranVerse } from "@shared/schema";
+import { Search, BookOpen, ArrowLeft, Loader2 } from "lucide-react";
+import { quranSurahs } from "@/data/quran-surahs";
+import type { BengaliVerse, ArabicVerse } from "@/data/quran-surahs";
+
+type SurahData = {
+  arabic: ArabicVerse[];
+  bengali: BengaliVerse[];
+};
 
 export default function QuranPage() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedSurah, setSelectedSurah] = useState<number | null>(null);
+  const [filteredSurahs, setFilteredSurahs] = useState(quranSurahs);
 
-  const { data: randomVerse } = useQuery<QuranVerse>({
-    queryKey: ["/api/quran/random"],
-    staleTime: 5 * 60 * 1000, // 5 minutes
+  // Fetch Arabic text for selected surah
+  const { data: arabicData, isLoading: arabicLoading } = useQuery<{ chapter: ArabicVerse[] }>({
+    queryKey: [`/quran/arabic/${selectedSurah}`],
+    queryFn: async () => {
+      if (!selectedSurah) return { chapter: [] };
+      const response = await fetch(`https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ara-quransimple/${selectedSurah}.json`);
+      return response.json();
+    },
+    enabled: !!selectedSurah,
   });
 
-  const { data: searchResults, refetch: searchVerses } = useQuery<QuranVerse[]>({
-    queryKey: ["/api/quran/search", searchQuery],
-    enabled: false,
+  // Fetch Bengali translation for selected surah
+  const { data: bengaliData, isLoading: bengaliLoading } = useQuery<{ chapter: BengaliVerse[] }>({
+    queryKey: [`/quran/bengali/${selectedSurah}`],
+    queryFn: async () => {
+      if (!selectedSurah) return { chapter: [] };
+      const response = await fetch(`https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ben-muhiuddinkhan/${selectedSurah}.json`);
+      return response.json();
+    },
+    enabled: !!selectedSurah,
   });
 
-  const handleSearch = () => {
-    if (searchQuery.trim()) {
-      searchVerses();
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    if (!query.trim()) {
+      setFilteredSurahs(quranSurahs);
+      return;
     }
+
+    const lowerQuery = query.toLowerCase();
+    const filtered = quranSurahs.filter(
+      (surah) =>
+        surah.bengali.toLowerCase().includes(lowerQuery) ||
+        surah.english.toLowerCase().includes(lowerQuery) ||
+        surah.arabic.includes(query) ||
+        surah.number.toString() === query
+    );
+    setFilteredSurahs(filtered);
   };
 
-  const handleShare = (verse: QuranVerse) => {
-    if (navigator.share) {
-      navigator.share({
-        title: `Quran ${verse.surahName} ${verse.surahNumber}:${verse.verseNumber}`,
-        text: `${verse.arabic}\n\n"${verse.translation}"\n\n- Quran ${verse.surahNumber}:${verse.verseNumber}`,
-      });
-    }
-  };
+  const selectedSurahInfo = quranSurahs.find((s) => s.number === selectedSurah);
+  const isLoading = arabicLoading || bengaliLoading;
 
   return (
     <div className="flex flex-col h-screen bg-gradient-to-b from-emerald-950 to-emerald-900">
-      <TopBar title="Holy Quran" subtitle="Read and search verses" />
+      <TopBar title="পবিত্র কুরআন" subtitle="সম্পূর্ণ বাংলা অনুবাদ সহ" />
 
-      <main className="flex-1 overflow-y-auto p-4 pb-20 space-y-6">
+      <main className="flex-1 overflow-y-auto p-4 pb-20 space-y-4">
         {/* Search Section */}
-        <div className="space-y-4">
-          <div className="flex gap-2">
-            <Input
-              placeholder="Search verses..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-              data-testid="input-search"
-            />
-            <Button onClick={handleSearch} data-testid="button-search">
-              <Search className="h-4 w-4" />
-            </Button>
-          </div>
-
-          {searchResults && searchResults.length > 0 && (
-            <div className="space-y-3">
-              <h2 className="text-lg font-semibold">Search Results</h2>
-              {searchResults.map((verse) => (
-                <Card key={`${verse.surahNumber}-${verse.verseNumber}`} data-testid={`card-verse-${verse.surahNumber}-${verse.verseNumber}`}>
-                  <CardContent className="p-4">
-                    <div className="text-right mb-3 text-xl font-semibold leading-relaxed" style={{ fontFamily: 'Times New Roman, serif' }}>
-                      {verse.arabic}
-                    </div>
-                    <div className="text-sm text-muted-foreground mb-2">
-                      "{verse.translation}"
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-muted-foreground">
-                        {verse.surahName} {verse.surahNumber}:{verse.verseNumber}
-                      </span>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleShare(verse)}
-                        data-testid={`button-share-${verse.surahNumber}-${verse.verseNumber}`}
-                      >
-                        <Share className="h-3 w-3 mr-1" />
-                        Share
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          )}
-
-          {searchResults && searchResults.length === 0 && searchQuery && (
-            <p className="text-muted-foreground text-center py-4">No verses found for "{searchQuery}"</p>
-          )}
+        <div className="flex gap-2">
+          <Input
+            placeholder="সূরা খুঁজুন... (নাম বা নম্বর)"
+            value={searchQuery}
+            onChange={(e) => handleSearch(e.target.value)}
+            className="bg-emerald-900/50 border-emerald-700 text-white placeholder:text-emerald-300"
+            data-testid="input-search-surah"
+          />
+          <Button
+            onClick={() => handleSearch(searchQuery)}
+            className="bg-emerald-600 hover:bg-emerald-700"
+            data-testid="button-search-surah"
+          >
+            <Search className="h-4 w-4" />
+          </Button>
         </div>
 
-        {/* Random Verse Section */}
-        {randomVerse && (
-          <div className="space-y-4">
-            <h2 className="text-lg font-semibold flex items-center">
-              <BookOpen className="mr-2" />
-              Featured Verse
-            </h2>
-            <Card data-testid="card-random-verse">
-              <CardContent className="p-6">
-                <div className="text-right mb-4 text-2xl font-semibold leading-relaxed" style={{ fontFamily: 'Times New Roman, serif' }}>
-                  {randomVerse.arabic}
+        {/* Surah List */}
+        <div className="space-y-2">
+          <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+            <BookOpen className="w-5 h-5" />
+            সূরা তালিকা ({filteredSurahs.length}টি)
+          </h2>
+
+          {filteredSurahs.map((surah) => (
+            <Card
+              key={surah.number}
+              className="bg-emerald-900/40 border-emerald-700 hover-elevate cursor-pointer"
+              onClick={() => setSelectedSurah(surah.number)}
+              data-testid={`card-surah-${surah.number}`}
+            >
+              <CardHeader className="p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-600 text-white font-bold">
+                      {surah.number}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-white text-lg">{surah.bengali}</h3>
+                      <p className="text-sm text-emerald-200">{surah.english}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-white mb-1" style={{ fontFamily: 'Times New Roman, serif' }}>
+                      {surah.arabic}
+                    </p>
+                    <p className="text-xs text-emerald-300">
+                      {surah.verses} আয়াত • {surah.revelation === "Mecca" ? "মক্কী" : "মাদানী"}
+                    </p>
+                  </div>
                 </div>
-                <div className="text-sm text-muted-foreground mb-2">
-                  "{randomVerse.translation}"
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xs text-muted-foreground">
-                    {randomVerse.surahName} {randomVerse.surahNumber}:{randomVerse.verseNumber}
-                  </span>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleShare(randomVerse)}
-                    data-testid="button-share-random"
-                  >
-                    <Share className="h-3 w-3 mr-1" />
-                    Share
-                  </Button>
-                </div>
+              </CardHeader>
+            </Card>
+          ))}
+
+          {filteredSurahs.length === 0 && (
+            <Card className="bg-emerald-900/40 border-emerald-700">
+              <CardContent className="p-8 text-center">
+                <p className="text-emerald-200">কোনো সূরা পাওয়া যায়নি</p>
               </CardContent>
             </Card>
-          </div>
-        )}
+          )}
+        </div>
       </main>
+
+      {/* Surah Detail Modal */}
+      <Dialog open={!!selectedSurah} onOpenChange={() => setSelectedSurah(null)}>
+        <DialogContent className="max-w-4xl h-[90vh] flex flex-col bg-emerald-950 border-emerald-700">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-white flex items-center gap-3">
+              {selectedSurahInfo && (
+                <>
+                  <span className="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-600 text-white">
+                    {selectedSurahInfo.number}
+                  </span>
+                  <div className="flex-1">
+                    <div className="text-2xl">{selectedSurahInfo.bengali}</div>
+                    <div className="text-sm text-emerald-300 font-normal">
+                      {selectedSurahInfo.english} • {selectedSurahInfo.verses} আয়াত
+                    </div>
+                  </div>
+                  <div className="text-3xl" style={{ fontFamily: 'Times New Roman, serif' }}>
+                    {selectedSurahInfo.arabic}
+                  </div>
+                </>
+              )}
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="flex-1 overflow-y-auto px-2">
+            {isLoading ? (
+              <div className="flex items-center justify-center h-64">
+                <Loader2 className="w-12 h-12 animate-spin text-emerald-500" />
+              </div>
+            ) : (
+              <div className="space-y-6 pb-6">
+                {arabicData?.chapter.map((ayah, index) => {
+                  const bengaliVerse = bengaliData?.chapter[index];
+                  return (
+                    <Card key={ayah.verse} className="bg-emerald-900/30 border-emerald-700" data-testid={`card-verse-${selectedSurah}-${ayah.verse}`}>
+                      <CardContent className="p-6 space-y-4">
+                        {/* Verse Number */}
+                        <div className="flex items-center gap-2">
+                          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-600 text-white text-sm font-bold">
+                            {ayah.verse}
+                          </div>
+                          <div className="h-px flex-1 bg-emerald-700"></div>
+                        </div>
+
+                        {/* Arabic Text */}
+                        <div
+                          className="text-right text-2xl leading-loose text-white"
+                          style={{ fontFamily: 'Times New Roman, serif' }}
+                        >
+                          {ayah.text}
+                        </div>
+
+                        {/* Bengali Translation */}
+                        {bengaliVerse && (
+                          <div className="text-lg leading-relaxed text-emerald-100 bg-emerald-900/50 p-4 rounded-md">
+                            {bengaliVerse.text}
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Back Button */}
+          <div className="border-t border-emerald-700 pt-4">
+            <Button
+              onClick={() => setSelectedSurah(null)}
+              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-6"
+              data-testid="button-back-from-surah"
+            >
+              <ArrowLeft className="mr-2 h-5 w-5" />
+              ফিরে যান
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <BottomNavigation currentPage="quran" />
     </div>
