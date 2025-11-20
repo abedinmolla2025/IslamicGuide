@@ -5,6 +5,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { BookMarked, BookOpen, X, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import BottomNavigation from "@/components/bottom-navigation";
+import Footer from "@/components/footer";
 import { surahs, Surah } from "@/data/surahs";
 
 export default function SurahPage() {
@@ -148,6 +149,8 @@ export default function SurahPage() {
                 )}
               </DialogContent>
             </Dialog>
+            
+            <Footer />
           </div>
         </ScrollArea>
       </div>

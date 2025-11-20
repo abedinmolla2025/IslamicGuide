@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import QiblaCompass from "@/components/qibla-compass";
 import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
+import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { MapPin, AlertCircle } from "lucide-react";
 
@@ -105,6 +106,8 @@ export default function QiblaPage() {
         {location && !error && !loading && (
           <QiblaCompass latitude={location.latitude} longitude={location.longitude} standalone />
         )}
+        
+        <Footer />
       </main>
 
       <BottomNavigation currentPage="qibla" />

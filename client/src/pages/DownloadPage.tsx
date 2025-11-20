@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import Footer from "@/components/footer";
 import { Download, Smartphone, CheckCircle, AlertCircle } from "lucide-react";
 
 export default function DownloadPage() {
@@ -159,6 +160,8 @@ export default function DownloadPage() {
             </div>
           </CardContent>
         </Card>
+        
+        <Footer />
       </div>
     </div>
   );

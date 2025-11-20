@@ -5,6 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
+import Footer from "@/components/footer";
 import { BookOpen, RefreshCw, Loader2, Sparkles } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import type { Hadith } from "@shared/schema";
@@ -174,6 +175,8 @@ export default function HadithPage() {
                 </Button>
               </>
             )}
+            
+            <Footer />
           </div>
         </ScrollArea>
       </main>

@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
+import Footer from "@/components/footer";
 import { Search, Heart, Share, Baby, Languages, Sparkles, Filter, TrendingUp } from "lucide-react";
 import type { IslamicName } from "@shared/schema";
 
@@ -285,6 +286,8 @@ export default function NamesPage() {
             )}
           </div>
         )}
+        
+        <Footer />
       </main>
 
       <BottomNavigation currentPage="names" />

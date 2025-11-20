@@ -5,6 +5,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { BookOpen, X, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import BottomNavigation from "@/components/bottom-navigation";
+import Footer from "@/components/footer";
 import { duas, Dua } from "@/data/duas";
 
 export default function DuaPage() {
@@ -135,6 +136,8 @@ export default function DuaPage() {
                 )}
               </DialogContent>
             </Dialog>
+            
+            <Footer />
           </div>
         </ScrollArea>
       </div>

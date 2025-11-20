@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
+import Footer from "@/components/footer";
 import { MapPin, Navigation, Phone, Globe, Star, Loader2, AlertCircle } from "lucide-react";
 
 interface Mosque {
@@ -307,6 +308,8 @@ export default function MosquePage() {
             )}
           </div>
         </ScrollArea>
+        
+        <Footer />
       </main>
 
       <BottomNavigation currentPage="mosque" />

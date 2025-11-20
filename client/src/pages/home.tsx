@@ -10,6 +10,7 @@ import DailyQuiz from "@/components/daily-quiz";
 import AsmaUlHusna from "@/components/asma-ul-husna";
 import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
+import Footer from "@/components/footer";
 import { getHijriDate } from "@/lib/islamic-calendar";
 
 export default function HomePage() {
@@ -171,6 +172,8 @@ export default function HomePage() {
           
           <DailyQuiz />
           <AsmaUlHusna />
+          
+          <Footer />
         </div>
       </main>
 

@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
+import Footer from "@/components/footer";
 import { Calendar, Star } from "lucide-react";
 import { getHijriDate, getGregorianFromHijri } from "@/lib/islamic-calendar";
 import type { IslamicEvent } from "@shared/schema";
@@ -108,6 +109,8 @@ export default function CalendarPage() {
             </div>
           </CardContent>
         </Card>
+        
+        <Footer />
       </main>
 
       <BottomNavigation currentPage="calendar" />
