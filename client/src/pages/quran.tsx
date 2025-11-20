@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
-import { Search, BookOpen, ArrowLeft, Loader2 } from "lucide-react";
+import AyahAudioPlayer from "@/components/ayah-audio-player";
+import { Search, BookOpen, ArrowLeft, Loader2, Volume2 } from "lucide-react";
 import { quranSurahs } from "@/data/quran-surahs";
 import type { BengaliVerse, ArabicVerse } from "@/data/quran-surahs";
 
@@ -19,6 +21,31 @@ export default function QuranPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSurah, setSelectedSurah] = useState<number | null>(null);
   const [filteredSurahs, setFilteredSurahs] = useState(quranSurahs);
+  const [selectedReciter, setSelectedReciter] = useState("ar.alafasy");
+  const [currentPlayingAyah, setCurrentPlayingAyah] = useState<number | null>(null);
+  const ayahRefs = useRef<Map<number, HTMLDivElement>>(new Map());
+
+  // Auto-scroll to currently playing ayah
+  useEffect(() => {
+    if (currentPlayingAyah !== null) {
+      const element = ayahRefs.current.get(currentPlayingAyah);
+      if (element) {
+        element.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center' 
+        });
+      }
+    }
+  }, [currentPlayingAyah]);
+
+  // Available reciters
+  const reciters = [
+    { value: "ar.alafasy", label: "মিশারি আল-আফাসি (Mishary Alafasy)" },
+    { value: "ar.abdulbasitmurattal", label: "আব্দুল বাসিত (Abdul Basit)" },
+    { value: "ar.abdurrahmaansudais", label: "আবদুর রহমান সুদাইস (Sudais)" },
+    { value: "ar.shaatree", label: "আবু বকর শাতেরি (Abu Bakr Shatri)" },
+    { value: "ar.hanirifai", label: "হানি রিফাই (Hani Rifai)" },
+  ];
 
   // Fetch Arabic text for selected surah
   const { data: arabicData, isLoading: arabicLoading } = useQuery<{ chapter: ArabicVerse[] }>({
@@ -135,23 +162,50 @@ export default function QuranPage() {
       </main>
 
       {/* Surah Detail Modal */}
-      <Dialog open={!!selectedSurah} onOpenChange={() => setSelectedSurah(null)}>
+      <Dialog open={!!selectedSurah} onOpenChange={() => {
+        setSelectedSurah(null);
+        setCurrentPlayingAyah(null); // Clear auto-play when closing dialog
+      }}>
         <DialogContent className="max-w-4xl h-[90vh] flex flex-col bg-emerald-950 border-emerald-700">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-white flex items-center gap-3">
+            <DialogTitle className="text-2xl font-bold text-white flex flex-col gap-4">
               {selectedSurahInfo && (
                 <>
-                  <span className="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-600 text-white">
-                    {selectedSurahInfo.number}
-                  </span>
-                  <div className="flex-1">
-                    <div className="text-2xl">{selectedSurahInfo.bengali}</div>
-                    <div className="text-sm text-emerald-300 font-normal">
-                      {selectedSurahInfo.english} • {selectedSurahInfo.verses} আয়াত
+                  <div className="flex items-center gap-3">
+                    <span className="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-600 text-white">
+                      {selectedSurahInfo.number}
+                    </span>
+                    <div className="flex-1">
+                      <div className="text-2xl">{selectedSurahInfo.bengali}</div>
+                      <div className="text-sm text-emerald-300 font-normal">
+                        {selectedSurahInfo.english} • {selectedSurahInfo.verses} আয়াত
+                      </div>
+                    </div>
+                    <div className="text-3xl" style={{ fontFamily: 'Times New Roman, serif' }}>
+                      {selectedSurahInfo.arabic}
                     </div>
                   </div>
-                  <div className="text-3xl" style={{ fontFamily: 'Times New Roman, serif' }}>
-                    {selectedSurahInfo.arabic}
+                  
+                  {/* Reciter Selection */}
+                  <div className="flex items-center gap-3">
+                    <Volume2 className="w-5 h-5 text-emerald-300" />
+                    <Select value={selectedReciter} onValueChange={setSelectedReciter}>
+                      <SelectTrigger className="bg-emerald-900/50 border-emerald-700 text-white" data-testid="select-reciter">
+                        <SelectValue placeholder="কারি নির্বাচন করুন" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-emerald-950 border-emerald-700">
+                        {reciters.map((reciter) => (
+                          <SelectItem 
+                            key={reciter.value} 
+                            value={reciter.value}
+                            className="text-white hover:bg-emerald-800"
+                            data-testid={`reciter-${reciter.value}`}
+                          >
+                            {reciter.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                 </>
               )}
@@ -168,14 +222,43 @@ export default function QuranPage() {
                 {arabicData?.chapter.map((ayah, index) => {
                   const bengaliVerse = bengaliData?.chapter[index];
                   return (
-                    <Card key={ayah.verse} className="bg-emerald-900/30 border-emerald-700" data-testid={`card-verse-${selectedSurah}-${ayah.verse}`}>
+                    <Card 
+                      key={ayah.verse} 
+                      ref={(el) => {
+                        if (el) {
+                          ayahRefs.current.set(ayah.verse, el);
+                        }
+                      }}
+                      className="bg-emerald-900/30 border-emerald-700" 
+                      data-testid={`card-verse-${selectedSurah}-${ayah.verse}`}
+                    >
                       <CardContent className="p-6 space-y-4">
-                        {/* Verse Number */}
+                        {/* Verse Number & Audio Player */}
                         <div className="flex items-center gap-2">
                           <div className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-600 text-white text-sm font-bold">
                             {ayah.verse}
                           </div>
                           <div className="h-px flex-1 bg-emerald-700"></div>
+                          
+                          {/* Audio Player */}
+                          {selectedSurah && (
+                            <AyahAudioPlayer
+                              surahNumber={selectedSurah}
+                              ayahNumber={ayah.verse}
+                              reciter={selectedReciter}
+                              autoPlay={currentPlayingAyah === ayah.verse}
+                              onEnded={() => {
+                                // Auto-play next ayah
+                                const nextIndex = index + 1;
+                                if (nextIndex < (arabicData?.chapter.length || 0)) {
+                                  setCurrentPlayingAyah(arabicData.chapter[nextIndex].verse);
+                                } else {
+                                  // End of surah, reset auto-play
+                                  setCurrentPlayingAyah(null);
+                                }
+                              }}
+                            />
+                          )}
                         </div>
 
                         {/* Arabic Text */}
