@@ -59,7 +59,7 @@ export default function BukhariQuizPage() {
 
       <main className="flex-1 overflow-hidden pb-16">
         <ScrollArea className="h-full">
-          <div className="p-4 space-y-4">
+          <div className="p-4 space-y-4 pb-24">
             {/* Language Toggle */}
             <div className="flex justify-end">
               <Button

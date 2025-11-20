@@ -88,7 +88,7 @@ export default function HomePage() {
 
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto pb-20 scrollbar-thin scrollbar-thumb-emerald-700 scrollbar-track-transparent">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto pb-24">
           {location && (
             <>
               <PrayerTimes latitude={location.latitude} longitude={location.longitude} />
@@ -123,6 +123,32 @@ export default function HomePage() {
                   </div>
                 </div>
                 <svg className="w-7 h-7 text-emerald-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </a>
+          </section>
+
+          {/* Beautiful Islamic Names Section */}
+          <section className="p-4">
+            <a 
+              href="/names" 
+              className="block bg-gradient-to-br from-purple-800/60 to-purple-900/60 border-2 border-purple-400/40 rounded-xl p-6 hover:from-purple-800/80 hover:to-purple-900/80 transition-all shadow-lg hover:shadow-purple-500/20"
+              data-testid="link-islamic-names"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 rounded-full bg-purple-500/30 flex items-center justify-center">
+                    <svg className="w-8 h-8 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-purple-200 font-bold text-xl mb-1">✨ Beautiful Islamic Names</h3>
+                    <p className="text-purple-300 text-sm">সুন্দর ইসলামিক নাম • অর্থ সহ</p>
+                  </div>
+                </div>
+                <svg className="w-7 h-7 text-purple-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                 </svg>
               </div>

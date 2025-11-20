@@ -23,7 +23,7 @@ export default function DuaPage() {
     <div className="flex flex-col h-screen bg-gradient-to-b from-emerald-950 to-emerald-900">
       <div className="flex-1 overflow-hidden pb-16">
         <ScrollArea className="h-full">
-          <div className="p-4 space-y-4">
+          <div className="p-4 space-y-4 pb-24">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-14 h-14 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg">
                 <BookOpen className="w-7 h-7 text-emerald-950" />

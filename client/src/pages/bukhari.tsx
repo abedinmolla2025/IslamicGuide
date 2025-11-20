@@ -38,7 +38,7 @@ export default function BukhariPage() {
 
       <main className="flex-1 overflow-hidden pb-16">
         <ScrollArea className="h-full">
-          <div className="p-4 space-y-4">
+          <div className="p-4 space-y-4 pb-24">
             {/* Tabs for Browse and Quiz */}
             <Tabs defaultValue="browse" className="w-full">
               <TabsList className="grid w-full grid-cols-2 bg-emerald-900/50">
