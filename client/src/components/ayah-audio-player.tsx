@@ -31,26 +31,44 @@ export default function AyahAudioPlayer({
       try {
         setIsLoading(true);
         setError(null);
+        
+        console.log(`🎵 Fetching audio for Surah ${surahNumber}, Ayah ${ayahNumber}`);
+        
         const response = await fetch(
           `https://api.alquran.cloud/v1/ayah/${surahNumber}:${ayahNumber}/${reciter}`
         );
         
         if (!response.ok) {
+          console.error(`❌ HTTP Error ${response.status} for ${surahNumber}:${ayahNumber}`);
           throw new Error('Failed to fetch audio URL');
         }
         
         const data = await response.json();
+        
+        console.log(`📦 API Response for ${surahNumber}:${ayahNumber}:`, {
+          code: data.code,
+          hasAudio: !!data.data?.audio,
+          hasAudioSecondary: !!data.data?.audioSecondary,
+          audioUrl: data.data?.audio,
+          audioSecondary: data.data?.audioSecondary
+        });
+        
         if (data.code === 200 && data.data.audioSecondary && data.data.audioSecondary.length > 0) {
           // Use the first CDN URL from audioSecondary array
-          setAudioUrl(data.data.audioSecondary[0]);
+          const url = data.data.audioSecondary[0];
+          console.log(`✅ Using audioSecondary for ${surahNumber}:${ayahNumber}: ${url}`);
+          setAudioUrl(url);
         } else if (data.data.audio) {
           // Fallback to main audio URL
-          setAudioUrl(data.data.audio);
+          const url = data.data.audio;
+          console.log(`✅ Using main audio for ${surahNumber}:${ayahNumber}: ${url}`);
+          setAudioUrl(url);
         } else {
+          console.error(`❌ No audio URL found in API response for ${surahNumber}:${ayahNumber}`);
           throw new Error('No audio URL found');
         }
       } catch (err) {
-        console.error("Failed to fetch audio URL:", err);
+        console.error(`❌ Error fetching audio for ${surahNumber}:${ayahNumber}:`, err);
         setError("অডিও URL লোড করতে ব্যর্থ হয়েছে");
         setIsLoading(false);
       }
