@@ -50,13 +50,11 @@ export default function TopBar({ title = "Islamic Companion", subtitle }: TopBar
           </SheetContent>
         </Sheet>
         
-        <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-xl shrink-0 overflow-hidden">
-          <img 
-            src="/icon-192.png" 
-            alt="Islamic Companion" 
-            className="w-full h-full object-cover"
-          />
-        </div>
+        <img 
+          src="/icon-192.png" 
+          alt="Islamic Companion" 
+          className="w-16 h-16 rounded-lg shadow-xl shrink-0"
+        />
         
         <div className="flex-1 min-w-0">
           <h1 className="text-2xl font-bold tracking-tight truncate" data-testid="app-title">
