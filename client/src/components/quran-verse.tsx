@@ -31,7 +31,7 @@ export default function QuranVerse() {
   };
 
   const browseQuran = () => {
-    setLocation("/quran");
+    setLocation("/quran", { replace: false });
   };
 
   const refreshVerse = () => {

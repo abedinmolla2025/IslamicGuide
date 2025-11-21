@@ -31,7 +31,7 @@ export default function DailyHadith() {
   };
 
   const browseHadith = () => {
-    setLocation("/hadith");
+    setLocation("/hadith", { replace: false });
   };
 
   const refreshHadith = () => {

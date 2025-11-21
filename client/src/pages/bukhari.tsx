@@ -229,7 +229,7 @@ export default function BukhariPage() {
 
                     <div className="space-y-3">
                       <Button
-                        onClick={() => setLocation("/bukhari-quiz/daily")}
+                        onClick={() => setLocation("/bukhari-quiz/daily", { replace: false })}
                         className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800"
                         data-testid="button-daily-quiz"
                       >
@@ -238,7 +238,7 @@ export default function BukhariPage() {
                       </Button>
 
                       <Button
-                        onClick={() => setLocation("/bukhari-quiz/unlimited")}
+                        onClick={() => setLocation("/bukhari-quiz/unlimited", { replace: false })}
                         className="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800"
                         data-testid="button-unlimited-quiz"
                       >

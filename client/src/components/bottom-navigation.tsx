@@ -39,7 +39,7 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
                     ? "text-amber-400" 
                     : "text-emerald-200 hover:text-amber-300"
                 }`}
-                onClick={() => setLocation(item.path)}
+                onClick={() => setLocation(item.path, { replace: false })}
                 data-testid={`nav-${item.id}`}
               >
                 <IconComponent 

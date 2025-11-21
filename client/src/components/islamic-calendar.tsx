@@ -10,7 +10,7 @@ export default function IslamicCalendar() {
   const [day, monthYear] = hijriDate.split(' ', 2);
 
   const viewCalendar = () => {
-    setLocation("/calendar");
+    setLocation("/calendar", { replace: false });
   };
 
   return (

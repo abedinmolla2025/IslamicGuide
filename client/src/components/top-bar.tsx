@@ -40,7 +40,7 @@ export default function TopBar({ title = "Islamic Companion", subtitle }: TopBar
               <Button
                 variant="ghost"
                 className="justify-start text-white hover:bg-emerald-800 hover:text-amber-400 gap-3"
-                onClick={() => setLocation("/settings")}
+                onClick={() => setLocation("/settings", { replace: false })}
                 data-testid="link-settings"
               >
                 <Settings className="h-5 w-5" />
