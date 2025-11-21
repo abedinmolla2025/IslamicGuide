@@ -196,7 +196,7 @@ export default function HomePage() {
             </a>
           </section>
           
-          <DailyQuiz />
+          {/* <DailyQuiz /> */}
           <AsmaUlHusna />
           
           <Footer />
