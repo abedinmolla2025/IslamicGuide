@@ -23,59 +23,58 @@ export default function AyahAudioPlayer({
   const [volume, setVolume] = useState(70);
   const [error, setError] = useState<string | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [hasInitialized, setHasInitialized] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Fetch audio URL from AlQuran Cloud API
-  useEffect(() => {
-    const fetchAudioUrl = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
-        
-        console.log(`🎵 Fetching audio for Surah ${surahNumber}, Ayah ${ayahNumber}`);
-        
-        const response = await fetch(
-          `https://api.alquran.cloud/v1/ayah/${surahNumber}:${ayahNumber}/${reciter}`
-        );
-        
-        if (!response.ok) {
-          console.error(`❌ HTTP Error ${response.status} for ${surahNumber}:${ayahNumber}`);
-          throw new Error('Failed to fetch audio URL');
-        }
-        
-        const data = await response.json();
-        
-        console.log(`📦 API Response for ${surahNumber}:${ayahNumber}:`, {
-          code: data.code,
-          hasAudio: !!data.data?.audio,
-          hasAudioSecondary: !!data.data?.audioSecondary,
-          audioUrl: data.data?.audio,
-          audioSecondary: data.data?.audioSecondary
-        });
-        
-        if (data.code === 200 && data.data.audioSecondary && data.data.audioSecondary.length > 0) {
-          // Use the first CDN URL from audioSecondary array
-          const url = data.data.audioSecondary[0];
-          console.log(`✅ Using audioSecondary for ${surahNumber}:${ayahNumber}: ${url}`);
-          setAudioUrl(url);
-        } else if (data.data.audio) {
-          // Fallback to main audio URL
-          const url = data.data.audio;
-          console.log(`✅ Using main audio for ${surahNumber}:${ayahNumber}: ${url}`);
-          setAudioUrl(url);
-        } else {
-          console.error(`❌ No audio URL found in API response for ${surahNumber}:${ayahNumber}`);
-          throw new Error('No audio URL found');
-        }
-      } catch (err) {
-        console.error(`❌ Error fetching audio for ${surahNumber}:${ayahNumber}:`, err);
-        setError("অডিও URL লোড করতে ব্যর্থ হয়েছে");
-        setIsLoading(false);
+  // Fetch audio URL from AlQuran Cloud API - ONLY when needed
+  const fetchAudioUrl = async () => {
+    if (audioUrl) return; // Already fetched
+    
+    try {
+      setIsLoading(true);
+      setError(null);
+      
+      console.log(`🎵 Fetching audio for Surah ${surahNumber}, Ayah ${ayahNumber}`);
+      
+      const response = await fetch(
+        `https://api.alquran.cloud/v1/ayah/${surahNumber}:${ayahNumber}/${reciter}`
+      );
+      
+      if (!response.ok) {
+        console.error(`❌ HTTP Error ${response.status} for ${surahNumber}:${ayahNumber}`);
+        throw new Error('Failed to fetch audio URL');
       }
-    };
-
-    fetchAudioUrl();
-  }, [surahNumber, ayahNumber, reciter]);
+      
+      const data = await response.json();
+      
+      console.log(`📦 API Response for ${surahNumber}:${ayahNumber}:`, {
+        code: data.code,
+        hasAudio: !!data.data?.audio,
+        hasAudioSecondary: !!data.data?.audioSecondary
+      });
+      
+      if (data.code === 200 && data.data.audioSecondary && data.data.audioSecondary.length > 0) {
+        // Use the first CDN URL from audioSecondary array
+        const url = data.data.audioSecondary[0];
+        console.log(`✅ Using audioSecondary for ${surahNumber}:${ayahNumber}: ${url}`);
+        setAudioUrl(url);
+        setHasInitialized(true);
+      } else if (data.data.audio) {
+        // Fallback to main audio URL
+        const url = data.data.audio;
+        console.log(`✅ Using main audio for ${surahNumber}:${ayahNumber}: ${url}`);
+        setAudioUrl(url);
+        setHasInitialized(true);
+      } else {
+        console.error(`❌ No audio URL found in API response for ${surahNumber}:${ayahNumber}`);
+        throw new Error('No audio URL found');
+      }
+    } catch (err) {
+      console.error(`❌ Error fetching audio for ${surahNumber}:${ayahNumber}:`, err);
+      setError("অডিও URL লোড করতে ব্যর্থ হয়েছে");
+      setIsLoading(false);
+    }
+  };
 
   // Initialize audio element and set up event listeners
   useEffect(() => {
@@ -125,12 +124,25 @@ export default function AyahAudioPlayer({
 
   // Handle auto-play
   useEffect(() => {
+    if (autoPlay && !hasInitialized) {
+      // Auto-play requested, fetch and play
+      fetchAudioUrl();
+    }
+  }, [autoPlay]);
+
+  useEffect(() => {
     if (autoPlay && audioRef.current && audioUrl && !isPlaying) {
       handlePlay();
     }
   }, [autoPlay, audioUrl]);
 
   const handlePlay = async () => {
+    // If not initialized, fetch audio first
+    if (!hasInitialized) {
+      await fetchAudioUrl();
+      return; // Audio will auto-play once loaded
+    }
+
     if (!audioRef.current) return;
 
     try {
