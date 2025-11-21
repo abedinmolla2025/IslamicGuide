@@ -36,22 +36,37 @@ export default function AyahAudioPlayer({
         );
         
         if (!response.ok) {
-          throw new Error('Failed to fetch audio URL');
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
         
         const data = await response.json();
-        if (data.code === 200 && data.data.audioSecondary && data.data.audioSecondary.length > 0) {
-          // Use the first CDN URL from audioSecondary array
-          setAudioUrl(data.data.audioSecondary[0]);
-        } else if (data.data.audio) {
-          // Fallback to main audio URL
-          setAudioUrl(data.data.audio);
-        } else {
-          throw new Error('No audio URL found');
+        
+        if (data.code !== 200) {
+          throw new Error(`API error! code: ${data.code}`);
         }
+        
+        // Priority: use high quality audio (128kbps) from main audio field
+        let selectedUrl = null;
+        
+        if (data.data.audio) {
+          selectedUrl = data.data.audio;
+        } else if (data.data.audioSecondary && data.data.audioSecondary.length > 0) {
+          // Fallback to secondary audio (64kbps)
+          selectedUrl = data.data.audioSecondary[0];
+        }
+        
+        if (!selectedUrl) {
+          throw new Error('No audio URL available');
+        }
+        
+        // Ensure HTTPS
+        selectedUrl = selectedUrl.replace('http://', 'https://');
+        
+        console.log(`Loading audio for ${surahNumber}:${ayahNumber} from:`, selectedUrl);
+        setAudioUrl(selectedUrl);
       } catch (err) {
-        console.error("Failed to fetch audio URL:", err);
-        setError("অডিও URL লোড করতে ব্যর্থ হয়েছে");
+        console.error(`Failed to fetch audio URL for ${surahNumber}:${ayahNumber}:`, err);
+        setError("অডিও পাওয়া যায়নি");
         setIsLoading(false);
       }
     };
@@ -66,6 +81,7 @@ export default function AyahAudioPlayer({
     if (!audioRef.current) {
       audioRef.current = new Audio();
       audioRef.current.preload = "metadata";
+      audioRef.current.crossOrigin = "anonymous"; // Enable CORS
     }
 
     const audio = audioRef.current;
@@ -77,9 +93,33 @@ export default function AyahAudioPlayer({
     };
 
     const handleLoadStart = () => setIsLoading(true);
-    const handleCanPlay = () => setIsLoading(false);
-    const handleError = () => {
-      setError("অডিও লোড করতে ব্যর্থ হয়েছে");
+    const handleCanPlay = () => {
+      setIsLoading(false);
+      setError(null); // Clear any previous errors
+    };
+    
+    const handleError = (e: Event) => {
+      const audioElement = e.target as HTMLAudioElement;
+      const errorCode = audioElement.error?.code;
+      const errorMessage = audioElement.error?.message;
+      
+      console.error(`Audio error for ${surahNumber}:${ayahNumber}:`, {
+        code: errorCode,
+        message: errorMessage,
+        src: audioUrl
+      });
+      
+      let userMessage = "অডিও চালু হচ্ছে না";
+      
+      if (errorCode === 4) {
+        userMessage = "অডিও ফাইল পাওয়া যায়নি";
+      } else if (errorCode === 3) {
+        userMessage = "অডিও লোড ব্যর্থ হয়েছে";
+      } else if (errorCode === 2) {
+        userMessage = "নেটওয়ার্ক সমস্যা";
+      }
+      
+      setError(userMessage);
       setIsLoading(false);
       setIsPlaying(false);
     };
@@ -96,7 +136,7 @@ export default function AyahAudioPlayer({
       audio.removeEventListener("error", handleError);
       audio.pause();
     };
-  }, [audioUrl, onEnded]);
+  }, [audioUrl, onEnded, surahNumber, ayahNumber]);
 
   // Handle volume changes separately to avoid restarting audio
   useEffect(() => {
