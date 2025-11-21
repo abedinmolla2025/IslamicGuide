@@ -6,7 +6,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
-import Footer from "@/components/footer";
 import { Brain, Check, X, RefreshCw, Loader2, BookOpen } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import type { BukhariHadith } from "@shared/schema";
@@ -211,8 +210,6 @@ export default function BukhariQuizPage() {
             )}
           </div>
         </ScrollArea>
-        
-        <Footer />
       </main>
 
       <BottomNavigation currentPage="hadith" />

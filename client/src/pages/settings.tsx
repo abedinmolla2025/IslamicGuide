@@ -5,7 +5,6 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import TopBar from "@/components/top-bar";
-import Footer from "@/components/footer";
 import { Settings as SettingsIcon, Bell, MapPin, Calculator, Palette, Download, Smartphone, AlertCircle } from "lucide-react";
 import { 
   requestNotificationPermission, 
@@ -324,8 +323,6 @@ export default function SettingsPage() {
             </p>
           </CardContent>
         </Card>
-        
-        <Footer />
       </main>
     </div>
   );

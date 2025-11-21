@@ -8,7 +8,6 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
-import Footer from "@/components/footer";
 import { BookOpen, Search, Loader2, Brain, Dices } from "lucide-react";
 import type { BukhariHadith } from "@shared/schema";
 import { useLocation } from "wouter";
@@ -252,8 +251,6 @@ export default function BukhariPage() {
             </Tabs>
           </div>
         </ScrollArea>
-        
-        <Footer />
       </main>
 
       <BottomNavigation currentPage="hadith" />
