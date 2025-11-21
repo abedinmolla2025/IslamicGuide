@@ -10,30 +10,14 @@ import { surahs, Surah } from "@/data/surahs";
 import { useLocation } from "wouter";
 
 export default function SurahPage() {
-  const [location, setLocation] = useLocation();
   const [selectedSurah, setSelectedSurah] = useState<Surah | null>(null);
 
-  // Parse surah ID from URL
-  useEffect(() => {
-    const search = location.split('?')[1] ?? '';
-    const params = new URLSearchParams(search);
-    const surahId = params.get('id');
-    if (surahId) {
-      const surah = surahs.find(s => s.id === surahId);
-      if (surah) {
-        setSelectedSurah(surah);
-      }
-    } else {
-      setSelectedSurah(null);
-    }
-  }, [location]);
-
   const openSurah = (surah: Surah) => {
-    setLocation(`/surah?id=${surah.id}`, { replace: false });
+    setSelectedSurah(surah);
   };
 
   const closeSurah = () => {
-    window.history.back();
+    setSelectedSurah(null);
   };
 
   return (

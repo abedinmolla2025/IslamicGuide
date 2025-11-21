@@ -10,30 +10,14 @@ import { duas, Dua } from "@/data/duas";
 import { useLocation } from "wouter";
 
 export default function DuaPage() {
-  const [location, setLocation] = useLocation();
   const [selectedDua, setSelectedDua] = useState<Dua | null>(null);
 
-  // Parse dua ID from URL
-  useEffect(() => {
-    const search = location.split('?')[1] ?? '';
-    const params = new URLSearchParams(search);
-    const duaId = params.get('id');
-    if (duaId) {
-      const dua = duas.find(d => d.id === duaId);
-      if (dua) {
-        setSelectedDua(dua);
-      }
-    } else {
-      setSelectedDua(null);
-    }
-  }, [location]);
-
   const openDua = (dua: Dua) => {
-    setLocation(`/dua?id=${dua.id}`, { replace: false });
+    setSelectedDua(dua);
   };
 
   const closeDua = () => {
-    window.history.back();
+    setSelectedDua(null);
   };
 
   return (
