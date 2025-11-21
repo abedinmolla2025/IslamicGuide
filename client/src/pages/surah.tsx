@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -7,16 +7,33 @@ import { Button } from "@/components/ui/button";
 import BottomNavigation from "@/components/bottom-navigation";
 import Footer from "@/components/footer";
 import { surahs, Surah } from "@/data/surahs";
+import { useLocation } from "wouter";
 
 export default function SurahPage() {
+  const [location, setLocation] = useLocation();
   const [selectedSurah, setSelectedSurah] = useState<Surah | null>(null);
 
+  // Parse surah ID from URL
+  useEffect(() => {
+    const search = location.split('?')[1] ?? '';
+    const params = new URLSearchParams(search);
+    const surahId = params.get('id');
+    if (surahId) {
+      const surah = surahs.find(s => s.id === surahId);
+      if (surah) {
+        setSelectedSurah(surah);
+      }
+    } else {
+      setSelectedSurah(null);
+    }
+  }, [location]);
+
   const openSurah = (surah: Surah) => {
-    setSelectedSurah(surah);
+    setLocation(`/surah?id=${surah.id}`, { replace: false });
   };
 
   const closeSurah = () => {
-    setSelectedSurah(null);
+    window.history.back();
   };
 
   return (
@@ -61,7 +78,7 @@ export default function SurahPage() {
             </div>
 
             {/* Surah Detail Modal */}
-            <Dialog open={!!selectedSurah} onOpenChange={closeSurah}>
+            <Dialog open={!!selectedSurah} onOpenChange={(open) => !open && closeSurah()}>
               <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-gradient-to-b from-[#125022] to-[#0E3B1A] border-2 border-amber-400/30 p-0">
                 {selectedSurah && (
                   <div className="p-6 space-y-5">

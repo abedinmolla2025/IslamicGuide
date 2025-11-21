@@ -591,6 +591,48 @@ cd android
 - ✅ **Quiz Navigation**: Daily/Unlimited quiz buttons push to history
 - ✅ **Settings**: Menu settings navigation pushes to history
 - ✅ **Native App Feel**: Proper back navigation like native apps
+
+## URL-Based Dua & Surah Navigation (November 21, 2025 - 9:45 AM)
+[x] 317. User reported dua list → individual dua → back skips dua list - COMPLETED
+[x] 318. Identified Dialog/Modal doesn't add to browser history - COMPLETED
+[x] 319. Updated dua.tsx to use URL query params (?id=duaId) - COMPLETED
+[x] 320. Added useEffect to parse dua ID from URL - COMPLETED
+[x] 321. Updated openDua to use setLocation with query param - COMPLETED
+[x] 322. Updated closeDua to navigate back to /dua - COMPLETED
+[x] 323. Applied same fix to surah.tsx for consistency - COMPLETED
+[x] 324. Added useEffect to parse surah ID from URL - COMPLETED
+[x] 325. Updated openSurah to use setLocation with query param - COMPLETED
+[x] 326. Updated closeSurah to navigate back to /surah - COMPLETED
+[x] 327. Restarted workflow to test URL-based navigation - COMPLETED
+[x] 328. Updated progress tracker - COMPLETED
+
+**Total Tasks Completed: 328/328** ✅
+
+## 📍 URL-Based Navigation:
+- ✅ **Dua Pages**: /dua?id=morning-dua (individual dua in URL)
+- ✅ **Surah Pages**: /surah?id=al-fatiha (individual surah in URL)
+- ✅ **Back Button**: Now goes dua → dua list → previous page
+- ✅ **Browser History**: Each dua/surah click adds to history
+- ✅ **Share URLs**: Can share direct links to specific duas/surahs
+
+## Critical Bug Fixes After Architect Review (November 21, 2025 - 10:00 AM)
+[x] 329. Architect identified URL parsing issue with undefined - COMPLETED
+[x] 330. Fixed URL parsing using ?? '' fallback for empty query - COMPLETED
+[x] 331. Architect found extra history entry on dialog close - COMPLETED
+[x] 332. Changed closeDua/closeSurah to use window.history.back() - COMPLETED
+[x] 333. Architect caught onOpenChange firing on dialog open - COMPLETED
+[x] 334. Fixed Dialog onOpenChange to only call close when !open - COMPLETED
+[x] 335. Applied all fixes to both dua.tsx and surah.tsx - COMPLETED
+[x] 336. Restarted workflow to test fixes - COMPLETED
+[x] 337. Updated progress tracker - COMPLETED
+
+**Total Tasks Completed: 337/337** ✅
+
+## 🐛 Bug Fixes Summary:
+- ✅ **URL Parsing**: Fixed undefined → "undefined" string bug
+- ✅ **History Management**: Using history.back() instead of extra push
+- ✅ **Dialog State**: onOpenChange only fires on close, not open
+- ✅ **Consistency**: Same implementation in dua.tsx and surah.tsx
 [x] 284. Changed background from orange gradient to white - COMPLETED
 [x] 285. Used /icon-192.png (green mosque dome on white) - COMPLETED
 [x] 286. Updated header to show professional app icon - COMPLETED
