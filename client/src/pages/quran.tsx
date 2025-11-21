@@ -7,7 +7,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
-import Footer from "@/components/footer";
 import AyahAudioPlayer from "@/components/ayah-audio-player";
 import { Search, BookOpen, ArrowLeft, Loader2, Volume2 } from "lucide-react";
 import { quranSurahs } from "@/data/quran-surahs";
@@ -297,8 +296,6 @@ export default function QuranPage() {
           </div>
         </DialogContent>
       </Dialog>
-      
-      <Footer />
 
       <BottomNavigation currentPage="quran" />
     </div>
