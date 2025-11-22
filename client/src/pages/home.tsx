@@ -132,9 +132,7 @@ export default function HomePage() {
           {/* Beautiful Islamic Names Section */}
           <section className="p-4">
             <a 
-              href="https://quranbangla.in/names" 
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/names" 
               className="block bg-gradient-to-br from-purple-800/60 to-purple-900/60 border-2 border-purple-400/40 rounded-xl p-6 hover:from-purple-800/80 hover:to-purple-900/80 transition-all shadow-lg hover:shadow-purple-500/20"
               data-testid="link-islamic-names"
             >
