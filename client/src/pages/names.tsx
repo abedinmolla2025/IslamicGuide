@@ -329,16 +329,16 @@ function NameCard({ name, selectedLanguage, onShare }: NameCardProps) {
   };
 
   const genderGradient = name.gender === 'boy' 
-    ? 'from-emerald-900/70 via-green-900/60 to-teal-900/70' 
-    : 'from-emerald-900/70 via-green-900/60 to-teal-900/70';
+    ? 'from-green-800/80 via-emerald-800/75 to-green-900/80' 
+    : 'from-green-800/80 via-emerald-800/75 to-green-900/80';
 
   const genderBorder = name.gender === 'boy'
-    ? 'border-emerald-600/40'
-    : 'border-emerald-600/40';
+    ? 'border-green-400/60'
+    : 'border-green-400/60';
 
   const genderAccent = name.gender === 'boy'
-    ? 'from-emerald-600 to-teal-600'
-    : 'from-emerald-600 to-teal-600';
+    ? 'from-green-500 to-emerald-600'
+    : 'from-green-500 to-emerald-600';
 
   return (
     <div
@@ -401,13 +401,13 @@ function NameCard({ name, selectedLanguage, onShare }: NameCardProps) {
           {/* Name Section */}
           <div className="mb-5">
             <h3 
-              className={`${getNameClass()} bg-gradient-to-r from-white via-white to-amber-100 bg-clip-text text-transparent drop-shadow-2xl leading-tight mb-2`}
+              className={`${getNameClass()} bg-gradient-to-r from-green-50 via-white to-green-100 bg-clip-text text-transparent drop-shadow-2xl leading-tight mb-2 tracking-tight`}
               data-testid={`text-name-${name.name.toLowerCase().replace(/\s+/g, '-')}`}
             >
               {getDisplayName()}
             </h3>
             {selectedLanguage !== "english" && (
-              <p className="text-base text-amber-200/80 font-semibold tracking-wide">
+              <p className="text-base text-green-100/90 font-semibold tracking-wide">
                 {name.name}
               </p>
             )}
@@ -419,14 +419,14 @@ function NameCard({ name, selectedLanguage, onShare }: NameCardProps) {
           {/* Information Grid */}
           <div className="space-y-4">
             {/* Meaning */}
-            <div className="group/item bg-gradient-to-r from-black/30 to-black/20 rounded-xl p-4 backdrop-blur-sm border border-white/10 hover:border-amber-400/30 transition-all duration-300">
+            <div className="group/item bg-gradient-to-r from-green-600/20 to-emerald-600/15 rounded-xl p-4 backdrop-blur-sm border border-green-400/30 hover:border-green-300/50 transition-all duration-300">
               <div className="flex items-start gap-3">
                 <div className={`mt-1 w-8 h-8 rounded-lg bg-gradient-to-br ${genderAccent} flex items-center justify-center flex-shrink-0 shadow-lg`}>
                   <Sparkles className="h-4 w-4 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <span className="text-xs font-bold text-amber-300 uppercase tracking-widest mb-1.5 block">Meaning</span>
-                  <p className="text-sm text-white font-medium leading-relaxed">
+                  <span className="text-xs font-extrabold text-green-200 uppercase tracking-widest mb-1.5 block">Meaning</span>
+                  <p className="text-base text-white font-semibold leading-relaxed tracking-wide">
                     {getDisplayMeaning()}
                   </p>
                 </div>
@@ -435,15 +435,15 @@ function NameCard({ name, selectedLanguage, onShare }: NameCardProps) {
 
             {/* Origin & Category */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="bg-gradient-to-br from-teal-500/10 to-emerald-500/10 rounded-xl p-3 backdrop-blur-sm border border-teal-400/20">
-                <span className="text-xs font-bold text-teal-300 uppercase tracking-wide block mb-1">Origin</span>
-                <p className="text-sm text-white/90 font-semibold">{name.origin}</p>
+              <div className="bg-gradient-to-br from-green-500/15 to-emerald-500/15 rounded-xl p-3 backdrop-blur-sm border border-green-400/30">
+                <span className="text-xs font-extrabold text-green-200 uppercase tracking-wide block mb-1">Origin</span>
+                <p className="text-base text-white font-bold">{name.origin}</p>
               </div>
               
               {name.category && (
-                <div className="bg-gradient-to-br from-purple-500/10 to-indigo-500/10 rounded-xl p-3 backdrop-blur-sm border border-purple-400/20">
-                  <span className="text-xs font-bold text-purple-300 uppercase tracking-wide block mb-1">Category</span>
-                  <p className="text-sm text-white/90 font-semibold truncate">{name.category}</p>
+                <div className="bg-gradient-to-br from-green-500/15 to-emerald-500/15 rounded-xl p-3 backdrop-blur-sm border border-green-400/30">
+                  <span className="text-xs font-extrabold text-green-200 uppercase tracking-wide block mb-1">Category</span>
+                  <p className="text-base text-white font-bold truncate">{name.category}</p>
                 </div>
               )}
             </div>
