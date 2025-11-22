@@ -27,8 +27,8 @@ export default function AyahAudioPlayer({
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Fetch audio URL from AlQuran Cloud API - ONLY when needed
-  const fetchAudioUrl = async () => {
-    if (audioUrl) return; // Already fetched
+  const fetchAudioUrl = async (): Promise<boolean> => {
+    if (audioUrl) return true; // Already fetched
     
     try {
       setIsLoading(true);
@@ -59,12 +59,14 @@ export default function AyahAudioPlayer({
         console.log(`✅ Using audioSecondary for ${surahNumber}:${ayahNumber}: ${url}`);
         setAudioUrl(url);
         setHasInitialized(true);
+        return true;
       } else if (data.data.audio) {
         // Fallback to main audio URL
         const url = data.data.audio;
         console.log(`✅ Using main audio for ${surahNumber}:${ayahNumber}: ${url}`);
         setAudioUrl(url);
         setHasInitialized(true);
+        return true;
       } else {
         console.error(`❌ No audio URL found in API response for ${surahNumber}:${ayahNumber}`);
         throw new Error('No audio URL found');
@@ -73,6 +75,7 @@ export default function AyahAudioPlayer({
       console.error(`❌ Error fetching audio for ${surahNumber}:${ayahNumber}:`, err);
       setError("অডিও URL লোড করতে ব্যর্থ হয়েছে");
       setIsLoading(false);
+      return false;
     }
   };
 
@@ -139,8 +142,10 @@ export default function AyahAudioPlayer({
   const handlePlay = async () => {
     // If not initialized, fetch audio first
     if (!hasInitialized) {
-      await fetchAudioUrl();
-      return; // Audio will auto-play once loaded
+      const success = await fetchAudioUrl();
+      if (!success) return;
+      // Wait a bit for audio element to be ready
+      await new Promise(resolve => setTimeout(resolve, 100));
     }
 
     if (!audioRef.current) return;
