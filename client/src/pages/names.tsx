@@ -287,7 +287,7 @@ export default function NamesPage() {
         )}
       </main>
 
-      <BottomNavigation currentPage="names" />
+      <BottomNavigation currentPage="home" />
     </div>
   );
 }
