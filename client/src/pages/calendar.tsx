@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,8 +7,12 @@ import TopBar from "@/components/top-bar";
 import { Calendar, Star } from "lucide-react";
 import { getHijriDate, getGregorianFromHijri } from "@/lib/islamic-calendar";
 import type { IslamicEvent } from "@shared/schema";
+import { updatePageTitle, PAGE_SEO } from "@/lib/seo";
 
 export default function CalendarPage() {
+  useEffect(() => {
+    updatePageTitle(PAGE_SEO.calendar.title, PAGE_SEO.calendar.description);
+  }, []);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const { data: events } = useQuery<IslamicEvent[]>({

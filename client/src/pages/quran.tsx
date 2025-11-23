@@ -11,6 +11,7 @@ import AyahAudioPlayer from "@/components/ayah-audio-player";
 import { Search, BookOpen, ArrowLeft, Loader2, Volume2 } from "lucide-react";
 import { quranSurahs } from "@/data/quran-surahs";
 import type { BengaliVerse, ArabicVerse } from "@/data/quran-surahs";
+import { updatePageTitle, PAGE_SEO } from "@/lib/seo";
 
 type SurahData = {
   arabic: ArabicVerse[];
@@ -18,6 +19,10 @@ type SurahData = {
 };
 
 export default function QuranPage() {
+  // Update page title for SEO
+  useEffect(() => {
+    updatePageTitle(PAGE_SEO.quran.title, PAGE_SEO.quran.description);
+  }, []);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSurah, setSelectedSurah] = useState<number | null>(null);
   const [filteredSurahs, setFilteredSurahs] = useState(quranSurahs);

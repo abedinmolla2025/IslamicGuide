@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Download, Smartphone, CheckCircle, AlertCircle } from "lucide-react";
+import { updatePageTitle, PAGE_SEO } from "@/lib/seo";
 
 export default function DownloadPage() {
+  useEffect(() => {
+    updatePageTitle(PAGE_SEO.download.title, PAGE_SEO.download.description);
+  }, []);
   const APK_DOWNLOAD_URL = "/downloads/islamic-companion.apk";
 
   return (

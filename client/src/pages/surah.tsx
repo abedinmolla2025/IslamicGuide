@@ -7,8 +7,12 @@ import { Button } from "@/components/ui/button";
 import BottomNavigation from "@/components/bottom-navigation";
 import { surahs, Surah } from "@/data/surahs";
 import { useLocation } from "wouter";
+import { updatePageTitle, PAGE_SEO } from "@/lib/seo";
 
 export default function SurahPage() {
+  useEffect(() => {
+    updatePageTitle(PAGE_SEO.surah.title, PAGE_SEO.surah.description);
+  }, []);
   const [selectedSurah, setSelectedSurah] = useState<Surah | null>(null);
 
   const openSurah = (surah: Surah) => {

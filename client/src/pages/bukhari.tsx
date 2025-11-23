@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,8 +11,12 @@ import TopBar from "@/components/top-bar";
 import { BookOpen, Search, Loader2, Brain, Dices } from "lucide-react";
 import type { BukhariHadith } from "@shared/schema";
 import { useLocation } from "wouter";
+import { updatePageTitle, PAGE_SEO } from "@/lib/seo";
 
 export default function BukhariPage() {
+  useEffect(() => {
+    updatePageTitle(PAGE_SEO.bukhari.title, PAGE_SEO.bukhari.description);
+  }, []);
   const [searchQuery, setSearchQuery] = useState("");
   const [, setLocation] = useLocation();
 

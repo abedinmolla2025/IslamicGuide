@@ -13,8 +13,12 @@ import {
   saveNotificationPreferences,
   clearPrayerNotifications
 } from "@/lib/notifications";
+import { updatePageTitle, PAGE_SEO } from "@/lib/seo";
 
 export default function SettingsPage() {
+  useEffect(() => {
+    updatePageTitle(PAGE_SEO.settings.title, PAGE_SEO.settings.description);
+  }, []);
   const [notifications, setNotifications] = useState(true);
   const [calculationMethod, setCalculationMethod] = useState("ISNA");
   const [darkMode, setDarkMode] = useState(false);

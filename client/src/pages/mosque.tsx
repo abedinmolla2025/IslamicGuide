@@ -7,6 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
 import { MapPin, Navigation, Phone, Globe, Star, Loader2, AlertCircle } from "lucide-react";
+import { updatePageTitle, PAGE_SEO } from "@/lib/seo";
 
 interface Mosque {
   id: string;
@@ -25,6 +26,9 @@ interface Mosque {
 }
 
 export default function MosquePage() {
+  useEffect(() => {
+    updatePageTitle(PAGE_SEO.mosque.title, PAGE_SEO.mosque.description);
+  }, []);
   const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
   const [radius, setRadius] = useState(5000);

@@ -7,8 +7,13 @@ import { Button } from "@/components/ui/button";
 import BottomNavigation from "@/components/bottom-navigation";
 import { duas, Dua } from "@/data/duas";
 import { useLocation } from "wouter";
+import { updatePageTitle, PAGE_SEO } from "@/lib/seo";
 
 export default function DuaPage() {
+  // Update page title for SEO
+  useEffect(() => {
+    updatePageTitle(PAGE_SEO.dua.title, PAGE_SEO.dua.description);
+  }, []);
   const [selectedDua, setSelectedDua] = useState<Dua | null>(null);
 
   const openDua = (dua: Dua) => {

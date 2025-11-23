@@ -12,8 +12,13 @@ import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
 import Footer from "@/components/footer";
 import { getHijriDate } from "@/lib/islamic-calendar";
+import { updatePageTitle, PAGE_SEO } from "@/lib/seo";
 
 export default function HomePage() {
+  // Update page title for SEO
+  useEffect(() => {
+    updatePageTitle(PAGE_SEO.home.title, PAGE_SEO.home.description);
+  }, []);
   const [location, setLocation] = useState<{ city: string; latitude: number; longitude: number } | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
 

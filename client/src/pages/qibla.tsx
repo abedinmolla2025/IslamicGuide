@@ -4,8 +4,12 @@ import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
 import { Button } from "@/components/ui/button";
 import { MapPin, AlertCircle } from "lucide-react";
+import { updatePageTitle, PAGE_SEO } from "@/lib/seo";
 
 export default function QiblaPage() {
+  useEffect(() => {
+    updatePageTitle(PAGE_SEO.qibla.title, PAGE_SEO.qibla.description);
+  }, []);
   const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -10,9 +10,13 @@ import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
 import { Search, Heart, Share, Baby, Languages, Sparkles, Filter, TrendingUp } from "lucide-react";
 import type { IslamicName } from "@shared/schema";
+import { updatePageTitle, PAGE_SEO } from "@/lib/seo";
 
 
 export default function NamesPage() {
+  useEffect(() => {
+    updatePageTitle(PAGE_SEO.names.title, PAGE_SEO.names.description);
+  }, []);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGender, setSelectedGender] = useState<"all" | "boy" | "girl">("all");
   const [selectedCategory, setSelectedCategory] = useState("All");

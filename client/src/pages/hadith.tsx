@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,8 +9,12 @@ import TopBar from "@/components/top-bar";
 import { BookOpen, RefreshCw, Loader2, Sparkles } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import type { Hadith } from "@shared/schema";
+import { updatePageTitle, PAGE_SEO } from "@/lib/seo";
 
 export default function HadithPage() {
+  useEffect(() => {
+    updatePageTitle(PAGE_SEO.hadith.title, PAGE_SEO.hadith.description);
+  }, []);
   const { data: hadith, isLoading, error } = useQuery<Hadith>({
     queryKey: ["/api/hadith/daily"],
   });
