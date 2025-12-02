@@ -91,8 +91,8 @@ export default function HomePage() {
       )}
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto pb-20 scrollbar-thin scrollbar-thumb-emerald-700 scrollbar-track-transparent">
-        <div className="max-w-2xl mx-auto pb-24">
+      <main className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-emerald-700 scrollbar-track-transparent">
+        <div className="max-w-2xl mx-auto min-h-full flex flex-col">
           {location && (
             <>
               <PrayerTimes latitude={location.latitude} longitude={location.longitude} />
@@ -202,6 +202,9 @@ export default function HomePage() {
           
           {/* <DailyQuiz /> */}
           <AsmaUlHusna />
+          
+          {/* Spacer to push footer to bottom */}
+          <div className="flex-grow"></div>
           
           {/* Footer Section - Only on Home Page */}
           <Footer />

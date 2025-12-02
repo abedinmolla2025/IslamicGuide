@@ -4,7 +4,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="bg-gradient-to-b from-emerald-900 to-emerald-950 border-t border-emerald-700/50 py-6 px-4 mt-auto">
+    <footer className="bg-gradient-to-b from-emerald-900 to-emerald-950 border-t border-emerald-700/50 py-8 px-4 mt-8">
       <div className="max-w-2xl mx-auto text-center space-y-3">
         {/* App Name & Tagline */}
         <div>
