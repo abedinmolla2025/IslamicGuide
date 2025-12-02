@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
 import AyahAudioPlayer from "@/components/ayah-audio-player";
 import { Search, BookOpen, ArrowLeft, Loader2, Volume2 } from "lucide-react";
@@ -302,7 +301,6 @@ export default function QuranPage() {
         </DialogContent>
       </Dialog>
 
-      <BottomNavigation currentPage="quran" />
     </div>
   );
 }

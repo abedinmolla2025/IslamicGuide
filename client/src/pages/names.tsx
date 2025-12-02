@@ -6,7 +6,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
 import { Search, Heart, Share, Baby, Languages, Sparkles, Filter, TrendingUp } from "lucide-react";
 import type { IslamicName } from "@shared/schema";
@@ -291,7 +290,6 @@ export default function NamesPage() {
         )}
       </main>
 
-      <BottomNavigation currentPage="home" />
     </div>
   );
 }

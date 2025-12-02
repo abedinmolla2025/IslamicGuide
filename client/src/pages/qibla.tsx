@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import QiblaCompass from "@/components/qibla-compass";
-import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
 import { Button } from "@/components/ui/button";
 import { MapPin, AlertCircle } from "lucide-react";
@@ -111,7 +110,6 @@ export default function QiblaPage() {
         )}
       </main>
 
-      <BottomNavigation currentPage="qibla" />
     </div>
   );
 }

@@ -8,7 +8,6 @@ import QuranVerse from "@/components/quran-verse";
 import DailyHadith from "@/components/daily-hadith";
 import DailyQuiz from "@/components/daily-quiz";
 import AsmaUlHusna from "@/components/asma-ul-husna";
-import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
 import Footer from "@/components/footer";
 import { getHijriDate } from "@/lib/islamic-calendar";
@@ -209,7 +208,6 @@ export default function HomePage() {
         </div>
       </main>
 
-      <BottomNavigation currentPage="home" />
     </div>
   );
 }

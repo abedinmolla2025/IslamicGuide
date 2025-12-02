@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
 import { BookOpen, Search, Loader2, Brain, Dices } from "lucide-react";
 import type { BukhariHadith } from "@shared/schema";
@@ -257,7 +256,6 @@ export default function BukhariPage() {
         </ScrollArea>
       </main>
 
-      <BottomNavigation currentPage="hadith" />
     </div>
   );
 }

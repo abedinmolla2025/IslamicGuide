@@ -33,7 +33,7 @@ export default function TopBar({ title = "Islamic Companion", subtitle }: TopBar
   const [location, setLocation] = useLocation();
 
   return (
-    <header className="bg-emerald-800 text-white p-4 shadow-lg">
+    <header className="sticky top-0 z-50 bg-emerald-800 text-white p-4 shadow-lg">
       <div className="flex items-center gap-4">
         <Sheet>
           <SheetTrigger asChild>

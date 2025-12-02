@@ -4,7 +4,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { BookOpen, X, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import BottomNavigation from "@/components/bottom-navigation";
+import TopBar from "@/components/top-bar";
 import { duas, Dua } from "@/data/duas";
 import { useLocation } from "wouter";
 import { updatePageTitle, PAGE_SEO } from "@/lib/seo";
@@ -145,7 +145,6 @@ export default function DuaPage() {
         </ScrollArea>
       </div>
 
-      <BottomNavigation currentPage="dua" />
     </div>
   );
 }

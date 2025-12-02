@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
 import { Calendar, Star } from "lucide-react";
 import { getHijriDate, getGregorianFromHijri } from "@/lib/islamic-calendar";
@@ -114,7 +113,6 @@ export default function CalendarPage() {
         </Card>
       </main>
 
-      <BottomNavigation currentPage="calendar" />
     </div>
   );
 }

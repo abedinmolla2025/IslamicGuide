@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
-import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
 import { BookOpen, RefreshCw, Loader2, Sparkles } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
@@ -183,7 +182,6 @@ export default function HadithPage() {
         </ScrollArea>
       </main>
 
-      <BottomNavigation currentPage="hadith" />
     </div>
   );
 }

@@ -4,7 +4,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import BottomNavigation from "@/components/bottom-navigation";
 import TopBar from "@/components/top-bar";
 import { MapPin, Navigation, Phone, Globe, Star, Loader2, AlertCircle } from "lucide-react";
 import { updatePageTitle, PAGE_SEO } from "@/lib/seo";
@@ -313,7 +312,6 @@ export default function MosquePage() {
         </ScrollArea>
       </main>
 
-      <BottomNavigation currentPage="mosque" />
     </div>
   );
 }
