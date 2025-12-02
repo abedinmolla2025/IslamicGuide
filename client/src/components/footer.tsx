@@ -20,6 +20,12 @@ export default function Footer() {
           কুরআন, হাদিস, দোয়া, নামাজের সময়, ক্বিবলা এবং আরও অনেক কিছু একসাথে
         </p>
         
+        {/* Developer Credit */}
+        <div className="text-emerald-300 text-sm font-semibold">
+          <span>Developed by </span>
+          <span className="text-amber-400 font-bold">ABEDIN MOLLA</span>
+        </div>
+        
         {/* Made with Love */}
         <div className="flex items-center justify-center gap-1.5 text-emerald-400 text-xs">
           <span>Made with</span>
