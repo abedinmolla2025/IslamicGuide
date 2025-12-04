@@ -1,9 +1,10 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import InstallPrompt from "@/components/install-prompt";
+import BottomNavigation from "@/components/bottom-navigation";
 import HomePage from "@/pages/home";
 import DuaPage from "@/pages/dua";
 import HadithPage from "@/pages/hadith";
@@ -40,15 +41,42 @@ function Router() {
   );
 }
 
+function AppContent() {
+  const [location] = useLocation();
+  
+  const getActivePage = () => {
+    if (location === "/") return "home";
+    if (location === "/dua") return "dua";
+    if (location === "/hadith") return "hadith";
+    if (location === "/surah") return "surah";
+    if (location === "/mosque") return "mosque";
+    if (location === "/qibla") return "qibla";
+    if (location === "/quran") return "quran";
+    if (location === "/names") return "names";
+    if (location === "/calendar") return "calendar";
+    return "home";
+  };
+
+  const hideNavPages = ["/settings", "/download", "/bukhari", "/bukhari-quiz"];
+  const shouldShowNav = !hideNavPages.some(page => location.startsWith(page));
+
+  return (
+    <div className="h-full max-w-md mx-auto bg-card shadow-xl islamic-pattern">
+      <Toaster />
+      <InstallPrompt />
+      <Router />
+      {shouldShowNav && (
+        <BottomNavigation currentPage={getActivePage() as any} />
+      )}
+    </div>
+  );
+}
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className="h-full max-w-md mx-auto bg-card shadow-xl islamic-pattern">
-          <Toaster />
-          <InstallPrompt />
-          <Router />
-        </div>
+        <AppContent />
       </TooltipProvider>
     </QueryClientProvider>
   );
